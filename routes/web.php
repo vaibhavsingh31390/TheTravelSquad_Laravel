@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+// Route::get('/', [PostsController::class, 'PostsController@index'])->name('Post.Index')->on;
+Route::get('/', [Controller::class, 'home'])->name('home.index');
+Route::resource('posts', PostsController::class)->only('index');
