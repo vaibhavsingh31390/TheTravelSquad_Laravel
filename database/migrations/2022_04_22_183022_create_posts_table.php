@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('database__categories', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('category_Menu');
-            $table->unsignedBigInteger('database__posts_id')->index();
-            $table->foreign('database__posts_id')->references('id')->on('database__posts');
+
+            $table->string('image_url')->default('https://images.unsplash.com/photo-1505866535066-ccebd6b2b98a');
+            $table->text('title');
+            $table->text('content');
+            $table->integer('like')->default(0);
+            $table->integer('dislike')->default(0);
         });
     }
 
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('database__categories');
+        Schema::dropIfExists('posts');
     }
 };

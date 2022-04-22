@@ -26,15 +26,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home.index') }}">Home</a>
                 </li>
+
+                <?php 
+                die($CAT);
+                ?>
+                @foreach ($CAT as $category)
+
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="#"> {{   $category->category_Menu   }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
+                @endforeach
+
                 <li class="nav-item admin_Btn">
                     <a class="nav-link" href="#">ADMIN</a>
                 </li>

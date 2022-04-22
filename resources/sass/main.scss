@@ -29,8 +29,8 @@ nav{
             .nav-item{
                 font-weight: 600;
                 border: 2px solid $bg_Color1;
-                padding-right: 1rem;
-                padding-left: 1rem;
+                padding-right: 0.35rem;
+                padding-left: 0.35rem;
                 .nav-link{
                     color: $txt_Color1;
                     &:hover{
@@ -81,5 +81,9 @@ nav{
     }
     .navbar-brand{
         margin-left: 1rem;
+    }
+    .nav-item{
+        padding-right: 1rem;
+        padding-left: 1rem;
     }
   }

@@ -11303,8 +11303,8 @@ nav .navbar-brand {
 nav .navbar-collapse .navbar-nav .nav-item {
   font-weight: 600;
   border: 2px solid #DDDDDD;
-  padding-right: 1rem;
-  padding-left: 1rem;
+  padding-right: 0.35rem;
+  padding-left: 0.35rem;
 }
 nav .navbar-collapse .navbar-nav .nav-item .nav-link {
   color: #222831;
@@ -11353,5 +11353,10 @@ nav .navbar-toggler .fa-bars:focus {
 
   .navbar-brand {
     margin-left: 1rem;
+  }
+
+  .nav-item {
+    padding-right: 1rem;
+    padding-left: 1rem;
   }
 }
