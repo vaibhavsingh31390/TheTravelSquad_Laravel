@@ -11294,15 +11294,17 @@ body {
 
 nav {
   background-color: #DDDDDD;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
 nav .navbar-brand {
   color: #30475E;
   font-weight: 700;
 }
 nav .navbar-collapse .navbar-nav .nav-item {
-  margin-right: 10px;
   font-weight: 600;
   border: 2px solid #DDDDDD;
+  padding-right: 1rem;
+  padding-left: 1rem;
 }
 nav .navbar-collapse .navbar-nav .nav-item .nav-link {
   color: #222831;
@@ -11327,4 +11329,29 @@ nav .navbar-collapse .navbar-nav .admin_Btn:hover {
 }
 nav .navbar-collapse .navbar-nav .admin_Btn:hover .nav-link {
   color: #F05454;
+}
+nav .navbar-toggler {
+  border: 2px solid #30475E;
+  padding: 0.45rem 0.75rem 0.35rem;
+}
+nav .navbar-toggler:focus {
+  border: 2px solid #F05454;
+  outline: none;
+  box-shadow: none;
+}
+nav .navbar-toggler .fa-bars {
+  color: #30475E;
+}
+nav .navbar-toggler .fa-bars:focus {
+  color: #F05454;
+}
+
+@media (max-width: 960px) {
+  .admin_Btn {
+    margin-left: 0px !important;
+  }
+
+  .navbar-brand {
+    margin-left: 1rem;
+  }
 }

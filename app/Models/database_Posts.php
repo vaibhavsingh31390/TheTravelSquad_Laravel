@@ -12,4 +12,9 @@ class database_Posts extends Model
     public function comment(){
         return $this->hasMany('App\Models\database_Comments');
     }
+
+    public function categories(){
+        return $this->hasOne('App\Models\database_Categories');
+    }
+    
 }

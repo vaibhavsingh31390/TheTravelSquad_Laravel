@@ -19,6 +19,7 @@ body{
 }
 nav{
     background-color: $bg_Color1;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
     .navbar-brand{
         color: $bg_Color2;
         font-weight: 700;
@@ -26,9 +27,10 @@ nav{
     .navbar-collapse{
         .navbar-nav{
             .nav-item{
-                margin-right: 10px;
                 font-weight: 600;
                 border: 2px solid $bg_Color1;
+                padding-right: 1rem;
+                padding-left: 1rem;
                 .nav-link{
                     color: $txt_Color1;
                     &:hover{
@@ -56,4 +58,28 @@ nav{
             }
         }
     }
-}
+    .navbar-toggler{
+        border: 2px solid $bg_Color2;
+        padding: 0.45rem 0.75rem 0.35rem;
+        &:focus{
+            border: 2px solid $txt_Color2;
+            outline: none;
+            box-shadow: none;
+        }
+        .fa-bars{
+            color: $bg_Color2;
+            &:focus{
+                color: $txt_Color2
+            }
+        }
+    }
+};
+
+@media (max-width: 960px) {
+    .admin_Btn{
+        margin-left: 0px !important;
+    }
+    .navbar-brand{
+        margin-left: 1rem;
+    }
+  }

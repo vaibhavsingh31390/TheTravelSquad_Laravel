@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('database__posts', function (Blueprint $table) {
+        Schema::create('database__categories', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-
-            $table->string('image_url');
-            $table->text('title');
-            $table->text('content');
-            $table->integer('like');
-            $table->integer('dislike');
+            $table->string('category_Menu');
+            $table->unsignedBigInteger('database__posts_id')->index();
+            $table->foreign('database__posts_id')->references('id')->on('database__posts');
         });
     }
 
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('database__posts');
+        Schema::dropIfExists('database__categories');
     }
 };
