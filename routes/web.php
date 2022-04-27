@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-// Route::get('/', [PostsController::class, 'PostsController@index'])->name('Post.Index')->on;
+Route::get('/layout', [Controller::class, 'layout'])->name('header');
 Route::get('/', [Controller::class, 'home'])->name('home.index');
-Route::resource('posts', PostsController::class)->only('index');
+Route::resource('posts', PostsController::class)->only('index', 'show');
+
+Route::get('/type/{category?}', [Controller::class, 'category'])->name('postByCategory');

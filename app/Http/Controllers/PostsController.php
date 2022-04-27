@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Posts;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -13,7 +15,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('index');
+        return view('post.posts', ['posts'=> Posts::all()]);
     }
 
     /**
@@ -45,7 +47,8 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        $CAT = Category::pluck('category_Menu');
+        return view('post.post', ['posts' => Posts::findOrFail($id)])->with('DATA' , $CAT);
     }
 
     /**

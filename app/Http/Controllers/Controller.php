@@ -16,11 +16,12 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function home(){
+        $CARDS = Posts::all();
+        return view('index')->with('DATA' , $CARDS);
+    }
 
-        DB::connection()->enableQueryLog();
-
-        $CAT = Category::all()->keyBy('category_Menu');
-        // $CAT = (array) $catObject;
-        return view('index')->with('CAT' , $CAT);
+    public function category($category){
+        $CARDS =  Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->get(); 
+        return view('post.category', ['CARDS'=>$CARDS]);
     }
 }

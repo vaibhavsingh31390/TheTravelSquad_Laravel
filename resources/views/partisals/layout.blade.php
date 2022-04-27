@@ -1,3 +1,8 @@
+<?php
+use App\Models\Category;
+$CAT = Category::pluck('category_Menu');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +18,7 @@
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-                <a class="navbar-brand" href="#">
-                    {{-- <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"> --}}
+                <a class="navbar-brand" href="{{ route('home.index') }}">
                 The Travel Squad</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
@@ -27,16 +31,20 @@
                     <a class="nav-link" href="{{ route('home.index') }}">Home</a>
                 </li>
 
-                <?php 
-                die($CAT);
-                ?>
                 @foreach ($CAT as $category)
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> {{   $category->category_Menu   }}</a>
-                </li>
+                <?php 
+                $menuItem[] = $category;
+                ?>
                 @endforeach
 
+                @foreach (array_unique($menuItem) as $key)
+       
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('postByCategory', ['category' => $key]) }}">{{ $key }} </a>
+                </li>
+                @endforeach
+                
                 <li class="nav-item admin_Btn">
                     <a class="nav-link" href="#">ADMIN</a>
                 </li>
@@ -44,5 +52,9 @@
           </div>
         </div>
     </nav>
+
+    <section>
+        @yield('section')
+    </section>
 </body>
 </html>

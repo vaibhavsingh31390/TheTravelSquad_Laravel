@@ -11290,6 +11290,7 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  background-color: #F7F5F2;
 }
 
 nav {
@@ -11297,8 +11298,10 @@ nav {
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
 nav .navbar-brand {
-  color: #30475E;
+  color: #F05454;
   font-weight: 700;
+  text-transform: uppercase;
+  word-spacing: 5px;
 }
 nav .navbar-collapse .navbar-nav .nav-item {
   font-weight: 600;
@@ -11359,4 +11362,67 @@ nav .navbar-toggler .fa-bars:focus {
     padding-right: 1rem;
     padding-left: 1rem;
   }
+}
+.hero_Carousel .carousel-inner .carousel-item {
+  height: 400px;
+  overflow: hidden;
+}
+.hero_Carousel .carousel-inner .carousel-item img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 50% 50%;
+     object-position: 50% 50%;
+}
+
+.heading {
+  color: #F05454 !important;
+}
+
+.card {
+  overflow: hidden;
+}
+.card .image-Img {
+  overflow: hidden;
+}
+.card .image-Img .card-img-top {
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: 0.65s ease;
+}
+.card .image-Img .card-img-top:hover {
+  transform: scale(1.1);
+}
+.card .card-body .card-title, .card .card-body .card-text {
+  color: #222831;
+}
+.card .card-footer .date_Added {
+  color: #F05454;
+}
+
+.card img {
+  height: 240px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.post-container .headingPost {
+  color: #222831;
+}
+.post-container .like_dislike .like, .post-container .like_dislike .dislike {
+  margin-left: 25px;
+  font-size: 20px;
+  color: #F05454;
+}
+.post-container .banner img {
+  width: 100%;
+  height: 400px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 50% 50%;
+     object-position: 50% 50%;
+  border: 2px solid #F05454;
+  border-radius: 5px;
 }

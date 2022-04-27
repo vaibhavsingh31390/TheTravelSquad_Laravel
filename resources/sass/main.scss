@@ -9,6 +9,8 @@
 
 $bg_Color1:#DDDDDD;
 $bg_Color2:#30475E;
+$bg_Color3:#F7F5F2;
+$bg_White:#FFFFFF;
 $txt_Color1:#222831;
 $txt_Color2:#F05454;
 
@@ -16,13 +18,18 @@ body{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    background-color: $bg_Color3;
 }
+
+// NAVIGATION
 nav{
     background-color: $bg_Color1;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
     .navbar-brand{
-        color: $bg_Color2;
+        color: $txt_Color2;
         font-weight: 700;
+        text-transform: uppercase;
+        word-spacing: 5px;
     }
     .navbar-collapse{
         .navbar-nav{
@@ -87,3 +94,83 @@ nav{
         padding-left: 1rem;
     }
   }
+
+//   CAROUSEL HERO SECTION
+.hero_Carousel{
+    .carousel-inner{
+        .carousel-item{
+            height: 400px;
+            overflow: hidden;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: 50% 50%;
+            }
+        }
+    }
+}
+
+// CARDS
+
+.heading{
+    color: $txt_Color2 !important;
+}
+.card{
+    overflow: hidden;
+    .image-Img{
+        overflow: hidden;
+        .card-img-top{
+            object-fit: cover;
+            transition: 0.65s ease;
+            &:hover{
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .card-body{
+        .card-title, .card-text{
+            color: $txt_Color1;
+        }
+    }
+    .card-footer{
+        .date_Added{
+            color: $txt_Color2;
+        }
+    }    
+}
+
+
+.card{
+    img{
+        height: 240px;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.post-container{
+    .headingPost{
+        color: $txt_Color1;
+    }
+    
+    .like_dislike{
+        .like, .dislike{
+            margin-left: 25px;
+            font-size: 20px;
+            color: $txt_Color2;
+        }
+    }
+    .banner{
+        img{
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            object-position: 50% 50%;
+            border: 2px solid $txt_Color2;
+            border-radius: 5px;
+        }
+    }
+}
+
