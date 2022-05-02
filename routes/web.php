@@ -19,3 +19,4 @@ Route::get('/', [Controller::class, 'home'])->name('home.index');
 Route::resource('posts', PostsController::class)->only('index', 'show');
 
 Route::get('/type/{category?}', [Controller::class, 'category'])->name('postByCategory');
+Route::get('/login', [Controller::class, 'login'])->name('admin_Login');

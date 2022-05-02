@@ -34,10 +34,11 @@ $CAT = Category::pluck('category_Menu');
                 @foreach ($CAT as $category)
                 <?php 
                 $menuItem[] = $category;
+                $menuItems = array_unique($menuItem);
                 ?>
                 @endforeach
 
-                @foreach (array_unique($menuItem) as $key)
+                @foreach ($menuItems as $key)
        
 
                 <li class="nav-item">
@@ -46,7 +47,7 @@ $CAT = Category::pluck('category_Menu');
                 @endforeach
                 
                 <li class="nav-item admin_Btn">
-                    <a class="nav-link" href="#">ADMIN</a>
+                    <a class="nav-link" href="{{ route('admin_Login') }}">Log In</a>
                 </li>
             </ul>
           </div>

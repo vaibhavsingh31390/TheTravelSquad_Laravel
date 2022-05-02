@@ -24,4 +24,9 @@ class Controller extends BaseController
         $CARDS =  Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->get(); 
         return view('post.category', ['CARDS'=>$CARDS]);
     }
+
+    public function login(){
+        return view('admin.login');
+    }
 }
+
