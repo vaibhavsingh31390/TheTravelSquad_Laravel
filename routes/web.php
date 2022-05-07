@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PostsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +20,6 @@ Route::get('/', [Controller::class, 'home'])->name('home.index');
 Route::resource('posts', PostsController::class)->only('index', 'show');
 
 Route::get('/type/{category?}', [Controller::class, 'category'])->name('postByCategory');
-Route::get('/login', [Controller::class, 'login'])->name('admin_Login');
+// Route::get('/login', [Controller::class, 'login']);
+
+Auth::routes();

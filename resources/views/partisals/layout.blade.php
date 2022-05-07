@@ -47,7 +47,7 @@ $CAT = Category::pluck('category_Menu');
                 @endforeach
                 
                 <li class="nav-item admin_Btn">
-                    <a class="nav-link" href="{{ route('admin_Login') }}">Log In</a>
+                    <a class="nav-link" href="{{ route('auth.login') }}">Log In</a>
                 </li>
             </ul>
           </div>
