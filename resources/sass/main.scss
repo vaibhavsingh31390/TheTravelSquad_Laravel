@@ -174,3 +174,35 @@ nav{
     }
 }
 
+.form_Container{
+    position: relative;
+    overflow: hidden;
+    height: 550px;
+    #register_Form{
+        position: absolute;
+        top: 0%;
+        left: -150%;
+    };
+    #login_Form{
+        position: absolute;
+        top: 0%;
+        left: 0%;
+    };
+    .heading{
+        font-weight: 700;
+        letter-spacing: 2px;
+    }
+    label{
+        color: $txt_Color1;
+    }
+    button{
+        background-color: $bg_Color2;
+        color: $bg_White;
+        outline: none;
+        border: none;
+        &:hover{
+            background-color: $txt_Color2;
+            color: $txt_Color1;
+        }
+    }
+}

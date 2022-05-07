@@ -45,10 +45,19 @@ $CAT = Category::pluck('category_Menu');
                     <a class="nav-link" href="{{ route('postByCategory', ['category' => $key]) }}">{{ $key }} </a>
                 </li>
                 @endforeach
-                
+                @guest
                 <li class="nav-item admin_Btn">
-                    <a class="nav-link" href="{{ route('auth.login') }}">Log In</a>
+                    <a class="nav-link" href="{{ route('login') }}">Log In</a>
                 </li>
+                @else
+                <li class="nav-item admin_Btn">
+                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Log Out</a>
+                </li>
+                <form id="logout-form" action="{{ route('logout') }}" method="post" style="display: none">
+                    @csrf
+                </form>
+                @endguest
+
             </ul>
           </div>
         </div>
@@ -57,5 +66,6 @@ $CAT = Category::pluck('category_Menu');
     <section>
         @yield('section')
     </section>
+    <script src="{{ mix('/js/main.js') }}"></script>
 </body>
 </html>

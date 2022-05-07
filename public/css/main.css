@@ -11426,3 +11426,36 @@ nav .navbar-toggler .fa-bars:focus {
   border: 2px solid #F05454;
   border-radius: 5px;
 }
+
+.form_Container {
+  position: relative;
+  overflow: hidden;
+  height: 550px;
+}
+.form_Container #register_Form {
+  position: absolute;
+  top: 0%;
+  left: -150%;
+}
+.form_Container #login_Form {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+}
+.form_Container .heading {
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.form_Container label {
+  color: #222831;
+}
+.form_Container button {
+  background-color: #30475E;
+  color: #FFFFFF;
+  outline: none;
+  border: none;
+}
+.form_Container button:hover {
+  background-color: #F05454;
+  color: #222831;
+}
