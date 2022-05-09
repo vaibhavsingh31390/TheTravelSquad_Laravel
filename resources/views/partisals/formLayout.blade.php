@@ -1,8 +1,8 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-12 col-sm-12 col-lg-12 form_Container">
+        <div class="col-md-12 col-sm-12 col-lg-7 form_Container">
             {{-- LOGIN FORM --}}
-            <form class="mx-auto w-100" id="login_Form" action="{{ route('login') }}" method="post">
+            <form class="mx-auto" id="login_Form" action="{{ route('login') }}" method="post">
                 @csrf
                 <h2 class="heading mt-4 mb-3 text-left">Login To Your Account.</h2>
                 <div class="mb-3">
@@ -33,12 +33,12 @@
                 </div>
 
                 <div class="text-left mb-2">
-                    <p>Not a member? &nbsp; <a href="#!" id="register_Trigger">Register</a></p>
+                    <p>Not a member? &nbsp; <span class="click_EventPrimaryForm" id="register_Trigger">Register</span></p>
                 </div>
                 <button type="submit" class="btn btn-primary w-25">Login</button>
             </form>
             {{-- REGISTERATION FORM --}}
-            <form class="mx-auto w-100" id="register_Form" action="{{ route('register') }}" method="post">
+            <form class="mx-auto d-none" id="register_Form" action="{{ route('register') }}" method="post">
                 @csrf
                 <h2 class="heading mt-4 mb-3 text-left">Register New Account.</h2>
                 <div class="mb-3">
@@ -68,14 +68,18 @@
                     @endif
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" name="password_confirmation">
                 </div>
                 <div class="text-left mb-2">
-                    <p>Already a member? &nbsp; <a href="#!" id="login_Trigger">Login</a></p>
+                    <p>Already a member? &nbsp; <span class="click_EventPrimaryForm" id="login_Trigger">Login</span></p>
                 </div>
                 <button type="submit" class="btn btn-primary w-25">Register</button>
             </form>
         </div>
+        <div class="col-md-3 col-sm-12 col-lg-5 d-flex justify-content-center align-items-center imageSvgLogin">
+            <img src="{{ asset('assets/loginSVG.svg') }}" alt="undraw-Authentication-re-svpt" width="95%">
+        </div>
     </div>
 </div>
+

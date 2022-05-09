@@ -11349,18 +11349,18 @@ nav .navbar-toggler .fa-bars:focus {
   color: #F05454;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 992px) {
   .admin_Btn {
     margin-left: 0px !important;
-  }
-
-  .navbar-brand {
-    margin-left: 1rem;
   }
 
   .nav-item {
     padding-right: 1rem;
     padding-left: 1rem;
+  }
+
+  .imageSvgLogin {
+    display: none !important;
   }
 }
 .hero_Carousel .carousel-inner .carousel-item {
@@ -11430,17 +11430,7 @@ nav .navbar-toggler .fa-bars:focus {
 .form_Container {
   position: relative;
   overflow: hidden;
-  height: 550px;
-}
-.form_Container #register_Form {
-  position: absolute;
-  top: 0%;
-  left: -150%;
-}
-.form_Container #login_Form {
-  position: absolute;
-  top: 0%;
-  left: 0%;
+  height: 540px;
 }
 .form_Container .heading {
   font-weight: 700;
@@ -11458,4 +11448,15 @@ nav .navbar-toggler .fa-bars:focus {
 .form_Container button:hover {
   background-color: #F05454;
   color: #222831;
+}
+.form_Container button:focus {
+  background-color: #30475E;
+  color: #FFFFFF;
+  outline: none;
+  border: none;
+}
+.form_Container .click_EventPrimaryForm {
+  color: #F05454;
+  font-weight: 700;
+  cursor: pointer;
 }

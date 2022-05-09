@@ -82,16 +82,19 @@ nav{
     }
 };
 
-@media (max-width: 960px) {
+@media (max-width: 992px) {
     .admin_Btn{
         margin-left: 0px !important;
     }
     .navbar-brand{
-        margin-left: 1rem;
+        // margin-left: 1rem;
     }
     .nav-item{
         padding-right: 1rem;
         padding-left: 1rem;
+    }
+    .imageSvgLogin{
+        display: none !important;
     }
   }
 
@@ -177,16 +180,12 @@ nav{
 .form_Container{
     position: relative;
     overflow: hidden;
-    height: 550px;
+    height: 540px;
     #register_Form{
-        position: absolute;
-        top: 0%;
-        left: -150%;
+
     };
     #login_Form{
-        position: absolute;
-        top: 0%;
-        left: 0%;
+
     };
     .heading{
         font-weight: 700;
@@ -204,5 +203,16 @@ nav{
             background-color: $txt_Color2;
             color: $txt_Color1;
         }
+        &:focus{
+            background-color: $bg_Color2;
+            color: $bg_White;
+            outline: none;
+            border: none;
+        }
+    }
+    .click_EventPrimaryForm{
+        color: $txt_Color2;
+        font-weight: 700;
+        cursor: pointer;
     }
 }
