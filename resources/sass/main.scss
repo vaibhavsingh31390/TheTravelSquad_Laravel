@@ -1,0 +1,218 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+$bg_Color1:#DDDDDD;
+$bg_Color2:#30475E;
+$bg_Color3:#F7F5F2;
+$bg_White:#FFFFFF;
+$txt_Color1:#222831;
+$txt_Color2:#F05454;
+
+body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: $bg_Color3;
+}
+
+// NAVIGATION
+nav{
+    background-color: $bg_Color1;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    .navbar-brand{
+        color: $txt_Color2;
+        font-weight: 700;
+        text-transform: uppercase;
+        word-spacing: 5px;
+    }
+    .navbar-collapse{
+        .navbar-nav{
+            .nav-item{
+                font-weight: 600;
+                border: 2px solid $bg_Color1;
+                padding-right: 0.35rem;
+                padding-left: 0.35rem;
+                .nav-link{
+                    color: $txt_Color1;
+                    &:hover{
+                        color: $txt_Color2;
+                    }
+                }
+            }
+            .admin_Btn{
+                background-color: $bg_Color2;
+                border: 2px solid $bg_Color2;
+                transition: 0.35s ease;
+                margin-left: 20px;
+                padding-right: 1rem;
+                padding-left: 1rem;
+                .nav-link{
+                    color: $bg_Color1;
+                }
+                &:hover{
+                    background-color: transparent;
+                    border: 2px solid $bg_Color2;
+                    .nav-link{
+                        color: $txt_Color2;
+                    }
+                }
+            }
+        }
+    }
+    .navbar-toggler{
+        border: 2px solid $bg_Color2;
+        padding: 0.45rem 0.75rem 0.35rem;
+        &:focus{
+            border: 2px solid $txt_Color2;
+            outline: none;
+            box-shadow: none;
+        }
+        .fa-bars{
+            color: $bg_Color2;
+            &:focus{
+                color: $txt_Color2
+            }
+        }
+    }
+};
+
+@media (max-width: 992px) {
+    .admin_Btn{
+        margin-left: 0px !important;
+    }
+    .navbar-brand{
+        // margin-left: 1rem;
+    }
+    .nav-item{
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+    .imageSvgLogin{
+        display: none !important;
+    }
+  }
+
+//   CAROUSEL HERO SECTION
+.hero_Carousel{
+    .carousel-inner{
+        .carousel-item{
+            height: 400px;
+            overflow: hidden;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: 50% 50%;
+            }
+        }
+    }
+}
+
+// CARDS
+
+.heading{
+    color: $txt_Color2 !important;
+}
+.card{
+    overflow: hidden;
+    .image-Img{
+        overflow: hidden;
+        .card-img-top{
+            object-fit: cover;
+            transition: 0.65s ease;
+            &:hover{
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .card-body{
+        .card-title, .card-text{
+            color: $txt_Color1;
+        }
+    }
+    .card-footer{
+        .date_Added{
+            color: $txt_Color2;
+        }
+    }    
+}
+
+
+.card{
+    img{
+        height: 240px;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.post-container{
+    .headingPost{
+        color: $txt_Color1;
+    }
+    
+    .like_dislike{
+        .like, .dislike{
+            margin-left: 25px;
+            font-size: 20px;
+            color: $txt_Color2;
+        }
+    }
+    .banner{
+        img{
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            object-position: 50% 50%;
+            border: 2px solid $txt_Color2;
+            border-radius: 5px;
+        }
+    }
+}
+
+.form_Container{
+    position: relative;
+    overflow: hidden;
+    height: 540px;
+    #register_Form{
+
+    };
+    #login_Form{
+
+    };
+    .heading{
+        font-weight: 700;
+        letter-spacing: 2px;
+    }
+    label{
+        color: $txt_Color1;
+    }
+    button{
+        background-color: $bg_Color2;
+        color: $bg_White;
+        outline: none;
+        border: none;
+        &:hover{
+            background-color: $txt_Color2;
+            color: $txt_Color1;
+        }
+        &:focus{
+            background-color: $bg_Color2;
+            color: $bg_White;
+            outline: none;
+            border: none;
+        }
+    }
+    .click_EventPrimaryForm{
+        color: $txt_Color2;
+        font-weight: 700;
+        cursor: pointer;
+    }
+}

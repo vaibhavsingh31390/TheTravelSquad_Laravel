@@ -1,0 +1,64 @@
+ {{-- HERO SECTION --}}
+ <div class="container mt-4 mb-4">
+  <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+          <div id="carouselExampleControlsNoTouching" class="carousel slide carousel-fade hero_Carousel" data-bs-touch="false" data-bs-interval="false">
+              <div class="carousel-inner">
+                  
+                  @foreach ($DATA->slice(0, 4) as $IMG )
+                  @if ($loop->first)
+                      <div class="carousel-item active">
+                          <img src="{{ $IMG->image_url }}" class="d-block w-100" alt="...">
+                      </div>
+                  @else
+                      <div class="carousel-item">
+                          <img src="{{ $IMG->image_url }}" class="d-block w-100" alt="...">
+                      </div>
+                  @endif
+
+                  @endforeach
+
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+      </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <h1 class="text-left mt-4 heading" style="font-weight: 600"> Popular Posts</h1>
+  </div>
+</div>
+
+<div class="container mt-1 mb-3 px-2">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach ($DATA->slice(0, 3) as $CARD)
+        <div class="col">
+            <div class="card h-100 border">
+              <div class="image-Img">
+                <a href="{{ route('posts.show', [$CARD->id]) }}">
+                  <img src="{{ $CARD->image_url }}" class="card-img-top">
+                </a>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">{{ $CARD->title }}</h4>
+                <p class="card-text" style="text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;">{{ $CARD->content }}</p>
+              </div>
+              <div class="card-footer">
+                <small class="date_Added">{{ $CARD->created_at->diffForHumans() }}</small>
+              </div>
+            </div>
+          </div>
+        @endforeach
+      </div>
+</div>
