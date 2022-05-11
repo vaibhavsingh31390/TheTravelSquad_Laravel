@@ -1,3 +1,4 @@
+{{-- $posts to acccess posts related data from model via posts controller --}}
 <div class="container px-4 mt-5 post-container">
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">

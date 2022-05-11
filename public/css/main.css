@@ -11296,6 +11296,7 @@ body {
 nav {
   background-color: #DDDDDD;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+  min-height: 60px;
 }
 nav .navbar-brand {
   color: #F05454;
@@ -11315,20 +11316,40 @@ nav .navbar-collapse .navbar-nav .nav-item .nav-link {
 nav .navbar-collapse .navbar-nav .nav-item .nav-link:hover {
   color: #F05454;
 }
+nav .navbar-collapse .navbar-nav .dropdown .dropdown-menu {
+  padding: 0rem 0;
+  background-color: #FFFFFF;
+}
+nav .navbar-collapse .navbar-nav .dropdown .dropdown-item:focus, nav .navbar-collapse .navbar-nav .dropdown .dropdown-item:active {
+  color: #222831;
+  background-color: #DDDDDD;
+}
+nav .navbar-collapse .navbar-nav .dropdown .accountAction {
+  font-weight: 600;
+  border-bottom: 2px solid #DDDDDD;
+  padding: 0.35rem 0.55rem;
+  font-size: 0.95em;
+  color: #222831;
+}
+nav .navbar-collapse .navbar-nav .dropdown .accountAction:hover {
+  color: #F05454;
+}
 nav .navbar-collapse .navbar-nav .admin_Btn {
   background-color: #30475E;
   border: 2px solid #30475E;
-  transition: 0.35s ease;
-  margin-left: 20px;
   padding-right: 1rem;
   padding-left: 1rem;
+  transition: 0.35s ease;
+  margin-left: 20px;
+  color: #DDDDDD;
 }
-nav .navbar-collapse .navbar-nav .admin_Btn .nav-link {
+nav .navbar-collapse .navbar-nav .admin_Btn .nav-link, nav .navbar-collapse .navbar-nav .admin_Btn .dropdown-item {
   color: #DDDDDD;
 }
 nav .navbar-collapse .navbar-nav .admin_Btn:hover {
   background-color: transparent;
   border: 2px solid #30475E;
+  color: #F05454;
 }
 nav .navbar-collapse .navbar-nav .admin_Btn:hover .nav-link {
   color: #F05454;
@@ -11349,6 +11370,10 @@ nav .navbar-toggler .fa-bars:focus {
   color: #F05454;
 }
 
+.body_Content {
+  margin-top: calc(60px + 1.5rem);
+}
+
 @media (max-width: 992px) {
   .admin_Btn {
     margin-left: 0px !important;
@@ -11361,6 +11386,10 @@ nav .navbar-toggler .fa-bars:focus {
 
   .imageSvgLogin {
     display: none !important;
+  }
+
+  .dropdown .dropdown-menu {
+    padding: 0.5rem 0;
   }
 }
 .hero_Carousel .carousel-inner .carousel-item {
@@ -11459,4 +11488,21 @@ nav .navbar-toggler .fa-bars:focus {
   color: #F05454;
   font-weight: 700;
   cursor: pointer;
+}
+
+.body_ContentDashboard {
+  margin-top: calc(60px + 0.1rem);
+}
+
+.dashArea {
+  background-color: #30475E;
+}
+.dashArea .user_Data .user_DataPhoto {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.dashArea .user_Data .user_DataPhoto img {
+  width: 100%;
 }
