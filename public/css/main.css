@@ -11291,6 +11291,8 @@ body {
   margin: 0;
   box-sizing: border-box;
   background-color: #F7F5F2;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 nav {
@@ -11490,19 +11492,78 @@ nav .navbar-toggler .fa-bars:focus {
   cursor: pointer;
 }
 
-.body_ContentDashboard {
-  margin-top: calc(60px + 0.1rem);
+.dashArea .side-Nav {
+  background-color: #DDDDDD;
+  min-height: 100vh;
 }
-
-.dashArea {
+.dashArea .side-Nav .user_Data {
+  border-radius: 10px;
+  padding: 5%;
   background-color: #30475E;
 }
-.dashArea .user_Data .user_DataPhoto {
+.dashArea .side-Nav .user_Data .user_DataPhoto {
   height: 50px;
   width: 50px;
   border-radius: 50%;
   overflow: hidden;
 }
-.dashArea .user_Data .user_DataPhoto img {
+.dashArea .side-Nav .user_Data .user_DataPhoto img {
   width: 100%;
+}
+.dashArea .side-Nav .user_Data .userDataName p {
+  margin-bottom: 0;
+  color: #FFFFFF;
+}
+.dashArea .side-Nav .side-Navigation {
+  border-radius: 10px;
+  background-color: #30475E;
+}
+.dashArea .side-Nav .side-Navigation .nav {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.dashArea .side-Nav .side-Navigation .nav .nav-link {
+  color: #FFFFFF;
+}
+.dashArea .side-Nav .side-Navigation .nav .nav-link:hover {
+  background-color: #DDDDDD;
+  color: #F05454;
+}
+.dashArea .dashData {
+  background-color: #30475E;
+}
+.dashArea .dashData h2, .dashArea .dashData .h2 {
+  color: #FFFFFF;
+}
+.dashArea .dashData .btn-search, .dashArea .dashData .btn-Dashboard {
+  background-color: #F05454;
+  color: #FFFFFF;
+  border: 2px solid #F05454;
+}
+.dashArea .dashData .btn-search:hover, .dashArea .dashData .btn-Dashboard:hover {
+  background-color: transparent;
+  color: #F05454;
+}
+.dashArea .dashData .dataSection table {
+  width: 100%;
+}
+.dashArea .dashData .dataSection table thead, .dashArea .dashData .dataSection table tbody, .dashArea .dashData .dataSection table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  background-color: #DDDDDD;
+}
+.dashArea .dashData .dataSection table tbody {
+  display: block;
+  overflow: auto;
+  table-layout: fixed;
+  max-height: calc(88vh - 60px);
+}
+.dashArea .dashData .dataSection table ::-webkit-scrollbar {
+  width: 5px;
+  position: fixed;
+  background-color: #FFFFFF;
+}
+.dashArea .dashData .dataSection table ::-webkit-scrollbar-thumb {
+  background: #F05454;
 }

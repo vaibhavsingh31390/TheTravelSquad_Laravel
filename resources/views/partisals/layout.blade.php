@@ -17,6 +17,11 @@ $CAT = Category::pluck('category_Menu');
     <script src="https://kit.fontawesome.com/f65829aefc.js" crossorigin="anonymous"></script>
 </head>
 <body>
+@if (Route::is('user.Dashboard'))
+    <section class="body_ContentDashboard">
+        @yield('section')
+    </section>
+@else
     <nav class="navbar fixed-top navbar-expand-lg">
         <div class="container">
                 <a class="navbar-brand" href="{{ route('home.index') }}">
@@ -81,11 +86,6 @@ $CAT = Category::pluck('category_Menu');
           </div>
         </div>
     </nav>
-@if (Route::is('user.Dashboard'))
-    <section class="body_ContentDashboard">
-        @yield('section')
-    </section>
-@else
     <section class="body_Content">
         @yield('section')
     </section>
