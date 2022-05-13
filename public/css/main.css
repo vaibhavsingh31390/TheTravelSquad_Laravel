@@ -11608,6 +11608,18 @@ nav .navbar-toggler .fa-bars:focus {
 .dashArea .dashData .dataSection table ::-webkit-scrollbar-thumb {
   background: #F05454;
 }
+.dashArea .dashData .dataSection table h1, .dashArea .dashData .dataSection table .h1 {
+  color: #222831;
+}
+.dashArea .dashData .dataSection table h1 a, .dashArea .dashData .dataSection table .h1 a {
+  transition: 0.35s ease;
+  color: #222831;
+  text-decoration: none;
+}
+.dashArea .dashData .dataSection table h1 a:hover, .dashArea .dashData .dataSection table .h1 a:hover {
+  text-decoration: none;
+  color: #F05454;
+}
 .dashArea .newPost {
   background-color: #30475E;
 }

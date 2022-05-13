@@ -14,6 +14,7 @@ $bg_White: #FFFFFF;
 $txt_Color1: #222831;
 $txt_Color2: #F05454;
 $navHeight: 60px;
+$transition: 0.35s ease;
 
 body {
     padding: 0;
@@ -401,7 +402,6 @@ nav {
         .dataSection {
             table {
                 width: 100%;
-
                 thead,
                 tbody,
                 tr {
@@ -427,6 +427,18 @@ nav {
 
                 ::-webkit-scrollbar-thumb {
                     background: $txt_Color2;
+                }
+                h1{
+                    color: $txt_Color1;
+                    a{
+                        transition: $transition;
+                        color: $txt_Color1;
+                        text-decoration: none;
+                        &:hover{
+                            text-decoration: none;
+                            color: $txt_Color2;
+                        }
+                    }
                 }
             }
         }

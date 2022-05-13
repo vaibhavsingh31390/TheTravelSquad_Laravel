@@ -258,7 +258,7 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                                 @empty
                             <tr>
                                 <th>
-                                    <h1>No Posts found. <a href="{{ route('#') }}">Create One !</a></h1>
+                                    <h1 class="text-center">No Posts found. <a href="{{ route('user.Dashboard', ['action'=>'newPosts']) }}">Create One!</a></h1>
                                 </th>
                             </tr>
                             @endforelse
@@ -267,7 +267,6 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                 </div>
             </div>
             {{-- SEARCHED Posts --}}
-         
             @else
             <div class="col-lg-12 col-md-12 col-sm-12 px-3 newPost">
                 <div class="content_wrapper p-3">
