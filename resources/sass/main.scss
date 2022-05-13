@@ -7,71 +7,85 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-$bg_Color1:#DDDDDD;
-$bg_Color2:#30475E;
-$bg_Color3:#F7F5F2;
-$bg_White:#FFFFFF;
-$txt_Color1:#222831;
-$txt_Color2:#F05454;
+$bg_Color1: #DDDDDD;
+$bg_Color2: #30475E;
+$bg_Color3: #F7F5F2;
+$bg_White: #FFFFFF;
+$txt_Color1: #222831;
+$txt_Color2: #F05454;
 $navHeight: 60px;
 
-body{
+body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     background-color: $bg_Color3;
-    height:100%;
+    height: 100%;
     overflow-x: hidden;
 }
 
 // NAVIGATION
-nav{
+nav {
     background-color: $bg_Color1;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
     min-height: $navHeight;
-    .navbar-brand{
+
+    .navbar-brand {
         color: $txt_Color2;
         font-weight: 700;
         text-transform: uppercase;
         word-spacing: 5px;
     }
-    .navbar-collapse{
-        .navbar-nav{
-            .nav-item{
+
+    .navbar-collapse {
+        .navbar-nav {
+            .nav-item {
                 font-weight: 600;
                 border: 2px solid $bg_Color1;
                 padding-right: 0.35rem;
                 padding-left: 0.35rem;
-                .nav-link{
+
+                .nav-link {
                     color: $txt_Color1;
+
                     &:hover{
                         color: $txt_Color2;
                     }
                 }
+                .active{
+                    color: $txt_Color2;
+                }
             }
-            .dropdown{
-                .dropdown-menu{
+
+            .dropdown {
+                .dropdown-menu {
                     padding: 0rem 0;
                     background-color: $bg_White;
                 }
-                .dropdown-item{
-                    &:focus, &:active{
+
+                .dropdown-item {
+
+                    &:focus,
+                    &:active {
                         color: $txt_Color1;
                         background-color: $bg_Color1;
                     }
                 }
-                .accountAction{
+
+                .accountAction {
                     font-weight: 600;
                     border-bottom: 2px solid $bg_Color1;
                     padding: 0.35rem 0.55rem;
                     font-size: 0.95em;
                     color: $txt_Color1;
-                    &:hover{
+
+                    &:hover {
                         color: $txt_Color2;
                     }
                 }
             }
-            .admin_Btn{
+
+            .admin_Btn {
                 background-color: $bg_Color2;
                 border: 2px solid $bg_Color2;
                 padding-right: 1rem;
@@ -79,14 +93,18 @@ nav{
                 transition: 0.35s ease;
                 margin-left: 20px;
                 color: $bg_Color1;
-                .nav-link, .dropdown-item{
+
+                .nav-link,
+                .dropdown-item {
                     color: $bg_Color1;
                 }
-                &:hover{
+
+                &:hover {
                     background-color: transparent;
                     border: 2px solid $bg_Color2;
                     color: $txt_Color2;
-                    .nav-link{
+
+                    .nav-link {
                         color: $txt_Color2;
                     }
                 }
@@ -94,56 +112,80 @@ nav{
         }
     }
 
-    .navbar-toggler{
+    .navbar-toggler {
         border: 2px solid $bg_Color2;
         padding: 0.45rem 0.75rem 0.35rem;
-        &:focus{
+
+        &:focus {
             border: 2px solid $txt_Color2;
             outline: none;
             box-shadow: none;
         }
-        .fa-bars{
+
+        .fa-bars {
             color: $bg_Color2;
-            &:focus{
+
+            &:focus {
                 color: $txt_Color2
             }
         }
     }
-};
+}
+
+;
 
 
-.body_Content{
+.body_Content {
     margin-top: calc($navHeight + 1.5rem);
 }
 
 @media (max-width: 992px) {
-    .admin_Btn{
+    .admin_Btn {
         margin-left: 0px !important;
     }
-    .navbar-brand{
+
+    .navbar-brand {
         // margin-left: 1rem;
     }
-    .nav-item{
+
+    .nav-item {
         padding-right: 1rem;
         padding-left: 1rem;
     }
-    .imageSvgLogin{
+
+    .imageSvgLogin {
         display: none !important;
     }
-    .dropdown{
-        .dropdown-menu{
+
+    .dropdown {
+        .dropdown-menu {
             padding: 0.5rem 0;
         }
     }
-  }
+
+    .side-Nav {
+        display: none;
+    }
+
+    .dashData {
+        height: 100vh;
+    }
+}
+
+@media (min-width: 992px) {
+    .actionNav_Responsive {
+        display: none;
+    }
+}
 
 //   CAROUSEL HERO SECTION
-.hero_Carousel{
-    .carousel-inner{
-        .carousel-item{
+.hero_Carousel {
+    .carousel-inner {
+        .carousel-item {
             height: 400px;
             overflow: hidden;
-            img{
+
+            img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
@@ -155,57 +197,67 @@ nav{
 
 // CARDS
 
-.heading{
-    color: $txt_Color2 !important;
+.heading {
+    color: $txt_Color2  !important;
 }
-.card{
+
+.card {
     overflow: hidden;
-    .image-Img{
+
+    .image-Img {
         overflow: hidden;
-        .card-img-top{
+
+        .card-img-top {
             object-fit: cover;
             transition: 0.65s ease;
-            &:hover{
+
+            &:hover {
                 transform: scale(1.1);
             }
         }
     }
 
-    .card-body{
-        .card-title, .card-text{
+    .card-body {
+
+        .card-title,
+        .card-text {
             color: $txt_Color1;
         }
     }
-    .card-footer{
-        .date_Added{
+
+    .card-footer {
+        .date_Added {
             color: $txt_Color2;
         }
-    }    
+    }
 }
 
 
-.card{
-    img{
+.card {
+    img {
         height: 240px;
         width: 100%;
         object-fit: cover;
     }
 }
 
-.post-container{
-    .headingPost{
+.post-container {
+    .headingPost {
         color: $txt_Color1;
     }
-    
-    .like_dislike{
-        .like, .dislike{
+
+    .like_dislike {
+
+        .like,
+        .dislike {
             margin-left: 25px;
             font-size: 20px;
             color: $txt_Color2;
         }
     }
-    .banner{
-        img{
+
+    .banner {
+        img {
             width: 100%;
             height: 400px;
             object-fit: cover;
@@ -216,34 +268,40 @@ nav{
     }
 }
 
-.form_Container{
+.form_Container {
     position: relative;
     overflow: hidden;
     height: 540px;
-    .heading{
+
+    .heading {
         font-weight: 700;
         letter-spacing: 2px;
     }
-    label{
+
+    label {
         color: $txt_Color1;
     }
-    button{
+
+    button {
         background-color: $bg_Color2;
         color: $bg_White;
         outline: none;
         border: none;
-        &:hover{
+
+        &:hover {
             background-color: $txt_Color2;
             color: $txt_Color1;
         }
-        &:focus{
+
+        &:focus {
             background-color: $bg_Color2;
             color: $bg_White;
             outline: none;
             border: none;
         }
     }
-    .click_EventPrimaryForm{
+
+    .click_EventPrimaryForm {
         color: $txt_Color2;
         font-weight: 700;
         cursor: pointer;
@@ -251,104 +309,141 @@ nav{
 }
 
 // DASHBOARD
-.dashArea{
-    .side-Nav{
+.dashArea {
+    .side-Nav {
         background-color: $bg_Color1;
         min-height: 100vh;
-        .user_Data{
+
+        .user_Data {
             border-radius: 10px;
             padding: 5%;
             background-color: $bg_Color2;
-                .user_DataPhoto{
-                    height: 50px;
-                    width: 50px;
-                    border-radius: 50%;
-                    overflow: hidden;
-                    img{
-                        width: 100%;
-                    }
-                }
-                .userDataName{
-                    p{
-                        margin-bottom: 0;
-                        color: $bg_White;
-                    }
+            border: 3px solid #F05454;
+            .user_DataPhoto {
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
                 }
             }
-            .side-Navigation{
-                border-radius: 10px;
-                background-color: $bg_Color2;
-                .nav{
-                    padding-top: 0.5rem;
-                    padding-bottom: 0.5rem;
-                    .nav-link{
+
+            .userDataName {
+                p {
+                    margin-bottom: 0;
+                    color: $bg_White;
+                }
+            }
+        }
+
+        .side-Navigation {
+            border-radius: 10px;
+            background-color: $bg_Color2;
+            border: 3px solid #F05454;
+            .nav {
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+
+                .nav-item {
+                    .nav-link {
                         color: $bg_White;
-                        // border-bottom: 1px solid #dddddd33;
-                        &:hover{
+
+                        &:hover, &:active {
                             background-color: $bg_Color1;
                             color: $txt_Color2;
                         }
-                        &:first-child{
-                            // border-top: 1px solid #dddddd33;
-                        }
+                    }
+                    .active{
+                        background-color: $bg_Color1;
+                        color: $txt_Color2;
+                        border-bottom: 1px solid #F05454;
                     }
                 }
             }
+        }
     }
-    .dashData{
+
+    .dashData {
         background-color: $bg_Color2;
-        h2{
+
+        h2 {
             color: $bg_White;
         }
-        .btn-search, .btn-Dashboard{
+
+        .btn-search,
+        .btn-Dashboard {
             background-color: $txt_Color2;
             color: $bg_White;
             border: 2px solid $txt_Color2;
-            &:hover{
+
+            &:hover {
                 background-color: transparent;
                 color: $txt_Color2;
             }
         }
-        
-        .dataSection{
 
-            // .my-custom-scrollbar {
-            //     position: relative;
-            //     height: 200px;
-            //     overflow: auto;
-            //     table{
-            //         background-color: $bg_Color1;
-            //         height: calc(100% - $navHeight);
-            //     }
-            // }
-            // .table-wrapper-scroll-y {
-            //     display: block;
-            // }
+        .actionNav_Responsive {
+            .user_DataPhoto {
+                height: 33px;
+                width: 33px;
+                border-radius: 50%;
+                border: 1px solid $txt_Color2;
+                overflow: hidden;
 
+                img {
+                    width: 100%;
+                }
+            }
+        }
+
+        .dataSection {
             table {
                 width: 100%;
-                thead, tbody, tr {
+
+                thead,
+                tbody,
+                tr {
                     display: table;
-                    width:100%;
+                    width: 100%;
                     table-layout: fixed;
                     background-color: $bg_Color1;
-                  }
-                  tbody {
+                }
+
+                tbody {
                     display: block;
                     overflow: auto;
                     table-layout: fixed;
                     max-height: calc(88vh - $navHeight);
-                  }
-                  ::-webkit-scrollbar {
+                    min-height: calc(88vh - 60px);
+                }
+
+                ::-webkit-scrollbar {
                     width: 5px;
                     position: fixed;
                     background-color: $bg_White;
-                  }
-                  ::-webkit-scrollbar-thumb {
-                    background: $txt_Color2; 
-                  }
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    background: $txt_Color2;
+                }
+            }
+        }
+    }
+
+    .newPost {
+        background-color: $bg_Color2;
+
+        .content_wrapper {
+            min-height: calc(93vh - 60px);
+            max-height: calc(93vh - 60px);
+            background-color: $bg_Color1;
+
+            h2 {
+                color: $txt_Color2;
+                border-bottom: 1px solid $bg_White;
             }
         }
     }
 }
-

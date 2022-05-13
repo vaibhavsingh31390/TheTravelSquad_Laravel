@@ -15,11 +15,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/layout', [Controller::class, 'layout'])->name('header');
-Route::get('/', [Controller::class, 'home'])->name('home.index');
+Route::get('/', 'Controller@home')->name('home.index');
 Route::resource('posts', PostsController::class)->only('index', 'show');
-
-Route::get('/type/{category?}', [Controller::class, 'category'])->name('postByCategory');
-Route::get('/userDashboard/{action?}', [Controller::class, 'userDash'])->middleware('auth')->name('user.Dashboard');
-
+Route::get('/type/{category?}', 'Controller@category')->name('postByCategory');
+Route::get('/userDashboard/{action?}', 'Controller@userDash')->middleware('auth')->name('user.Dashboard');
 Auth::routes();

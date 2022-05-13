@@ -16,12 +16,13 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-
             $table->string('image_url')->default('https://images.unsplash.com/photo-1505866535066-ccebd6b2b98a');
             $table->text('title');
             $table->text('content');
             $table->integer('like')->default(0);
             $table->integer('dislike')->default(0);
+            $table->unsignedBigInteger('users_id')->index();
+            $table->foreign('users_id')->references('id')->on('users');
         });
     }
 

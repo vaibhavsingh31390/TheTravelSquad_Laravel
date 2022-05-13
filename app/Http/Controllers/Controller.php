@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Posts;
+use App\Models\User;
 use Egulias\EmailValidator\Parser\Comment;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class Controller extends BaseController
 {
@@ -27,8 +30,19 @@ class Controller extends BaseController
     }
 
     public function userDash(){
-        $userData = Auth::user();
-        return view('auth.userDashboard')->with('userData', $userData);
+        $search_Parameter = $_GET['search_Query'] ?? "";
+        $profile = Auth::user();
+        $userData = Posts::where('users_id', '=', $profile->id);
+        if($search_Parameter != ""){
+            $findIt = $userData->where('title', 'LIKE', '%'.$search_Parameter.'%')->get();
+        }
+        else{
+            $findIt = Posts::where('users_id', '=', $profile->id)->get();
+        }
+        $findPosts = compact('profile', 'findIt', 'search_Parameter');
+        // dd($findPosts);
+        return view('auth.userDashboard')->with('findPosts', $findPosts);
     }
+
 }
 

@@ -11318,6 +11318,9 @@ nav .navbar-collapse .navbar-nav .nav-item .nav-link {
 nav .navbar-collapse .navbar-nav .nav-item .nav-link:hover {
   color: #F05454;
 }
+nav .navbar-collapse .navbar-nav .nav-item .active {
+  color: #F05454;
+}
 nav .navbar-collapse .navbar-nav .dropdown .dropdown-menu {
   padding: 0rem 0;
   background-color: #FFFFFF;
@@ -11345,7 +11348,8 @@ nav .navbar-collapse .navbar-nav .admin_Btn {
   margin-left: 20px;
   color: #DDDDDD;
 }
-nav .navbar-collapse .navbar-nav .admin_Btn .nav-link, nav .navbar-collapse .navbar-nav .admin_Btn .dropdown-item {
+nav .navbar-collapse .navbar-nav .admin_Btn .nav-link,
+nav .navbar-collapse .navbar-nav .admin_Btn .dropdown-item {
   color: #DDDDDD;
 }
 nav .navbar-collapse .navbar-nav .admin_Btn:hover {
@@ -11393,6 +11397,19 @@ nav .navbar-toggler .fa-bars:focus {
   .dropdown .dropdown-menu {
     padding: 0.5rem 0;
   }
+
+  .side-Nav {
+    display: none;
+  }
+
+  .dashData {
+    height: 100vh;
+  }
+}
+@media (min-width: 992px) {
+  .actionNav_Responsive {
+    display: none;
+  }
 }
 .hero_Carousel .carousel-inner .carousel-item {
   height: 400px;
@@ -11425,7 +11442,8 @@ nav .navbar-toggler .fa-bars:focus {
 .card .image-Img .card-img-top:hover {
   transform: scale(1.1);
 }
-.card .card-body .card-title, .card .card-body .card-text {
+.card .card-body .card-title,
+.card .card-body .card-text {
   color: #222831;
 }
 .card .card-footer .date_Added {
@@ -11442,7 +11460,8 @@ nav .navbar-toggler .fa-bars:focus {
 .post-container .headingPost {
   color: #222831;
 }
-.post-container .like_dislike .like, .post-container .like_dislike .dislike {
+.post-container .like_dislike .like,
+.post-container .like_dislike .dislike {
   margin-left: 25px;
   font-size: 20px;
   color: #F05454;
@@ -11500,6 +11519,7 @@ nav .navbar-toggler .fa-bars:focus {
   border-radius: 10px;
   padding: 5%;
   background-color: #30475E;
+  border: 3px solid #F05454;
 }
 .dashArea .side-Nav .user_Data .user_DataPhoto {
   height: 50px;
@@ -11517,17 +11537,23 @@ nav .navbar-toggler .fa-bars:focus {
 .dashArea .side-Nav .side-Navigation {
   border-radius: 10px;
   background-color: #30475E;
+  border: 3px solid #F05454;
 }
 .dashArea .side-Nav .side-Navigation .nav {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
-.dashArea .side-Nav .side-Navigation .nav .nav-link {
+.dashArea .side-Nav .side-Navigation .nav .nav-item .nav-link {
   color: #FFFFFF;
 }
-.dashArea .side-Nav .side-Navigation .nav .nav-link:hover {
+.dashArea .side-Nav .side-Navigation .nav .nav-item .nav-link:hover, .dashArea .side-Nav .side-Navigation .nav .nav-item .nav-link:active {
   background-color: #DDDDDD;
   color: #F05454;
+}
+.dashArea .side-Nav .side-Navigation .nav .nav-item .active {
+  background-color: #DDDDDD;
+  color: #F05454;
+  border-bottom: 1px solid #F05454;
 }
 .dashArea .dashData {
   background-color: #30475E;
@@ -11535,19 +11561,33 @@ nav .navbar-toggler .fa-bars:focus {
 .dashArea .dashData h2, .dashArea .dashData .h2 {
   color: #FFFFFF;
 }
-.dashArea .dashData .btn-search, .dashArea .dashData .btn-Dashboard {
+.dashArea .dashData .btn-search,
+.dashArea .dashData .btn-Dashboard {
   background-color: #F05454;
   color: #FFFFFF;
   border: 2px solid #F05454;
 }
-.dashArea .dashData .btn-search:hover, .dashArea .dashData .btn-Dashboard:hover {
+.dashArea .dashData .btn-search:hover,
+.dashArea .dashData .btn-Dashboard:hover {
   background-color: transparent;
   color: #F05454;
+}
+.dashArea .dashData .actionNav_Responsive .user_DataPhoto {
+  height: 33px;
+  width: 33px;
+  border-radius: 50%;
+  border: 1px solid #F05454;
+  overflow: hidden;
+}
+.dashArea .dashData .actionNav_Responsive .user_DataPhoto img {
+  width: 100%;
 }
 .dashArea .dashData .dataSection table {
   width: 100%;
 }
-.dashArea .dashData .dataSection table thead, .dashArea .dashData .dataSection table tbody, .dashArea .dashData .dataSection table tr {
+.dashArea .dashData .dataSection table thead,
+.dashArea .dashData .dataSection table tbody,
+.dashArea .dashData .dataSection table tr {
   display: table;
   width: 100%;
   table-layout: fixed;
@@ -11558,6 +11598,7 @@ nav .navbar-toggler .fa-bars:focus {
   overflow: auto;
   table-layout: fixed;
   max-height: calc(88vh - 60px);
+  min-height: calc(88vh - 60px);
 }
 .dashArea .dashData .dataSection table ::-webkit-scrollbar {
   width: 5px;
@@ -11566,4 +11607,16 @@ nav .navbar-toggler .fa-bars:focus {
 }
 .dashArea .dashData .dataSection table ::-webkit-scrollbar-thumb {
   background: #F05454;
+}
+.dashArea .newPost {
+  background-color: #30475E;
+}
+.dashArea .newPost .content_wrapper {
+  min-height: calc(93vh - 60px);
+  max-height: calc(93vh - 60px);
+  background-color: #DDDDDD;
+}
+.dashArea .newPost .content_wrapper h2, .dashArea .newPost .content_wrapper .h2 {
+  color: #F05454;
+  border-bottom: 1px solid #FFFFFF;
 }
