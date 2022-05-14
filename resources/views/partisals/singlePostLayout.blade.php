@@ -29,4 +29,4 @@
             <p style="text-align: justify; white-space: pre-wrap;"><?php echo str_replace('<br />', '<br>', $cont) ?></p>
         </div>
     </div>
-  </div>
+</div>

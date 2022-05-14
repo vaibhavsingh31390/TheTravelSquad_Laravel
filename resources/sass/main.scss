@@ -62,6 +62,12 @@ nav {
                 .dropdown-menu {
                     padding: 0rem 0;
                     background-color: $bg_White;
+                    .active{
+                        background-color: #e9ecef;
+                        .nav-link{
+                            color: $txt_Color2;
+                        }
+                    }
                 }
 
                 .dropdown-item {

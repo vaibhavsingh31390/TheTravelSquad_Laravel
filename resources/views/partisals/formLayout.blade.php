@@ -9,22 +9,22 @@
                     <label for="email" class="form-label">Email address</label>
                     <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ old('email') }}" id="emailLogin" name="email">
                     @if ($errors->has('email'))
-                        <span class="invalid-feedback">
+                    <span class="invalid-feedback">
                         <strong>
                             {{ $errors->first() }}
                         </strong>
-                        </span>
+                    </span>
                     @endif
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
                     <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="passwordLogin" name="password">
                     @if ($errors->has('password'))
-                        <span class="invalid-feedback">
+                    <span class="invalid-feedback">
                         <strong>
                             {{ $errors->first() }}
                         </strong>
-                        </span>
+                    </span>
                     @endif
                 </div>
                 <div class="mb-3 form-check">
@@ -63,9 +63,9 @@
                 <button type="submit" class="btn btn-primary w-25">Register</button>
                 @if ($errors->has('password'))
                 <span class="invalid-feedback">
-                <strong  id="Register-feedback">
-                    {{ $errors->all() . "<br>" }}
-                </strong>
+                    <strong id="Register-feedback">
+                        {{ $errors->all() . "<br>" }}
+                    </strong>
                 </span>
                 @endif
             </form>
@@ -78,22 +78,19 @@
 
 @section('script')
 <script>
-var loginForm = document.getElementById("login_Form");
-var registerForm = document.getElementById("register_Form");
+    var loginForm = document.getElementById("login_Form");
+    var registerForm = document.getElementById("register_Form");
 
-document
-    .getElementById("register_Trigger")
-    .addEventListener("click", function () {
-        loginForm.classList.add("d-none");
-        registerForm.classList.remove("d-none");
+    document
+        .getElementById("register_Trigger")
+        .addEventListener("click", function() {
+            loginForm.classList.add("d-none");
+            registerForm.classList.remove("d-none");
+        });
+
+    document.getElementById("login_Trigger").addEventListener("click", function() {
+        loginForm.classList.remove("d-none");
+        registerForm.classList.add("d-none");
     });
-
-document.getElementById("login_Trigger").addEventListener("click", function () {
-    loginForm.classList.remove("d-none");
-    registerForm.classList.add("d-none");
-});
 </script>
 @endsection
-
-
-

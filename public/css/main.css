@@ -11325,6 +11325,12 @@ nav .navbar-collapse .navbar-nav .dropdown .dropdown-menu {
   padding: 0rem 0;
   background-color: #FFFFFF;
 }
+nav .navbar-collapse .navbar-nav .dropdown .dropdown-menu .active {
+  background-color: #e9ecef;
+}
+nav .navbar-collapse .navbar-nav .dropdown .dropdown-menu .active .nav-link {
+  color: #F05454;
+}
 nav .navbar-collapse .navbar-nav .dropdown .dropdown-item:focus, nav .navbar-collapse .navbar-nav .dropdown .dropdown-item:active {
   color: #222831;
   background-color: #DDDDDD;
