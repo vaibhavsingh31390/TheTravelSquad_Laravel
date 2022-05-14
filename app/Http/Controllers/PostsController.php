@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePost;
 use App\Models\Category;
 use App\Models\Posts;
 use Illuminate\Http\Request;
@@ -13,6 +14,11 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destroy']);
+    }
+
     public function index()
     {
         return view('post.posts', ['posts'=> Posts::all()]);
@@ -25,7 +31,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('auth.userDashboard', ['action' => 'newPosts']);
     }
 
     /**
@@ -34,9 +40,11 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePost $request)
     {
-        //
+        $validated = $request->validated();
+        $post = Posts::create($validated);
+        return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
     }
 
     /**

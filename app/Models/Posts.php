@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Posts extends Model
 {
+    protected $fillable = ['image_url', 'title', 'content', 'users_id'];
     use HasFactory;
 
     public function user(){

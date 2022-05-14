@@ -11625,7 +11625,6 @@ nav .navbar-toggler .fa-bars:focus {
 }
 .dashArea .newPost .content_wrapper {
   min-height: calc(93vh - 60px);
-  max-height: calc(93vh - 60px);
   background-color: #DDDDDD;
 }
 .dashArea .newPost .content_wrapper h2, .dashArea .newPost .content_wrapper .h2 {

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', 'Controller@home')->name('home.index');
-Route::resource('posts', PostsController::class)->only('index', 'show');
+Route::resource('posts', PostsController::class);
 Route::get('/type/{category?}', 'Controller@category')->name('postByCategory');
 Route::get('/userDashboard/{action?}', 'Controller@userDash')->middleware('auth')->name('user.Dashboard');
 Auth::routes();

@@ -37,7 +37,7 @@
 
 {{-- CARDS FOR ALL POSTS --}}
       @else
-          @foreach ($postsData as $card)
+          @foreach ($posts as $card)
           <div class="col">
               <div class="card h-100 border">
                 <div class="image-Img">
