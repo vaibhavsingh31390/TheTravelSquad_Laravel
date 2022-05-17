@@ -4,3 +4,7 @@
 @section('section')
     @include('partisals.layoutDashboard')
 @endsection
+
+@section('script')
+<script src="{{ mix('/js/main.js') }}"></script>
+@endsection

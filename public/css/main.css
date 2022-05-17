@@ -11590,6 +11590,7 @@ nav .navbar-toggler .fa-bars:focus {
 }
 .dashArea .dashData .dataSection table {
   width: 100%;
+  vertical-align: middle;
 }
 .dashArea .dashData .dataSection table thead,
 .dashArea .dashData .dataSection table tbody,
@@ -11598,6 +11599,14 @@ nav .navbar-toggler .fa-bars:focus {
   width: 100%;
   table-layout: fixed;
   background-color: #DDDDDD;
+}
+.dashArea .dashData .dataSection table thead td p, .dashArea .dashData .dataSection table thead th p,
+.dashArea .dashData .dataSection table tbody td p,
+.dashArea .dashData .dataSection table tbody th p,
+.dashArea .dashData .dataSection table tr td p,
+.dashArea .dashData .dataSection table tr th p {
+  margin-bottom: 0;
+  word-break: break-all;
 }
 .dashArea .dashData .dataSection table tbody {
   display: block;
@@ -11619,12 +11628,12 @@ nav .navbar-toggler .fa-bars:focus {
 }
 .dashArea .dashData .dataSection table h1 a, .dashArea .dashData .dataSection table .h1 a {
   transition: 0.35s ease;
-  color: #222831;
+  color: #F05454;
   text-decoration: none;
 }
 .dashArea .dashData .dataSection table h1 a:hover, .dashArea .dashData .dataSection table .h1 a:hover {
   text-decoration: none;
-  color: #F05454;
+  color: #222831;
 }
 .dashArea .newPost {
   background-color: #30475E;

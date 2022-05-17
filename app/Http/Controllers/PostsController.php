@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePost;
-use App\Models\Category;
 use App\Models\Posts;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePost;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
@@ -66,8 +67,8 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        return view('auth.userDashboard', ['action' => "editPosts"]);
     }
 
     /**
@@ -77,9 +78,13 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePost $request, $id)
     {
-        //
+        $post = Posts::findOrFail($id);
+        $validated = $request->validated();
+        $post -> fill($validated);
+        $post -> save();
+        return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
     }
 
     /**
@@ -90,6 +95,7 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Posts::findOrFail($id)->delete();
+        return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
     }
 }

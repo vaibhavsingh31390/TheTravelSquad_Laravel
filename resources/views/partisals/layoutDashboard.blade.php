@@ -1,10 +1,8 @@
 {{-- $findPosts for user Posts details --}}
 {{-- $userProfile for user details --}}
-
 <?php 
 function set_active($path, $active = 'active') {
 return call_user_func_array('Request::is', (array)$path) ? $active : '';
-
 }
 ?>
 
@@ -131,9 +129,9 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                                         <input type="checkbox" class="custom-control-input" id="customCheck1">
                                     </form>
                                 </th>
-                                <th style="width: 3%" scope="col" class="text-center">#</th>
-                                <th style="width: 20%" scope="col">Title</th>
-                                <th style="width: 40%" scope="col">Content</th>
+                                <th style="width: 5%" scope="col" class="text-center">#</th>
+                                <th style="width: 19%" scope="col">Title</th>
+                                <th style="width: 39%" scope="col">Content</th>
                                 <th style="width: 15%" scope="col">Status</th>
                                 <th style="width: 20%" scope="col" class="text-center">Action</th>
                             </tr>
@@ -148,9 +146,10 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                                             data-id="{{ $data->id }}">
                                     </form>
                                 </th>
-                                <th class="text-center" style="width: 3%" scope="row">{{ $data->id }}</th>
-                                <td style="width: 20%">{{ $data->title }}</td>
-                                <td style="width: 40%">{{ Str::of($data->content)->words(20) }}</td>
+                                <th class="text-center" style="width: 5%" scope="row">
+                                    <p id="dataID">{{ $data->id }}</p></th>
+                                <td style="width: 19%"><p>{{ Str::of($data->title )->limit(25)}}</p></td>
+                                <td style="width: 39%"><p>{{ Str::of($data->content)->limit(55) }}</p></td>
                                 <td style="width: 15%">
                                     <select data-id="{{ $data->id }}" class="form-select"
                                         aria-label="Default select example">
@@ -159,16 +158,24 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                                     </select>
                                 </td>
                                 <td class="text-center">
-                                    <button data-id="{{ $data->id }}" type="button"
-                                        class="btn btn-Dashboard">Edit</button>
-                                    <button data-id="{{ $data->id }}" type="button"
-                                        class="btn btn-Dashboard ms-4">Delete</button>
+                                    <form action="{{ route('posts.destroy', ['post'=>$data->id]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a href="{{ route('user.Dashboard', ['action'=>'editPosts', 'id'=>$data->id]) }}">
+                                            <button data-id="{{ $data->id }}" type="button"
+                                                class="btn btn-Dashboard">Edit</button>
+                                        </a> 
+                                        <a href="{{ route('posts.destroy', ['post' => $data->id]) }}">
+                                            <button data-id="{{ $data->id }}" type="submit"
+                                                class="btn btn-Dashboard ms-4">Delete</button>
+                                            </a>
+                                    </form>
                                 </td>
                             <tr>
                                 @empty
                             <tr>
                                 <th>
-                                    <h1>Create Your Very First Post <a href="{{ route('#') }}"></a></h1>
+                                    <h1 class="text-center">No Posts Created Please Create Your Very First Post <a href="{{ route('user.Dashboard', ['action' => 'newPosts']) }}">Post</a></h1>
                                 </th>
                             </tr>
                             @endforelse
@@ -178,7 +185,16 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
             </div>
             {{-- DATA SECTION ALL Posts --}}
             @elseif (Request::is('userDashboard/newPosts'))
-                @include('post.partials.postsForm')
+            <div class="col-lg-12 col-md-12 col-sm-12 px-3 newPost">
+                <div class="content_wrapper p-3">
+                    <h2>New Post</h2>
+                    <form action="{{ route('posts.store') }}" method="post">
+                    @csrf
+                     @include('post.partials.postsForm')
+                    <button type="submit" class="btn btn-search w-25">Save</button>
+                </div>
+            </div>
+            </form>
             {{-- NEW POST ADD Posts --}}
             @elseif (Request::is('userDashboard/search'))
             <div class="col-lg-12 col-md-12 col-sm-12 px-3 dataSection findPosts">
@@ -220,10 +236,18 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                                     </select>
                                 </td>
                                 <td class="text-center">
-                                    <button data-id="{{ $findPost->id }}" type="button"
-                                        class="btn btn-Dashboard">Edit</button>
-                                    <button data-id="{{ $findPost->id }}" type="button"
-                                        class="btn btn-Dashboard ms-4">Delete</button>
+                                    <form action="{{ route('posts.destroy', ['post'=>$findPost->id]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a href="#">
+                                            <button data-id="{{ $findPost->id }}" type="button"
+                                                class="btn btn-Dashboard">Edit</button>
+                                        </a> 
+                                        <a href="{{ route('posts.destroy', ['post' => $data->id]) }}">
+                                            <button data-id="{{ $findPost->id }}" type="submit"
+                                                class="btn btn-Dashboard ms-4">Delete</button>
+                                            </a>
+                                    </form>
                                 </td>
                             <tr>
                                 @empty
@@ -237,6 +261,18 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                     </table>
                 </div>
             </div>
+            @elseif (Request::is('userDashboard/editPosts'))
+            <div class="col-lg-12 col-md-12 col-sm-12 px-3 newPost editPost">
+                <div class="content_wrapper p-3">
+                    <h2>Update Post</h2>
+                    <form action="{{ route('posts.update', ['post'=>$_GET['id']]) }}" method="post">
+                    @csrf
+                    @method('PUT')
+                    @include('post.partials.postsForm')
+                    <button type="submit" class="btn btn-search w-25">Update</button>
+                </div>
+            </div>
+            </form>
             {{-- SEARCHED Posts --}}
             @else
             <div class="col-lg-12 col-md-12 col-sm-12 px-3 newPost">
@@ -252,3 +288,4 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
     {{-- DASHAREA ROW END --}}
 </div>
 {{-- DASHAREA END --}}
+

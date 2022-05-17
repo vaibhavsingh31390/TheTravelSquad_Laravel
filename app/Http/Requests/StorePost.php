@@ -27,8 +27,8 @@ class StorePost extends FormRequest
         return [
             'image_url'=> 'required|min:5|max:150',
             'title' => 'required|min:5|max:50',
-            'content'=> 'required|min:50|max:1000', 
-            'users_id' => 'required|min:1|max:1000'            
+            'content'=> 'required|min:50|max:8000', 
+            'users_id' => 'required|min:1|max:100000'            
         ];
     }
 }

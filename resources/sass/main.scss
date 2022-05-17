@@ -408,6 +408,7 @@ nav {
         .dataSection {
             table {
                 width: 100%;
+                vertical-align: middle;
                 thead,
                 tbody,
                 tr {
@@ -415,6 +416,12 @@ nav {
                     width: 100%;
                     table-layout: fixed;
                     background-color: $bg_Color1;
+                        td, th{
+                            p{
+                                margin-bottom: 0;
+                                word-break: break-all;
+                            }
+                        }
                 }
 
                 tbody {
@@ -438,11 +445,11 @@ nav {
                     color: $txt_Color1;
                     a{
                         transition: $transition;
-                        color: $txt_Color1;
+                        color: $txt_Color2;
                         text-decoration: none;
                         &:hover{
                             text-decoration: none;
-                            color: $txt_Color2;
+                            color: $txt_Color1;
                         }
                     }
                 }

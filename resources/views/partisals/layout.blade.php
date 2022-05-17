@@ -16,6 +16,9 @@ $CAT = array('Technology', 'Travel', 'Food');;
     <link rel="stylesheet" href="{{ mix('/css/main.css') }}" />
     <script src="{{ mix('/js/app.js') }}" defer></script>
     <script src="https://kit.fontawesome.com/f65829aefc.js" crossorigin="anonymous"></script>
+    @if (Route::is('user.Dashboard'))
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+    @endif
 </head>
 
 <body>
@@ -92,8 +95,6 @@ $CAT = array('Technology', 'Travel', 'Food');;
     </nav>
     <section class="body_Content">@yield('section')</section>
     @endif
-
-    <script src="{{ mix('/js/main.js') }}"></script>
     @yield('script')
 </body>
 
