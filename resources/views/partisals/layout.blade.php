@@ -1,8 +1,7 @@
 <?php
 
 use App\Models\Category;
-// $CAT = Category::pluck('category_Menu')
-$CAT = array('Technology', 'Travel', 'Food');;
+$CAT = Category::pluck('category_Menu')
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +50,7 @@ $CAT = array('Technology', 'Travel', 'Food');;
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                             @foreach ($menuItems as $key)
-                            <li class="dropdown-item  {{ Route::is('postByCategory', ['category' => $key]) ? 'active' : '' }}">
+                            <li class="dropdown-item  {{ request()->is("type/$key") ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('postByCategory', ['category' => $key]) }}">{{ $key }}
                                 </a>
                             </li>
@@ -96,6 +95,7 @@ $CAT = array('Technology', 'Travel', 'Food');;
     <section class="body_Content">@yield('section')</section>
     @endif
     @yield('script')
+    <script src="{{ mix('/js/main.js') }}"></script>
 </body>
 
 </html>

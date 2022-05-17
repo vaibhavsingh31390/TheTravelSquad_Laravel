@@ -211,7 +211,7 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                                 <th style="width: 3%" scope="col" class="text-center">#</th>
                                 <th style="width: 20%" scope="col">Title</th>
                                 <th style="width: 40%" scope="col">Content</th>
-                                <th style="width: 15%" scope="col">Status</th>
+                                <th style="width: 15%" scope="col">Category</th>
                                 <th style="width: 20%" scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -231,19 +231,23 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                                 <td style="width: 15%">
                                     <select data-id="{{ $findPost->id }}" class="form-select"
                                         aria-label="Default select example">
-                                        <option selected value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
+                                        <option value="Travel">Travel</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="Food">Food</option>
+                                        <option value="Movies">Movies</option>
+                                        <option value="Sports">Sports</option>
+                                        <option value="Others">Others</option>
                                     </select>
                                 </td>
                                 <td class="text-center">
                                     <form action="{{ route('posts.destroy', ['post'=>$findPost->id]) }}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <a href="#">
+                                        <a href="{{ route('user.Dashboard', ['action'=>'editPosts', 'id'=>$findPost->id]) }}">
                                             <button data-id="{{ $findPost->id }}" type="button"
                                                 class="btn btn-Dashboard">Edit</button>
                                         </a> 
-                                        <a href="{{ route('posts.destroy', ['post' => $data->id]) }}">
+                                        <a href="{{ route('posts.destroy', ['post' => $findPost->id]) }}">
                                             <button data-id="{{ $findPost->id }}" type="submit"
                                                 class="btn btn-Dashboard ms-4">Delete</button>
                                             </a>

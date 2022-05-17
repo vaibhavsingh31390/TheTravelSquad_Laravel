@@ -42,9 +42,19 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StorePost $request)
-    {
-        $validated = $request->validated();
-        $post = Posts::create($validated);
+    {   
+        $validate  = $request->validated();
+        $post = Posts::create([
+            'id'=>$request->id,
+            'image_url'=> $request->image_url,
+            'title' => $request->title,
+            'content'=> $request->content, 
+            'users_id' => decrypt($request->users_id)
+        ]);
+        if($validate->fails()){
+            abort(404);
+        }
+        $category = $post->category()->create(['category_Menu'=>$request->category_Menu]);
         return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
     }
 
@@ -55,7 +65,7 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
+    {   
         $CAT = Category::pluck('category_Menu');
         return view('post.post', ['posts' => Posts::findOrFail($id)])->with('DATA' , $CAT);
     }
@@ -80,10 +90,16 @@ class PostsController extends Controller
      */
     public function update(StorePost $request, $id)
     {
-        $post = Posts::findOrFail($id);
+        $post = Posts::findOrFail($id);    
         $validated = $request->validated();
+        $idGet = decrypt($validated['users_id']);
+        if($idGet!=Auth::id()){
+            abort(404);
+        }
+        $validated['users_id'] = $idGet;
         $post -> fill($validated);
         $post -> save();
+        $category = $post->category()->update(['category_Menu'=>$request->category_Menu]);
         return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
     }
 
@@ -95,7 +111,10 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        Posts::findOrFail($id)->delete();
+        $deletePost = Posts::findOrFail($id);
+        $deletePost->category()->delete();
+        $deletePost->delete();
+
         return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
     }
 }

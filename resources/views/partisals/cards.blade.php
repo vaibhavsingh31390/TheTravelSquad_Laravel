@@ -6,14 +6,18 @@
        <div id="carouselExampleControlsNoTouching" class="carousel slide carousel-fade hero_Carousel" data-bs-touch="false" data-bs-interval="false">
          <div class="carousel-inner">
 
-           @foreach ($postsData->slice(0, 4) as $IMG )
+           @foreach ($postsData->slice(0, 5) as $IMG )
            @if ($loop->first)
            <div class="carousel-item active">
+            <a href="{{ route('posts.show', [$IMG->id]) }}">
              <img src="{{ $IMG->image_url }}" class="d-block w-100" alt="...">
+            </a>
            </div>
            @else
            <div class="carousel-item">
-             <img src="{{ $IMG->image_url }}" class="d-block w-100" alt="...">
+            <a href="{{ route('posts.show', [$IMG->id]) }}">
+              <img src="{{ $IMG->image_url }}" class="d-block w-100" alt="...">
+             </a>
            </div>
            @endif
 
@@ -63,3 +67,18 @@
      @endforeach
    </div>
  </div>
+
+ <div class="container">
+   <div class="row">
+     <div class="col-sm-12">
+      <div class="load_More text-center">
+        <a href="#">
+          <button type="submit"
+              class="btn load_MoreBtn mb-3 mt-1" id="loadMore">Load More</button>
+          </a>
+       </div>
+     </div>
+   </div>
+ </div>
+
+

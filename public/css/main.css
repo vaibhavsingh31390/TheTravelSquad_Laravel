@@ -11463,6 +11463,21 @@ nav .navbar-toggler .fa-bars:focus {
      object-fit: cover;
 }
 
+.load_MoreBtn {
+  background-color: #30475E;
+  border: 2px solid #30475E;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  transition: 0.35s ease;
+  margin-left: 20px;
+  color: #DDDDDD;
+}
+.load_MoreBtn:hover {
+  background-color: transparent;
+  border: 2px solid #30475E;
+  color: #F05454;
+}
+
 .post-container .headingPost {
   color: #222831;
 }
@@ -11560,6 +11575,7 @@ nav .navbar-toggler .fa-bars:focus {
   background-color: #DDDDDD;
   color: #F05454;
   border-bottom: 1px solid #F05454;
+  border-top: 1px solid #F05454;
 }
 .dashArea .dashData {
   background-color: #30475E;

@@ -13,18 +13,18 @@
 
     document
         .getElementById("register_Trigger")
-        .addEventListener("click", function() {
+        .addEventListener("click", function () {
             loginForm.classList.add("d-none");
             registerForm.classList.remove("d-none");
         });
 
-    document.getElementById("login_Trigger").addEventListener("click", function() {
+    document.getElementById("login_Trigger").addEventListener("click", function () {
         loginForm.classList.remove("d-none");
         registerForm.classList.add("d-none");
     });
 
-    $(function() {
-        $("#register_Form").on("submit", function(e) {
+    $(function () {
+        $("#register_Form").on("submit", function (e) {
             var validate = {
                 pass1: $("#Password1").val(),
                 pass2: $("#Password2").val()
@@ -37,3 +37,4 @@
     })
 </script>
 @endsection
+

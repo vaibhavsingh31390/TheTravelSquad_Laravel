@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Category extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'category_Menu', 'posts_id'
+    ];
     public function post(){
         return $this->BelongsTo('App\Models\Posts');
     }
