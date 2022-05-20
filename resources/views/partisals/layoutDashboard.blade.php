@@ -151,11 +151,7 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                                 <td style="width: 19%"><p>{{ Str::of($data->title )->limit(25)}}</p></td>
                                 <td style="width: 39%"><p>{{ Str::of($data->content)->limit(55) }}</p></td>
                                 <td style="width: 15%">
-                                    <select data-id="{{ $data->id }}" class="form-select"
-                                        aria-label="Default select example">
-                                        <option selected value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
+                                    <p>{{ $data->category()->first()->category_Menu }}</p>
                                 </td>
                                 <td class="text-center">
                                     <form action="{{ route('posts.destroy', ['post'=>$data->id]) }}" method="post">
@@ -292,4 +288,3 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
     {{-- DASHAREA ROW END --}}
 </div>
 {{-- DASHAREA END --}}
-
