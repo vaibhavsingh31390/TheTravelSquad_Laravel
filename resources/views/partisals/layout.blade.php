@@ -1,8 +1,7 @@
 <?php
 
 use App\Models\Category;
-// $CAT = Category::pluck('category_Menu')
-$CAT = ['test1'];
+$CAT = Category::pluck('category_Menu')
 ?>
 <!DOCTYPE html>
 <html lang="en">
