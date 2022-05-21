@@ -30,3 +30,17 @@
         </div>
     </div>
 </div>
+
+<div class="container comments_Container">
+    <div class="row comments_Container_Row">
+        <div class="col-md-12 col-lg-12 col-sm-12 comments_Form">
+            <form action="#" method="post">
+                @csrf
+
+            </form>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12 comments_Layout">
+
+        </div>
+    </div>
+</div>
