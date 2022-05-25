@@ -21,5 +21,4 @@ class Posts extends Model
     public function category(){
         return $this->hasMany('App\Models\Category');
     }
-
 }

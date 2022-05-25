@@ -15,6 +15,7 @@ $CAT = Category::pluck('category_Menu')
     <link rel="stylesheet" href="{{ mix('/css/main.css') }}" />
     <script src="{{ mix('/js/app.js') }}" defer></script>
     <script src="https://kit.fontawesome.com/f65829aefc.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     @if (Route::is('user.Dashboard'))
         <meta name="csrf-token" content="{{ csrf_token() }}">
     @endif
@@ -96,6 +97,7 @@ $CAT = Category::pluck('category_Menu')
     @endif
     @yield('script')
     <script src="{{ mix('/js/main.js') }}"></script>
+
 </body>
 
 </html>

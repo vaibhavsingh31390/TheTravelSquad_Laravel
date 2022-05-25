@@ -288,6 +288,18 @@ nav {
             border-radius: 5px;
         }
     }
+    .author{
+        p{
+            font-size: 1.5em;
+            color: $txt_Color1;
+            font-weight: 600;
+            .authorName{
+                font-size: 1.3rem;
+                color: $txt_Color2;
+                font-weight: 600;
+            }
+        }
+    }
 }
 
 .form_Container {
@@ -491,12 +503,60 @@ nav {
 
 // COMMENTS  SECTION
 .comments_Container{
-    .comments_Container_Row{
-        .comments_Form{
-
-        }
         .comments_Layout{
-            
+            // min-height: 500px;
+            background-color: $bg_White;
+            border-radius: 5px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            h1{
+                color: $txt_Color1;
+                
+            }
+            .comments_Form{
+                p{
+                    color: $txt_Color1;
+                    a{
+                        text-decoration: none;
+                        color: $txt_Color2;
+                        transition: $transition;
+                        &:hover{
+                            color: $txt_Color1;
+                        }
+                    }
+                }
+                button {
+                    background-color: $txt_Color2;
+                    color: $bg_White;
+                    border: 2px solid $txt_Color2;
+                    outline: none;
+                    &:hover {
+                        background-color: transparent;
+                        border: 2px solid $txt_Color2;
+                        color: $txt_Color2;
+                    }
+                    &:focus {
+                        background-color: transparent;
+                        border: 2px solid $txt_Color2;
+                        color: $txt_Color2;
+                        outline: none;
+                    }
+            }
+        }
+        .user_DataPhoto {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+            }
+        }
+        .userName{
+            color: $txt_Color2;
+            font-size: 1.2rem;
         }
     }
 }
+
+

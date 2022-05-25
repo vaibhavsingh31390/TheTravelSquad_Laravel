@@ -18,7 +18,8 @@ class CommentsFactory extends Factory
     {
         return [
             'comment' => $this->faker->text(100),
-            'post_id' => 1
+            'posts_id' => 1,
+            // 'users_id' => 1
         ];
     }
 }

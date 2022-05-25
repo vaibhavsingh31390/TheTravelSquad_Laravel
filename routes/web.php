@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PostsController;
 use App\Models\Posts;
@@ -21,3 +22,4 @@ Route::resource('posts', PostsController::class);
 Route::get('/type/{category?}', 'Controller@category')->name('postByCategory');
 Route::get('/userDashboard/{action?}', 'Controller@userDash')->middleware('auth')->name('user.Dashboard');
 Auth::routes();
+Route::put('posts/{id}/post-comments', [PostsController::class, 'addComment'])->name('add.comment');

@@ -11497,6 +11497,16 @@ nav .navbar-toggler .fa-bars:focus {
   border: 2px solid #F05454;
   border-radius: 5px;
 }
+.post-container .author p {
+  font-size: 1.5em;
+  color: #222831;
+  font-weight: 600;
+}
+.post-container .author p .authorName {
+  font-size: 1.3rem;
+  color: #F05454;
+  font-weight: 600;
+}
 
 .form_Container {
   position: relative;
@@ -11661,4 +11671,54 @@ nav .navbar-toggler .fa-bars:focus {
 .dashArea .newPost .content_wrapper h2, .dashArea .newPost .content_wrapper .h2 {
   color: #F05454;
   border-bottom: 1px solid #FFFFFF;
+}
+
+.comments_Container .comments_Layout {
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.comments_Container .comments_Layout h1, .comments_Container .comments_Layout .h1 {
+  color: #222831;
+}
+.comments_Container .comments_Layout .comments_Form p {
+  color: #222831;
+}
+.comments_Container .comments_Layout .comments_Form p a {
+  text-decoration: none;
+  color: #F05454;
+  transition: 0.35s ease;
+}
+.comments_Container .comments_Layout .comments_Form p a:hover {
+  color: #222831;
+}
+.comments_Container .comments_Layout .comments_Form button {
+  background-color: #F05454;
+  color: #FFFFFF;
+  border: 2px solid #F05454;
+  outline: none;
+}
+.comments_Container .comments_Layout .comments_Form button:hover {
+  background-color: transparent;
+  border: 2px solid #F05454;
+  color: #F05454;
+}
+.comments_Container .comments_Layout .comments_Form button:focus {
+  background-color: transparent;
+  border: 2px solid #F05454;
+  color: #F05454;
+  outline: none;
+}
+.comments_Container .comments_Layout .user_DataPhoto {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.comments_Container .comments_Layout .user_DataPhoto img {
+  width: 100%;
+}
+.comments_Container .comments_Layout .userName {
+  color: #F05454;
+  font-size: 1.2rem;
 }

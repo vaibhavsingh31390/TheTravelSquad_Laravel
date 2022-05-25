@@ -6,6 +6,8 @@ use App\Models\Posts;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePost;
+use App\Models\Comments;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
@@ -51,9 +53,7 @@ class PostsController extends Controller
             'content'=> $request->content, 
             'users_id' => decrypt($request->users_id)
         ]);
-        if($validate->fails()){
-            abort(404);
-        }
+
         $category = $post->category()->create(['category_Menu'=>$request->category_Menu]);
         return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
     }
@@ -66,8 +66,11 @@ class PostsController extends Controller
      */
     public function show($id)
     {   
-        $CAT = Category::pluck('category_Menu');
-        return view('post.post', ['posts' => Posts::findOrFail($id)])->with('DATA' , $CAT);
+        $Cat = Category::pluck('category_Menu');
+        $findName = Posts::where('id', '=', $id)->pluck('users_id');
+        $author = User::where('id', '=', $findName)->get();
+        $data = compact('Cat', 'author');
+        return view('post.post', ['posts' => Posts::findOrFail($id), 'Data' =>$data]);
     }
 
     /**
@@ -93,9 +96,9 @@ class PostsController extends Controller
         $post = Posts::findOrFail($id);    
         $validated = $request->validated();
         $idGet = decrypt($validated['users_id']);
-        if($idGet!=Auth::id()){
-            abort(404);
-        }
+         if($idGet!=Auth::id()){
+             abort(404);
+         }
         $validated['users_id'] = $idGet;
         $post -> fill($validated);
         $post -> save();
@@ -116,5 +119,15 @@ class PostsController extends Controller
         $deletePost->delete();
 
         return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
+    }
+
+    public function addComment(Request $request, $id){
+        // dd($request);
+        $post = Posts::findOrFail($id);
+        $comment = Comments::create([
+            'posts_id' => $post->id,
+            'comment' =>  $request->comment
+        ]);
+        return redirect()->back();
     }
 }

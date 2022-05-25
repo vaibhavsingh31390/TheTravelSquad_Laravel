@@ -43,6 +43,5 @@ class Controller extends BaseController
         // dd($findPosts);
         return view('auth.userDashboard')->with('findPosts', $findPosts);
     }
-
 }
 
