@@ -16,9 +16,10 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+        $category = ['Travel','Technology','Sports','Food','Food','Others'];
         return [
-            'category_Menu' => $this->faker->text(5),
-            'post_id' => 1,
+            'category_Menu' => $category[array_rand($category)],
+            'posts_id' => rand(1,20),
         ];
     }
 }

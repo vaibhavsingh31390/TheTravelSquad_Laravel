@@ -132,7 +132,7 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                                 <th style="width: 5%" scope="col" class="text-center">#</th>
                                 <th style="width: 19%" scope="col">Title</th>
                                 <th style="width: 39%" scope="col">Content</th>
-                                <th style="width: 15%" scope="col">Status</th>
+                                <th style="width: 15%" scope="col">Category</th>
                                 <th style="width: 20%" scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -151,7 +151,7 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                                 <td style="width: 19%"><p>{{ Str::of($data->title )->limit(25)}}</p></td>
                                 <td style="width: 39%"><p>{{ Str::of($data->content)->limit(55) }}</p></td>
                                 <td style="width: 15%">
-                                    <p>{{ $data->category()->first()->category_Menu }}</p>
+                                    <p>{{ $data->category->first()->category_Menu }}</p>
                                 </td>
                                 <td class="text-center">
                                     <form action="{{ route('posts.destroy', ['post'=>$data->id]) }}" method="post">

@@ -37,7 +37,7 @@ class Controller extends BaseController
             $findIt = $userData->where('title', 'LIKE', '%'.$search_Parameter.'%')->get();
         }
         else{
-            $findIt = Posts::where('users_id', '=', $profile->id)->get();
+            $findIt = Posts::where('users_id', '=', $profile->id)->with('category')->get();
         }
         $findPosts = compact('profile', 'findIt', 'search_Parameter');
         // dd($findPosts);

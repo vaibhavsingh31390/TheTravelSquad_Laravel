@@ -16,13 +16,14 @@ class PostsFactory extends Factory
      */
     public function definition()
     {
+
         return [
-            'image_url' => $this->faker->text(),
+            'image_url' => 'https://placeimg.com/1920/1080/any?' . rand(1, 100),
             'title' => $this->faker->text(),
             'content' => $this->faker->paragraph(5),
             'like' => $this->faker->randomDigit(),
             'dislike' => $this->faker->randomDigit(),
-            'users_id' => 1
+            'users_id' => random_int(1,20)
         ];
     }
 }
