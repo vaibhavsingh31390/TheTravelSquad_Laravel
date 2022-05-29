@@ -151,7 +151,7 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
                                 <td style="width: 19%"><p>{{ Str::of($data->title )->limit(25)}}</p></td>
                                 <td style="width: 39%"><p>{{ Str::of($data->content)->limit(55) }}</p></td>
                                 <td style="width: 15%">
-                                    <p>{{ $data->category->first()->category_Menu }}</p>
+                                    <p> {{ $data->category()->first()->category_Menu ?? 'No Category' }}</p>
                                 </td>
                                 <td class="text-center">
                                     <form action="{{ route('posts.destroy', ['post'=>$data->id]) }}" method="post">
