@@ -54,7 +54,7 @@
            </a>
          </div>
          <div class="card-body">
-           <h4 class="card-title">{{ $card->title }}</h4>
+           <h4 class="card-title">{{ Str::of($card->title)->limit(40) }}</h4>
            <p class="card-text" style="text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;">{{ $card->content }}</p>

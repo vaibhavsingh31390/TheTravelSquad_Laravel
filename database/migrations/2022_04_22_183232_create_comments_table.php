@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('comment');
             $table->unsignedBigInteger('posts_id')->index();
             $table->foreign('posts_id')->references('id')->on('posts');
+            $table->unsignedBigInteger('users_id')->index();
+            $table->foreign('users_id')->references('id')->on('users');
         });
     }
 

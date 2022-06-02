@@ -18,7 +18,9 @@ class CommentsFactory extends Factory
     {
         return [
             'comment' => $this->faker->text(150),
+            'created_at'=> $this->faker->dateTimeBetween('-3 months'),
             'posts_id' => rand(1,20),
+            'users_id' => random_int(1,20)
         ];
     }
 }

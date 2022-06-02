@@ -24,7 +24,10 @@ class PostsController extends Controller
 
     public function index()
     {
-        return view('post.posts', ['posts'=> Posts::all()]);
+        return view('post.posts', ['posts'=> Posts::with(['comments' => function($query){
+            return $query->LatestComments();
+        }])->get()
+    ]);
     }
 
     /**
@@ -122,11 +125,12 @@ class PostsController extends Controller
     }
 
     public function addComment(Request $request, $id){
-        // dd($request);
+        
         $post = Posts::findOrFail($id);
         $comment = Comments::create([
+            'comment' =>  $request->comment,
             'posts_id' => $post->id,
-            'comment' =>  $request->comment
+            'users_id' =>  Auth::user()->id,
         ]);
         return redirect()->back();
     }

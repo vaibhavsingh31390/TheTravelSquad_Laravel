@@ -24,7 +24,7 @@
           </a>
         </div>
         <div class="card-body">
-          <h4 class="card-title">{{ $card->title }}</h4>
+          <h4 class="card-title">{{ Str::of($card->title)->limit(40) }}</h4>
           <p class="card-text" style="text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;">{{ $card->content }}</p>
@@ -47,13 +47,14 @@
           </a>
         </div>
         <div class="card-body">
-          <h4 class="card-title">{{ $card->title }}</h4>
+          <h4 class="card-title">{{ Str::of($card->title)->limit(40) }}</h4>
           <p class="card-text" style="text-overflow: ellipsis;
                   overflow: hidden;
                   white-space: nowrap;">{{ $card->content }}</p>
         </div>
-        <div class="card-footer">
+        <div class="card-footer d-flex justify-content-between">
           <small class="date_Added">{{ $card->created_at->diffForHumans() }}</small>
+          <small class="date_Added">{{ $card->comments->count() }} commment</small> 
         </div>
       </div>
     </div>

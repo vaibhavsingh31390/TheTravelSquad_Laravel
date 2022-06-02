@@ -1,8 +1,8 @@
 {{-- $posts to acccess posts related data from model via posts controller --}}
 <?php
 use App\Models\Posts;
-use Illuminate\Foundation\Auth\User;
-    $comments = $posts->comments()->get();
+use App\Models\User;
+    $comments = $posts->comments()->LatestComments()->get();
 ?>
 <div class="container mt-5 post-container">
     <div class="row">
@@ -57,7 +57,7 @@ use Illuminate\Foundation\Auth\User;
                         <textarea name="comment" class="form-control" placeholder="Leave a comment here" id="comment" style="height: 100px"></textarea>
                         <label for="comment">Post yout comment here..</label>
                     </div>
-                    <input type="hidden" name="posts_id" id="postId" value="{{ $posts->id }}">
+                    {{-- <input type="hidden" name="posts_id" id="postId" value="{{ $posts->id }}"> --}}
                     <button type="submit" class="btn">Post Now</button>
                 </form>
             @endguest
@@ -72,10 +72,10 @@ use Illuminate\Foundation\Auth\User;
                         <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61" alt="user_Photo">
                     </div>
                     <small class="ms-2 userName">
-                        <?php 
-                        $findName = Posts::where('id', '=', $comment->posts_id)->pluck('users_id');
-                        $author = User::where('id', '=', $findName)->get();
-                        echo $author->first()->name;
+                        <?php
+                            $userId = $comment->users_id;
+                            $author = User::where('id', '=', $userId)->pluck('name');
+                            echo $author->first();
                         ?>
                     </small>
                 </div>
@@ -87,7 +87,7 @@ use Illuminate\Foundation\Auth\User;
                 </div>
             </div>
             @empty
-            <div class="col-sm-12 col-md-12 col-lg-12 mt-3 p-2 border">
+            <div class="col-sm-12 col-md-12 col-lg-12 mt-3 mb-4 p-2 border">
                 <div class="user_Comment px-2">
                     <p>No comments posted.</p>
                 </div>
