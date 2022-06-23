@@ -45,24 +45,11 @@
 
  <div class="container mt-1 mb-3 px-2">
    <div class="row row-cols-1 row-cols-md-3 g-4">
-     @foreach ($postsData->slice(0, 3) as $card)
+     @foreach ($postsData->take(3) as $card)
      <div class="col">
-       <div class="card h-100 border">
-         <div class="image-Img">
-           <a href="{{ route('posts.show', [$card->id]) }}">
-             <img src="{{ $card->image_url }}" class="card-img-top">
-           </a>
-         </div>
-         <div class="card-body">
-           <h4 class="card-title">{{ Str::of($card->title)->limit(40) }}</h4>
-           <p class="card-text" style="text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;">{{ $card->content }}</p>
-         </div>
-         <div class="card-footer">
-           <small class="date_Added">{{ $card->created_at->diffForHumans() }}</small>
-         </div>
-       </div>
+      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->image_url, 'title'=>$card->title, 
+      'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
+      @endpostCard
      </div>
      @endforeach
    </div>
@@ -74,7 +61,7 @@
       <div class="load_More text-center">
         <a href="#">
           <button type="submit"
-              class="btn load_MoreBtn mb-3 mt-1" id="loadMore">Load More</button>
+              class="btn load_MoreBtn mb-3 mt-1" id="load_More">Load More</button>
           </a>
        </div>
      </div>

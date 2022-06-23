@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Cache;
 
 class Posts extends Model
 {
@@ -34,5 +35,14 @@ class Posts extends Model
         parent::boot();
 
         // static::addGlobalScope(new sortByLatest);
+
+        static::deleting(function(Posts $posts){
+            $posts->comments()->delete();
+        });
+
+
+        static::updating(function(Posts $posts){
+            Cache::forget('index-postsData');
+        });
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Requests\StorePost;
 use App\Models\Comments;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class PostsController extends Controller
 {
@@ -24,10 +25,11 @@ class PostsController extends Controller
 
     public function index()
     {
-        return view('post.posts', ['posts'=> Posts::with(['comments' => function($query){
-            return $query->LatestComments();
-        }])->get()
-    ]);
+        $posts =  Cache::remember('index-postsData', now()->addDays(2), function(){
+            return Posts::with(['comments' => function($query){return $query->LatestComments(); }])->get();
+        });
+
+        return view('post.posts', ['posts'=> $posts]);
     }
 
     /**
@@ -99,13 +101,17 @@ class PostsController extends Controller
         $post = Posts::findOrFail($id);    
         $validated = $request->validated();
         $idGet = decrypt($validated['users_id']);
-         if($idGet!=Auth::id()){
-             abort(404);
-         }
+        if($idGet!=Auth::id()){
+            abort(404);
+        }
         $validated['users_id'] = $idGet;
-        $post -> fill($validated);
-        $post -> save();
-        $category = $post->category()->update(['category_Menu'=>$request->category_Menu]);
+        $post->fill($validated);
+        if($post->category->count() >1){
+            $post->category()->update(['category_Menu'=>$request->category_Menu]);
+        }else{
+         $post->category()->create(['category_Menu'=>$request->category_Menu]);
+        }
+        $post->save();
         return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
     }
 
@@ -119,6 +125,7 @@ class PostsController extends Controller
     {
         $deletePost = Posts::findOrFail($id);
         $deletePost->category()->delete();
+        $deletePost->comments()->delete();
         $deletePost->delete();
 
         return redirect()->route('user.Dashboard', ['action' => 'myPosts']);

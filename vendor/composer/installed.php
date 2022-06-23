@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'c27bf5333c719cadd7baed564eaaeb9dd1f6637e',
+        'reference' => 'df41494847eb0baac201ae5bc78894fc03b649be',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -131,12 +131,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
-            'pretty_version' => '7.4.2',
-            'version' => '7.4.2.0',
+            'pretty_version' => '7.4.3',
+            'version' => '7.4.3.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
             'aliases' => array(),
-            'reference' => 'ac1ec1cd9b5624694c3a40be801d94137afb12b4',
+            'reference' => '74a8602c6faec9ef74b7a9391ac82c5e65b1cdab',
             'dev_requirement' => false,
         ),
         'guzzlehttp/promises' => array(
@@ -383,12 +383,12 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'c27bf5333c719cadd7baed564eaaeb9dd1f6637e',
+            'reference' => 'df41494847eb0baac201ae5bc78894fc03b649be',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
@@ -667,6 +667,15 @@
             'reference' => '12bc8879fb65aef2138b26fc633cb1e3620cffba',
             'dev_requirement' => true,
         ),
+        'predis/predis' => array(
+            'pretty_version' => 'v2.0.0',
+            'version' => '2.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../predis/predis',
+            'aliases' => array(),
+            'reference' => '99c253733dee9447d26257dc669d33d5ac84713d',
+            'dev_requirement' => false,
+        ),
         'psr/container' => array(
             'pretty_version' => '2.0.2',
             'version' => '2.0.2.0',
@@ -754,8 +763,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(

@@ -14,18 +14,25 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Cache;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function home(){
-        $allCards = Posts::all();
+        $allCards = Cache::remember('Index', now()->addWeek(1), function(){
+            return Posts::all();
+        });
+        
         return view('index')->with('postsData' , $allCards);
     }
 
     public function category($category){
-        $categoryCards =  Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->get(); 
+
+        $categoryCards = Cache::remember('Post_By_Category', now()->addDay(1), function() use ($category){
+            return Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->get(); 
+        });
         return view('post.category', ['cardsData'=>$categoryCards]);
     }
 

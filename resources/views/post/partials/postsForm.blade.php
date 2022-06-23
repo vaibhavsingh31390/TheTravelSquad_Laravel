@@ -27,7 +27,7 @@
                     <option value="Technology">Technology</option>
                     <option value="Sports">Sports</option>
                     <option value="Food">Food</option>
-                    <option value="Food">Fashion</option>
+                    <option value="Fashion">Fashion</option>
                     <option value="Others">Others</option>
                 </select>
                 @if ($errors->has('image_url'))

@@ -17,22 +17,9 @@
     @if (isset($cardsData))
     @foreach ($cardsData as $card)
     <div class="col">
-      <div class="card h-100 border">
-        <div class="image-Img">
-          <a href="{{ route('posts.show', [$card->id]) }}">
-            <img src="{{ $card->image_url }}" class="card-img-top">
-          </a>
-        </div>
-        <div class="card-body">
-          <h4 class="card-title">{{ Str::of($card->title)->limit(40) }}</h4>
-          <p class="card-text" style="text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;">{{ $card->content }}</p>
-        </div>
-        <div class="card-footer">
-          <small class="date_Added">{{ $card->created_at->diffForHumans() }}</small>
-        </div>
-      </div>
+      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->image_url, 'title'=>$card->title, 
+      'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
+      @endpostCard
     </div>
     @endforeach
 
@@ -40,23 +27,9 @@
     @else
     @foreach ($posts as $card)
     <div class="col">
-      <div class="card h-100 border">
-        <div class="image-Img">
-          <a href="{{ route('posts.show', [$card->id]) }}">
-            <img src="{{ $card->image_url }}" class="card-img-top">
-          </a>
-        </div>
-        <div class="card-body">
-          <h4 class="card-title">{{ Str::of($card->title)->limit(40) }}</h4>
-          <p class="card-text" style="text-overflow: ellipsis;
-                  overflow: hidden;
-                  white-space: nowrap;">{{ $card->content }}</p>
-        </div>
-        <div class="card-footer d-flex justify-content-between">
-          <small class="date_Added">{{ $card->created_at->diffForHumans() }}</small>
-          <small class="date_Added">{{ $card->comments->count() }} commment</small> 
-        </div>
-      </div>
+      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->image_url, 'title'=>$card->title, 
+      'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
+      @endpostCard
     </div>
     @endforeach
     @endif
