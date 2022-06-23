@@ -20,14 +20,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function home(){
-        $allCards = Cache::remember('Index', now()->addWeek(1), function(){
-            return Posts::all();
-        });
-        
-        return view('index')->with('postsData' , $allCards);
-    }
-
     public function category($category){
 
         $categoryCards = Cache::remember('Post_By_Category', now()->addDay(1), function() use ($category){

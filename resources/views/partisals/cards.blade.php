@@ -1,5 +1,8 @@
  {{-- HERO SECTION --}}
  {{-- $postData to access all posts data inside the posts model via controllers --}}
+ <?php
+  use App\Models\Posts;
+ ?>
  <div class="container mt-4 mb-4">
    <div class="row">
      <div class="col-sm-12 col-md-12 col-lg-12">
@@ -44,8 +47,8 @@
  </div>
 
  <div class="container mt-1 mb-3 px-2">
-   <div class="row row-cols-1 row-cols-md-3 g-4">
-     @foreach ($postsData->take(3) as $card)
+   <div class="row row-cols-1 row-cols-md-3 g-4"  id="data-col">
+     @foreach ($ca = Posts::all()->take(3) as $card)
      <div class="col">
       @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->image_url, 'title'=>$card->title, 
       'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
@@ -69,3 +72,18 @@
  </div>
 
 
+ <script>
+  $(document).ready(function(){
+    $("#load_More").click(function(e){
+       console.log('working');
+        $.ajax({
+          type: "GET",
+          url: "/card-data",
+          dataType: "json",
+          success: function (data) {
+            $('#data-col').append(data.cards);
+          }
+        });
+    });
+  });
+</script>

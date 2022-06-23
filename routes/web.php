@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'Controller@home')->name('home.index');
+Route::get('/', 'AjaxController@index')->name('home.index');
+Route::get('/card-data', 'AjaxController@indexData')->name('home.cardData');
 Route::resource('posts', PostsController::class);
 Route::get('/type/{category?}', 'Controller@category')->name('postByCategory');
 Route::get('/userDashboard/{action?}', 'Controller@userDash')->middleware('auth')->name('user.Dashboard');
