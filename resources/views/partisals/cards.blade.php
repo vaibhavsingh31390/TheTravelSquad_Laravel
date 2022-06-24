@@ -1,15 +1,12 @@
  {{-- HERO SECTION --}}
  {{-- $postData to access all posts data inside the posts model via controllers --}}
- <?php
-  use App\Models\Posts;
- ?>
  <div class="container mt-4 mb-4">
    <div class="row">
      <div class="col-sm-12 col-md-12 col-lg-12">
        <div id="carouselExampleControlsNoTouching" class="carousel slide carousel-fade hero_Carousel" data-bs-touch="false" data-bs-interval="false">
          <div class="carousel-inner">
 
-           @foreach ($postsData->slice(0, 5) as $IMG )
+           @foreach ($postsData as $IMG )
            @if ($loop->first)
            <div class="carousel-item active">
             <a href="{{ route('posts.show', [$IMG->id]) }}">
@@ -47,8 +44,8 @@
  </div>
 
  <div class="container mt-1 mb-3 px-2">
-   <div class="row row-cols-1 row-cols-md-3 g-4"  id="data-col">
-     @foreach ($ca = Posts::all()->take(3) as $card)
+   <div class="row row-cols-1 row-cols-md-3 g-4" id="data-col">
+     @foreach ($postsData as $card)
      <div class="col">
       @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->image_url, 'title'=>$card->title, 
       'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
@@ -73,17 +70,37 @@
 
 
  <script>
-  $(document).ready(function(){
-    $("#load_More").click(function(e){
-       console.log('working');
-        $.ajax({
-          type: "GET",
-          url: "/card-data",
-          dataType: "json",
-          success: function (data) {
-            $('#data-col').append(data.cards);
-          }
-        });
-    });
+  $(document).ready(function () {
+      $("#load_More").click(function (e) {
+          console.log('working');
+
+          function getData() { 
+            $.ajax({
+                  type: "GET",
+                  url: "/card-data",
+                  dataType: "json",
+                  success: function (data) {
+                     console.log(data);
+                     console.log('DONE');
+                  },
+                  error: function(data){
+                    console.log('Server Error');
+                  },  
+                });
+           }
+          $.ajax({
+              type: "POST",
+              url: "/card-data",
+              data: { test: 'test', _token: "{{ csrf_token() }}", },
+              dataType: "json",
+              success: function (data) {
+                $('#data-col').append(data.cards);
+              },
+              error: function (error) {
+                  console.log(error.responseText);
+                  console.log('error');
+              },
+          });
+      });
   });
 </script>
