@@ -45,7 +45,7 @@
 
  <div class="container mt-1 mb-3 px-2">
    <div class="row row-cols-1 row-cols-md-3 g-4" id="data-col">
-     @foreach ($postsData as $card)
+     @foreach ($postsData->take(3) as $card)
      <div class="col">
       @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->image_url, 'title'=>$card->title, 
       'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
@@ -70,31 +70,18 @@
 
 
  <script>
+  var countAmt = 5;
   $(document).ready(function () {
       $("#load_More").click(function (e) {
-          console.log('working');
-
-          function getData() { 
-            $.ajax({
-                  type: "GET",
-                  url: "/card-data",
-                  dataType: "json",
-                  success: function (data) {
-                     console.log(data);
-                     console.log('DONE');
-                  },
-                  error: function(data){
-                    console.log('Server Error');
-                  },  
-                });
-           }
+          // console.log('working');
           $.ajax({
               type: "POST",
               url: "/card-data",
-              data: { test: 'test', _token: "{{ csrf_token() }}", },
+              data: { test: 'test', _token: "{{ csrf_token() }}",count: countAmt},
               dataType: "json",
               success: function (data) {
                 $('#data-col').append(data.cards);
+                countAmt+=3;
               },
               error: function (error) {
                   console.log(error.responseText);
