@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('posts_action', function (Blueprint $table) {
             $table->id();
             $table->foreign('actions_id')->references('id')->on('actions')->onDelete('cascade');
-            $table->boolean('state');
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('actions_id')->index();
             $table->unsignedBigInteger('posts_id')->index();

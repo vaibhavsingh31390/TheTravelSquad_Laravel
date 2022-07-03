@@ -38,36 +38,39 @@ class AjaxController extends Controller
         $post = Posts::findOrFail($id);
         $counter = $request->input('counter');
         // $sessionId  = session()->getId();
-        
-        if($request->input('like')== "like"){
-            if($counter % 2 == 0){
-                if($request->ajax()){
-                    $post = Posts::where('id', '=', $id)->increment('like', 1);
-                    $postLikeCount = Posts::where('id', '=', $id)->pluck('like');
-                    return response()->json(['success'=>true , 'id' =>$id, 'count' => $postLikeCount]);
-                };
-            }else{
-                if($request->ajax()){
-                    $post = Posts::where('id', '=', $id)->decrement('like', 1);
-                    $postLikeCount = Posts::where('id', '=', $id)->pluck('like');
-                    return response()->json(['success'=>true , 'id' =>$id, 'count' => $postLikeCount]);
-                };
-            }
-        }else{
-            if($counter % 2 == 0){
-                if($request->ajax()){
-                    $post = Posts::where('id', '=', $id)->increment('dislike', 1);
-                    $postDislikeCount = Posts::where('id', '=', $id)->pluck('dislike');
-                    return response()->json(['success'=>true , 'id' =>$id, 'count' => $postDislikeCount]);
-                };
-            }else{
-                if($request->ajax()){
-                    $post = Posts::where('id', '=', $id)->decrement('dislike', 1);
-                    $postDislikeCount = Posts::where('id', '=', $id)->pluck('dislike');
-                    return response()->json(['success'=>true , 'id' =>$id, 'count' => $postDislikeCount]);
-                };
-            }
-        }
+        if($request->ajax()){
+            return response()->json(['success'=>true , 'id' =>$id, 'action' => $request->input('action'), 'value'=>$request->input('value')]);
+        };
+        // if($request->input('action')== "like"){
+        //     if($counter % 2 == 0){
+        //         if($request->ajax()){
+        //             $post = Posts::where('id', '=', $id)->actionPosts()->attach($action,['state'=>rand(true,false),'posts_id'=>$getPost->id, 'users_id'=>$getPost->users_id]);  
+        //             $postLikeCount = Posts::where('id', '=', $id)->pluck('like');
+        //             return response()->json(['success'=>true , 'id' =>$id, 'count' => $postLikeCount]);
+        //         };
+        //     }else{
+        //         if($request->ajax()){
+        //             $post = Posts::where('id', '=', $id)->decrement('like', 1);
+        //             $postLikeCount = Posts::where('id', '=', $id)->pluck('like');
+        //             return response()->json(['success'=>true , 'id' =>$id, 'count' => $postLikeCount]);
+        //         };
+        //     }
+        // }
+        // }else{
+        //     if($counter % 2 == 0){
+        //         if($request->ajax()){
+        //             $post = Posts::where('id', '=', $id)->increment('dislike', 1);
+        //             $postDislikeCount = Posts::where('id', '=', $id)->pluck('dislike');
+        //             return response()->json(['success'=>true , 'id' =>$id, 'count' => $postDislikeCount]);
+        //         };
+        //     }else{
+        //         if($request->ajax()){
+        //             $post = Posts::where('id', '=', $id)->decrement('dislike', 1);
+        //             $postDislikeCount = Posts::where('id', '=', $id)->pluck('dislike');
+        //             return response()->json(['success'=>true , 'id' =>$id, 'count' => $postDislikeCount]);
+        //         };
+        //     }
+        // }
     }
 
     public function likeDislike(){

@@ -19,7 +19,6 @@ class ActionFactory extends Factory
     {
         $action = Action::all();
         return [
-            'state'=> rand(1,2),
             'posts_id' => rand(1,50),
             'users_id' => random_int(1,20),
             'action_id' => random_int(1,2)

@@ -9,18 +9,18 @@
                 <small style="font-size: 16px;">{{ $posts->created_at->diffForHumans() }}</small>
             </div>
             <div class="like_dislike d-flex justify-content-between">
-                <span class="like" id="like_Btn" data-id="{{ $posts->id }}">
+                <span class="like" id="like_Btn" data-index-number="{{ $posts->id }}" data-id="{{ $posts->users_id }}">
                     <i class="far fa-thumbs-up" id="styleChangeLike"></i>
-                    <span id="like_val">{{ $posts->like }}</span>
+                    <span id="like_val">{{ $posts->likeCount()->count() }}</span>
                 </span>
                 <span class="dislike" id="dislike_Btn" data-id="{{ $posts->id }}">
                     <i class="far fa-thumbs-down" id="styleChangeDislike"></i>
-                    <span id="dislike_val">{{ $posts->dislike }}</span>
+                    <span id="dislike_val">{{ $posts->dislikeCount()->count() }}</span>
                 </span>
             </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 mt-4 banner">
-            <img src="{{ $posts->image_url  }}" alt="">
+            <img src="{{ $posts->image_url  }}" alt="Demo_img">
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 mt-4 content">
@@ -36,40 +36,18 @@
 
 <script>
     var likeCount = 2;
-    var dislikeCount = 2;
     $(document).ready(function () {
         $("#like_Btn").click(function (e) {
             var likeID = $(this).attr("data-id");
+            var value = $("#like_val").text();
             $.ajax({
                 type: "POST",
                 url: "/send-action",
-                data: { like: 'like', _token: "{{ csrf_token() }}", id: likeID, counter: likeCount},
+                data: { action: 'like', value:true , _token: "{{ csrf_token() }}", id: likeID, counter: likeCount},
                 dataType: "json",
                 success: function (data) {
-                    $('#like_val').text(data.count);
-                    console.log(data.count + " Like " + likeCount);
+                    console.log(data);
                     likeCount++;
-                },
-                error: function (error) {
-                    console.log(error.responseText);
-                    if(error.status == 401){
-                        alert("Please Login To Perform This Function !")
-                    }
-                },
-            });
-        });
-        $("#dislike_Btn").click(function (e) {
-            var dislikeID = $(this).attr("data-id");
-            $.ajax({
-                type: "POST",
-                url: "/send-action",
-                data: { dislike: 'dislike', _token: "{{ csrf_token() }}", id: dislikeID, counter: dislikeCount},
-                dataType: "json",
-                success: function (data) {
-
-                    $('#dislike_val').text(data.count);
-                    console.log(data.count + " Dislike " + dislikeCount);
-                    dislikeCount++;
                 },
                 error: function (error) {
                     console.log(error.responseText);

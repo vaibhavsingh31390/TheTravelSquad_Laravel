@@ -27,7 +27,7 @@ class PostsActionTableSeeder extends Seeder
             $getPost = $posts->random();
             $actions = Action::all();
             $action = $actions->random();
-            $getPost->actionPosts()->attach($action,['state'=>rand(true,false),'posts_id'=>$getPost->id, 'users_id'=>$getPost->users_id]);  
+            $getPost->actionPosts()->attach($action,['posts_id'=>$getPost->id, 'users_id'=>$getPost->users_id]);  
         });
     }
 }

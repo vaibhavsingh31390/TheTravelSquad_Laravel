@@ -51,6 +51,14 @@ class Posts extends Model
     }
 
     public function actionPosts(){
-        return $this->belongsToMany('App\Models\Action', 'posts_action', 'posts_id', 'actions_id', 'users_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\Action', 'posts_action', 'posts_id', 'actions_id')->withTimestamps();
+    }
+
+    public function likeCount(){
+        return $this->actionPosts()->wherePivot('actions_id','=', 1);
+    }
+
+    public function dislikeCount(){
+        return $this->actionPosts()->wherePivot('actions_id','=', 2);
     }
 }
