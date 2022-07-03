@@ -45,4 +45,8 @@ class User extends Authenticatable
     public function Posts(){
         return $this->hasMany('App\Models\Posts');
     }
+
+    public function actionUsers(){
+        return $this->belongsToMany('App\Models\Action', 'posts_action', 'posts_id', 'actions_id', 'users_id')->withTimestamps();
+    }
 }

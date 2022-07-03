@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Action;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Action>
  */
-class CategoryFactory extends Factory
+class ActionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,10 +17,12 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
-        $category = ['Travel','Technology','Sports','Food','Food','Others'];
+        $action = Action::all();
         return [
-            'category_Menu' => $category[array_rand($category)],
+            'state'=> rand(1,2),
             'posts_id' => rand(1,50),
+            'users_id' => random_int(1,20),
+            'action_id' => random_int(1,2)
         ];
     }
 }

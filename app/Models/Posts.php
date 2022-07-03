@@ -40,9 +40,17 @@ class Posts extends Model
             $posts->comments()->delete();
         });
 
+        static::deleting(function(Posts $posts){
+            $posts->actionPosts()->delete();
+        });
+
 
         static::updating(function(Posts $posts){
             Cache::forget('index-postsData');
         });
+    }
+
+    public function actionPosts(){
+        return $this->belongsToMany('App\Models\Action', 'posts_action', 'posts_id', 'actions_id', 'users_id')->withTimestamps();
     }
 }

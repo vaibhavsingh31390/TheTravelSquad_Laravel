@@ -59,10 +59,7 @@
    <div class="row">
      <div class="col-sm-12">
       <div class="load_More text-center">
-        <a href="#">
-          <button type="submit"
-              class="btn load_MoreBtn mb-3 mt-1" id="load_More">Load More</button>
-          </a>
+          <button type="submit" class="btn load_MoreBtn mb-3 mt-1" id="load_More">Load More</button>
        </div>
      </div>
    </div>
@@ -74,13 +71,21 @@
   $(document).ready(function () {
       $("#load_More").click(function (e) {
           // console.log('working');
+          $(document).on({
+              ajaxStart: function() { $("#load_More").text('Loading..');},
+              ajaxStop: function() { $("#load_More").text('Load More'); }    
+          });
           $.ajax({
               type: "POST",
               url: "/card-data",
               data: { test: 'test', _token: "{{ csrf_token() }}",count: countAmt},
               dataType: "json",
               success: function (data) {
-                $('#data-col').append(data.cards);
+                if(data.cards == ""){
+                  $("#load_More").hide();
+                }else{
+                  $('#data-col').append(data.cards);
+                }
                 countAmt+=3;
               },
               error: function (error) {

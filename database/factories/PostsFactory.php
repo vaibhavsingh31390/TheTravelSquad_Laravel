@@ -21,9 +21,7 @@ class PostsFactory extends Factory
             'image_url' => 'https://placeimg.com/1024/576/any?' . rand(1, 100),
             'created_at'=> $this->faker->dateTimeBetween('-3 months'),
             'title' => $this->faker->text(),
-            'content' => $this->faker->paragraph(5),
-            'like' => $this->faker->randomDigit(),
-            'dislike' => $this->faker->randomDigit(),
+            'content' => $this->faker->paragraph(10),
             'users_id' => random_int(1,20)
         ];
     }

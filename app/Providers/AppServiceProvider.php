@@ -25,5 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::aliasComponent('components.postCard', 'postCard');
+        Blade::aliasComponent('components.singlePost', 'singlePost');
+        Blade::aliasComponent('components.comments', 'comments');
     }
 }

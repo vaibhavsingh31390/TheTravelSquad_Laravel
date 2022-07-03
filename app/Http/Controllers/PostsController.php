@@ -28,7 +28,6 @@ class PostsController extends Controller
         $posts =  Cache::remember('index-postsData', now()->addDays(2), function(){
             return Posts::with(['comments' => function($query){return $query->LatestComments(); }])->get();
         });
-
         return view('post.posts', ['posts'=> $posts]);
     }
 

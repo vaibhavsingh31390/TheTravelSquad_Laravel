@@ -250,6 +250,7 @@ nav {
 
 .load_MoreBtn{
     background-color: $bg_Color2;
+    width: 150px;
     border: 2px solid $bg_Color2;
     padding-right: 1rem;
     padding-left: 1rem;
@@ -275,6 +276,7 @@ nav {
             margin-left: 25px;
             font-size: 20px;
             color: $txt_Color2;
+            cursor: pointer;
         }
     }
 

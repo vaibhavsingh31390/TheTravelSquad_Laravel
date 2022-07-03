@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('actions', function (Blueprint $table) {
             $table->id();
+            $table->string('type', 20);
             $table->timestamps();
-            $table->string('image_url')->default('https://images.unsplash.com/photo-1505866535066-ccebd6b2b98a');
-            $table->text('title');
-            $table->text('content');
-            $table->unsignedBigInteger('users_id')->index();
-            $table->foreign('users_id')->references('id')->on('users');
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('actions');
     }
 };
