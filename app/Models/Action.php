@@ -17,6 +17,3 @@ class Action extends Model
         return $this->belongsToMany('App\Models\Users', 'posts_action', 'posts_id', 'actions_id')->withTimestamps();
     }
 }
-
-// $post->actionPosts()->attach($a,['state'=>false,'posts_id'=>$post->id, 'users_id'=>$post->users_id]);   
-// $post->actionPosts()->syncWithoutDetaching($action, [1=>['state'=>false], 2=>['actions_id'=>$action->id], 3 =>['posts_id'=>$post->id], 4 =>['users_id'=>$post->users_id]]);

@@ -9,12 +9,18 @@
                 <small style="font-size: 16px;">{{ $posts->created_at->diffForHumans() }}</small>
             </div>
             <div class="like_dislike d-flex justify-content-between">
-                <span class="like" id="like_Btn" data-index-number="{{ $posts->id }}" data-id="{{ $posts->users_id }}">
-                    <i class="far fa-thumbs-up" id="styleChangeLike"></i>
+                <span class="likeContainer">
+                    <label>
+                        <input type="checkbox" name="likeBtn" id="like_Btn" data-index-number="{{ $posts->id }}" data-id="{{ $posts->users_id }}">
+                        <i class="far fa-heart actionIcon" id="like_Btn_Icon"></i>
+                    </label>
                     <span id="like_val">{{ $posts->likeCount()->count() }}</span>
                 </span>
-                <span class="dislike" id="dislike_Btn" data-id="{{ $posts->id }}">
-                    <i class="far fa-thumbs-down" id="styleChangeDislike"></i>
+                <span class="dislikeContainer" >
+                    <label>
+                        <input type="checkbox" name="dislikeBtn" id="dislike_Btn" data-index-number="{{ $posts->id }}" data-id="{{ $posts->users_id }}">
+                        <i class="far fa-thumbs-down actionIcon" id="dislike_Btn_Icon"></i>
+                    </label>
                     <span id="dislike_val">{{ $posts->dislikeCount()->count() }}</span>
                 </span>
             </div>
@@ -33,21 +39,64 @@
         </div>
     </div>
 </div>
-
+<?php
+// dd($posts->filterActions(1,$posts->id, 7)->isEmpty());
+?>
 <script>
-    var likeCount = 2;
     $(document).ready(function () {
+        //Like Action
         $("#like_Btn").click(function (e) {
+            if ($('#like_Btn').is(':checked')) {
+                var requestValue = true;
+                $('#like_Btn_Icon').removeClass('far fa-heart actionIcon').addClass('fas fa-heart actionIcon');
+                $("#dislike_Btn").prop("disabled", true );
+            }else{
+                var requestValue = false;
+                $('#like_Btn_Icon').removeClass('fas fa-heart actionIcon').addClass('far fa-heart actionIcon');
+                $("#dislike_Btn").prop("disabled", false );
+            };
             var likeID = $(this).attr("data-id");
-            var value = $("#like_val").text();
+            var valuePostId = $(this).attr("data-index-number");
+            var valueUserId = $(this).attr("data-id");
             $.ajax({
                 type: "POST",
                 url: "/send-action",
-                data: { action: 'like', value:true , _token: "{{ csrf_token() }}", id: likeID, counter: likeCount},
+                data: { action: 'like', value:requestValue , _token: "{{ csrf_token() }}", postId: valuePostId, userId: valueUserId},
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
-                    likeCount++;
+                    $('#like_val').text(data.count);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    if(error.status == 401){
+                        alert("Please Login To Perform This Function !")
+                    }
+                },
+            });
+        });
+        //Dislike Action
+        $("#dislike_Btn").click(function (e) {
+            if ($('#dislike_Btn').is(':checked')) {
+                var requestValue = true;
+                $('#dislike_Btn_Icon').removeClass('far fa-thumbs-down actionIcon').addClass('fas fa-thumbs-down actionIcon');
+                $("#like_Btn").prop( "disabled", true );
+            }else{
+                var requestValue = false;
+                $('#dislike_Btn_Icon').removeClass('fas fa-thumbs-down actionIcon').addClass('far fa-thumbs-down actionIcon');
+                $("#like_Btn").prop( "disabled", false );
+            };
+            var dislikeID = $(this).attr("data-id");
+            var valuePostId = $(this).attr("data-index-number");
+            var valueUserId = $(this).attr("data-id");
+            $.ajax({
+                type: "POST",
+                url: "/send-action",
+                data: { action: 'dislike', value: requestValue , _token: "{{ csrf_token() }}", postId: valuePostId, userId: valueUserId},
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    $('#dislike_val').text(data.count);
                 },
                 error: function (error) {
                     console.log(error.responseText);

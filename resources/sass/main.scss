@@ -1,18 +1,18 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito");
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 
-$bg_Color1: #DDDDDD;
-$bg_Color2: #30475E;
-$bg_Color3: #F7F5F2;
-$bg_White: #FFFFFF;
+$bg_Color1: #dddddd;
+$bg_Color2: #30475e;
+$bg_Color3: #f7f5f2;
+$bg_White: #ffffff;
 $txt_Color1: #222831;
-$txt_Color2: #F05454;
+$txt_Color2: #f05454;
 $navHeight: 60px;
 $transition: 0.35s ease;
 
@@ -49,11 +49,11 @@ nav {
                 .nav-link {
                     color: $txt_Color1;
 
-                    &:hover{
+                    &:hover {
                         color: $txt_Color2;
                     }
                 }
-                .active{
+                .active {
                     color: $txt_Color2;
                 }
             }
@@ -62,16 +62,15 @@ nav {
                 .dropdown-menu {
                     padding: 0rem 0;
                     background-color: $bg_White;
-                    .active{
+                    .active {
                         background-color: #e9ecef;
-                        .nav-link{
+                        .nav-link {
                             color: $txt_Color2;
                         }
                     }
                 }
 
                 .dropdown-item {
-
                     &:focus,
                     &:active {
                         color: $txt_Color1;
@@ -133,14 +132,11 @@ nav {
             color: $bg_Color2;
 
             &:focus {
-                color: $txt_Color2
+                color: $txt_Color2;
             }
         }
     }
 }
-
-;
-
 
 .body_Content {
     margin-top: calc($navHeight + 1.5rem);
@@ -205,7 +201,7 @@ nav {
 // CARDS
 
 .heading {
-    color: $txt_Color2  !important;
+    color: $txt_Color2 !important;
 }
 
 .card {
@@ -225,7 +221,6 @@ nav {
     }
 
     .card-body {
-
         .card-title,
         .card-text {
             color: $txt_Color1;
@@ -239,7 +234,6 @@ nav {
     }
 }
 
-
 .card {
     img {
         height: 240px;
@@ -248,7 +242,7 @@ nav {
     }
 }
 
-.load_MoreBtn{
+.load_MoreBtn {
     background-color: $bg_Color2;
     width: 150px;
     border: 2px solid $bg_Color2;
@@ -270,13 +264,20 @@ nav {
     }
 
     .like_dislike {
-
-        .like,
-        .dislike {
+        .likeContainer,
+        .dislikeContainer {
             margin-left: 25px;
             font-size: 20px;
             color: $txt_Color2;
-            cursor: pointer;
+            label {
+                .actionIcon {
+                    cursor: pointer;
+                    display: inline-block;
+                }
+                   input[type=checkbox] {
+                    display: none;
+                }
+            }
         }
     }
 
@@ -290,12 +291,12 @@ nav {
             border-radius: 5px;
         }
     }
-    .author{
-        p{
+    .author {
+        p {
             font-size: 1.5em;
             color: $txt_Color1;
             font-weight: 600;
-            .authorName{
+            .authorName {
                 font-size: 1.3rem;
                 color: $txt_Color2;
                 font-weight: 600;
@@ -354,7 +355,7 @@ nav {
             border-radius: 10px;
             padding: 5%;
             background-color: $bg_Color2;
-            border: 3px solid #F05454;
+            border: 3px solid #f05454;
             .user_DataPhoto {
                 height: 50px;
                 width: 50px;
@@ -377,7 +378,7 @@ nav {
         .side-Navigation {
             border-radius: 10px;
             background-color: $bg_Color2;
-            border: 3px solid #F05454;
+            border: 3px solid #f05454;
             .nav {
                 padding-top: 0.5rem;
                 padding-bottom: 0.5rem;
@@ -386,16 +387,17 @@ nav {
                     .nav-link {
                         color: $bg_White;
 
-                        &:hover, &:active {
+                        &:hover,
+                        &:active {
                             background-color: $bg_Color1;
                             color: $txt_Color2;
                         }
                     }
-                    .active{
+                    .active {
                         background-color: $bg_Color1;
                         color: $txt_Color2;
-                        border-bottom: 1px solid #F05454;
-                        border-top: 1px solid #F05454;
+                        border-bottom: 1px solid #f05454;
+                        border-top: 1px solid #f05454;
                     }
                 }
             }
@@ -446,12 +448,13 @@ nav {
                     width: 100%;
                     table-layout: fixed;
                     background-color: $bg_Color1;
-                        td, th{
-                            p{
-                                margin-bottom: 0;
-                                word-break: break-all;
-                            }
+                    td,
+                    th {
+                        p {
+                            margin-bottom: 0;
+                            word-break: break-all;
                         }
+                    }
                 }
 
                 tbody {
@@ -471,13 +474,13 @@ nav {
                 ::-webkit-scrollbar-thumb {
                     background: $txt_Color2;
                 }
-                h1{
+                h1 {
                     color: $txt_Color1;
-                    a{
+                    a {
                         transition: $transition;
                         color: $txt_Color2;
                         text-decoration: none;
-                        &:hover{
+                        &:hover {
                             text-decoration: none;
                             color: $txt_Color1;
                         }
@@ -504,44 +507,43 @@ nav {
 }
 
 // COMMENTS  SECTION
-.comments_Container{
-        .comments_Layout{
-            // min-height: 500px;
-            background-color: $bg_White;
-            border-radius: 5px;
-            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-            h1{
+.comments_Container {
+    .comments_Layout {
+        // min-height: 500px;
+        background-color: $bg_White;
+        border-radius: 5px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        h1 {
+            color: $txt_Color1;
+        }
+        .comments_Form {
+            p {
                 color: $txt_Color1;
-                
-            }
-            .comments_Form{
-                p{
-                    color: $txt_Color1;
-                    a{
-                        text-decoration: none;
-                        color: $txt_Color2;
-                        transition: $transition;
-                        &:hover{
-                            color: $txt_Color1;
-                        }
+                a {
+                    text-decoration: none;
+                    color: $txt_Color2;
+                    transition: $transition;
+                    &:hover {
+                        color: $txt_Color1;
                     }
                 }
-                button {
-                    background-color: $txt_Color2;
-                    color: $bg_White;
+            }
+            button {
+                background-color: $txt_Color2;
+                color: $bg_White;
+                border: 2px solid $txt_Color2;
+                outline: none;
+                &:hover {
+                    background-color: transparent;
                     border: 2px solid $txt_Color2;
+                    color: $txt_Color2;
+                }
+                &:focus {
+                    background-color: transparent;
+                    border: 2px solid $txt_Color2;
+                    color: $txt_Color2;
                     outline: none;
-                    &:hover {
-                        background-color: transparent;
-                        border: 2px solid $txt_Color2;
-                        color: $txt_Color2;
-                    }
-                    &:focus {
-                        background-color: transparent;
-                        border: 2px solid $txt_Color2;
-                        color: $txt_Color2;
-                        outline: none;
-                    }
+                }
             }
         }
         .user_DataPhoto {
@@ -554,11 +556,9 @@ nav {
                 width: 100%;
             }
         }
-        .userName{
+        .userName {
             color: $txt_Color2;
             font-size: 1.2rem;
         }
     }
 }
-
-

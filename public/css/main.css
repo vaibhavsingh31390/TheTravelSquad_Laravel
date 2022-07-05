@@ -11290,25 +11290,25 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  background-color: #F7F5F2;
+  background-color: #f7f5f2;
   height: 100%;
   overflow-x: hidden;
 }
 
 nav {
-  background-color: #DDDDDD;
+  background-color: #dddddd;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
   min-height: 60px;
 }
 nav .navbar-brand {
-  color: #F05454;
+  color: #f05454;
   font-weight: 700;
   text-transform: uppercase;
   word-spacing: 5px;
 }
 nav .navbar-collapse .navbar-nav .nav-item {
   font-weight: 600;
-  border: 2px solid #DDDDDD;
+  border: 2px solid #dddddd;
   padding-right: 0.35rem;
   padding-left: 0.35rem;
 }
@@ -11316,70 +11316,70 @@ nav .navbar-collapse .navbar-nav .nav-item .nav-link {
   color: #222831;
 }
 nav .navbar-collapse .navbar-nav .nav-item .nav-link:hover {
-  color: #F05454;
+  color: #f05454;
 }
 nav .navbar-collapse .navbar-nav .nav-item .active {
-  color: #F05454;
+  color: #f05454;
 }
 nav .navbar-collapse .navbar-nav .dropdown .dropdown-menu {
   padding: 0rem 0;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 nav .navbar-collapse .navbar-nav .dropdown .dropdown-menu .active {
   background-color: #e9ecef;
 }
 nav .navbar-collapse .navbar-nav .dropdown .dropdown-menu .active .nav-link {
-  color: #F05454;
+  color: #f05454;
 }
 nav .navbar-collapse .navbar-nav .dropdown .dropdown-item:focus, nav .navbar-collapse .navbar-nav .dropdown .dropdown-item:active {
   color: #222831;
-  background-color: #DDDDDD;
+  background-color: #dddddd;
 }
 nav .navbar-collapse .navbar-nav .dropdown .accountAction {
   font-weight: 600;
-  border-bottom: 2px solid #DDDDDD;
+  border-bottom: 2px solid #dddddd;
   padding: 0.35rem 0.55rem;
   font-size: 0.95em;
   color: #222831;
 }
 nav .navbar-collapse .navbar-nav .dropdown .accountAction:hover {
-  color: #F05454;
+  color: #f05454;
 }
 nav .navbar-collapse .navbar-nav .admin_Btn {
-  background-color: #30475E;
-  border: 2px solid #30475E;
+  background-color: #30475e;
+  border: 2px solid #30475e;
   padding-right: 1rem;
   padding-left: 1rem;
   transition: 0.35s ease;
   margin-left: 20px;
-  color: #DDDDDD;
+  color: #dddddd;
 }
 nav .navbar-collapse .navbar-nav .admin_Btn .nav-link,
 nav .navbar-collapse .navbar-nav .admin_Btn .dropdown-item {
-  color: #DDDDDD;
+  color: #dddddd;
 }
 nav .navbar-collapse .navbar-nav .admin_Btn:hover {
   background-color: transparent;
-  border: 2px solid #30475E;
-  color: #F05454;
+  border: 2px solid #30475e;
+  color: #f05454;
 }
 nav .navbar-collapse .navbar-nav .admin_Btn:hover .nav-link {
-  color: #F05454;
+  color: #f05454;
 }
 nav .navbar-toggler {
-  border: 2px solid #30475E;
+  border: 2px solid #30475e;
   padding: 0.45rem 0.75rem 0.35rem;
 }
 nav .navbar-toggler:focus {
-  border: 2px solid #F05454;
+  border: 2px solid #f05454;
   outline: none;
   box-shadow: none;
 }
 nav .navbar-toggler .fa-bars {
-  color: #30475E;
+  color: #30475e;
 }
 nav .navbar-toggler .fa-bars:focus {
-  color: #F05454;
+  color: #f05454;
 }
 
 .body_Content {
@@ -11431,7 +11431,7 @@ nav .navbar-toggler .fa-bars:focus {
 }
 
 .heading {
-  color: #F05454 !important;
+  color: #f05454 !important;
 }
 
 .card {
@@ -11453,7 +11453,7 @@ nav .navbar-toggler .fa-bars:focus {
   color: #222831;
 }
 .card .card-footer .date_Added {
-  color: #F05454;
+  color: #f05454;
 }
 
 .card img {
@@ -11464,30 +11464,38 @@ nav .navbar-toggler .fa-bars:focus {
 }
 
 .load_MoreBtn {
-  background-color: #30475E;
+  background-color: #30475e;
   width: 150px;
-  border: 2px solid #30475E;
+  border: 2px solid #30475e;
   padding-right: 1rem;
   padding-left: 1rem;
   transition: 0.35s ease;
   margin-left: 20px;
-  color: #DDDDDD;
+  color: #dddddd;
 }
 .load_MoreBtn:hover {
   background-color: transparent;
-  border: 2px solid #30475E;
-  color: #F05454;
+  border: 2px solid #30475e;
+  color: #f05454;
 }
 
 .post-container .headingPost {
   color: #222831;
 }
-.post-container .like_dislike .like,
-.post-container .like_dislike .dislike {
+.post-container .like_dislike .likeContainer,
+.post-container .like_dislike .dislikeContainer {
   margin-left: 25px;
   font-size: 20px;
-  color: #F05454;
+  color: #f05454;
+}
+.post-container .like_dislike .likeContainer label .actionIcon,
+.post-container .like_dislike .dislikeContainer label .actionIcon {
   cursor: pointer;
+  display: inline-block;
+}
+.post-container .like_dislike .likeContainer label input[type=checkbox],
+.post-container .like_dislike .dislikeContainer label input[type=checkbox] {
+  display: none;
 }
 .post-container .banner img {
   width: 100%;
@@ -11496,7 +11504,7 @@ nav .navbar-toggler .fa-bars:focus {
      object-fit: cover;
   -o-object-position: 50% 50%;
      object-position: 50% 50%;
-  border: 2px solid #F05454;
+  border: 2px solid #f05454;
   border-radius: 5px;
 }
 .post-container .author p {
@@ -11506,7 +11514,7 @@ nav .navbar-toggler .fa-bars:focus {
 }
 .post-container .author p .authorName {
   font-size: 1.3rem;
-  color: #F05454;
+  color: #f05454;
   font-weight: 600;
 }
 
@@ -11523,36 +11531,36 @@ nav .navbar-toggler .fa-bars:focus {
   color: #222831;
 }
 .form_Container button {
-  background-color: #30475E;
-  color: #FFFFFF;
+  background-color: #30475e;
+  color: #ffffff;
   outline: none;
   border: none;
 }
 .form_Container button:hover {
-  background-color: #F05454;
+  background-color: #f05454;
   color: #222831;
 }
 .form_Container button:focus {
-  background-color: #30475E;
-  color: #FFFFFF;
+  background-color: #30475e;
+  color: #ffffff;
   outline: none;
   border: none;
 }
 .form_Container .click_EventPrimaryForm {
-  color: #F05454;
+  color: #f05454;
   font-weight: 700;
   cursor: pointer;
 }
 
 .dashArea .side-Nav {
-  background-color: #DDDDDD;
+  background-color: #dddddd;
   min-height: 100vh;
 }
 .dashArea .side-Nav .user_Data {
   border-radius: 10px;
   padding: 5%;
-  background-color: #30475E;
-  border: 3px solid #F05454;
+  background-color: #30475e;
+  border: 3px solid #f05454;
 }
 .dashArea .side-Nav .user_Data .user_DataPhoto {
   height: 50px;
@@ -11565,52 +11573,52 @@ nav .navbar-toggler .fa-bars:focus {
 }
 .dashArea .side-Nav .user_Data .userDataName p {
   margin-bottom: 0;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .dashArea .side-Nav .side-Navigation {
   border-radius: 10px;
-  background-color: #30475E;
-  border: 3px solid #F05454;
+  background-color: #30475e;
+  border: 3px solid #f05454;
 }
 .dashArea .side-Nav .side-Navigation .nav {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 .dashArea .side-Nav .side-Navigation .nav .nav-item .nav-link {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .dashArea .side-Nav .side-Navigation .nav .nav-item .nav-link:hover, .dashArea .side-Nav .side-Navigation .nav .nav-item .nav-link:active {
-  background-color: #DDDDDD;
-  color: #F05454;
+  background-color: #dddddd;
+  color: #f05454;
 }
 .dashArea .side-Nav .side-Navigation .nav .nav-item .active {
-  background-color: #DDDDDD;
-  color: #F05454;
-  border-bottom: 1px solid #F05454;
-  border-top: 1px solid #F05454;
+  background-color: #dddddd;
+  color: #f05454;
+  border-bottom: 1px solid #f05454;
+  border-top: 1px solid #f05454;
 }
 .dashArea .dashData {
-  background-color: #30475E;
+  background-color: #30475e;
 }
 .dashArea .dashData h2, .dashArea .dashData .h2 {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .dashArea .dashData .btn-search,
 .dashArea .dashData .btn-Dashboard {
-  background-color: #F05454;
-  color: #FFFFFF;
-  border: 2px solid #F05454;
+  background-color: #f05454;
+  color: #ffffff;
+  border: 2px solid #f05454;
 }
 .dashArea .dashData .btn-search:hover,
 .dashArea .dashData .btn-Dashboard:hover {
   background-color: transparent;
-  color: #F05454;
+  color: #f05454;
 }
 .dashArea .dashData .actionNav_Responsive .user_DataPhoto {
   height: 33px;
   width: 33px;
   border-radius: 50%;
-  border: 1px solid #F05454;
+  border: 1px solid #f05454;
   overflow: hidden;
 }
 .dashArea .dashData .actionNav_Responsive .user_DataPhoto img {
@@ -11626,9 +11634,10 @@ nav .navbar-toggler .fa-bars:focus {
   display: table;
   width: 100%;
   table-layout: fixed;
-  background-color: #DDDDDD;
+  background-color: #dddddd;
 }
-.dashArea .dashData .dataSection table thead td p, .dashArea .dashData .dataSection table thead th p,
+.dashArea .dashData .dataSection table thead td p,
+.dashArea .dashData .dataSection table thead th p,
 .dashArea .dashData .dataSection table tbody td p,
 .dashArea .dashData .dataSection table tbody th p,
 .dashArea .dashData .dataSection table tr td p,
@@ -11646,17 +11655,17 @@ nav .navbar-toggler .fa-bars:focus {
 .dashArea .dashData .dataSection table ::-webkit-scrollbar {
   width: 5px;
   position: fixed;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 .dashArea .dashData .dataSection table ::-webkit-scrollbar-thumb {
-  background: #F05454;
+  background: #f05454;
 }
 .dashArea .dashData .dataSection table h1, .dashArea .dashData .dataSection table .h1 {
   color: #222831;
 }
 .dashArea .dashData .dataSection table h1 a, .dashArea .dashData .dataSection table .h1 a {
   transition: 0.35s ease;
-  color: #F05454;
+  color: #f05454;
   text-decoration: none;
 }
 .dashArea .dashData .dataSection table h1 a:hover, .dashArea .dashData .dataSection table .h1 a:hover {
@@ -11664,19 +11673,19 @@ nav .navbar-toggler .fa-bars:focus {
   color: #222831;
 }
 .dashArea .newPost {
-  background-color: #30475E;
+  background-color: #30475e;
 }
 .dashArea .newPost .content_wrapper {
   min-height: calc(93vh - 60px);
-  background-color: #DDDDDD;
+  background-color: #dddddd;
 }
 .dashArea .newPost .content_wrapper h2, .dashArea .newPost .content_wrapper .h2 {
-  color: #F05454;
-  border-bottom: 1px solid #FFFFFF;
+  color: #f05454;
+  border-bottom: 1px solid #ffffff;
 }
 
 .comments_Container .comments_Layout {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
@@ -11688,27 +11697,27 @@ nav .navbar-toggler .fa-bars:focus {
 }
 .comments_Container .comments_Layout .comments_Form p a {
   text-decoration: none;
-  color: #F05454;
+  color: #f05454;
   transition: 0.35s ease;
 }
 .comments_Container .comments_Layout .comments_Form p a:hover {
   color: #222831;
 }
 .comments_Container .comments_Layout .comments_Form button {
-  background-color: #F05454;
-  color: #FFFFFF;
-  border: 2px solid #F05454;
+  background-color: #f05454;
+  color: #ffffff;
+  border: 2px solid #f05454;
   outline: none;
 }
 .comments_Container .comments_Layout .comments_Form button:hover {
   background-color: transparent;
-  border: 2px solid #F05454;
-  color: #F05454;
+  border: 2px solid #f05454;
+  color: #f05454;
 }
 .comments_Container .comments_Layout .comments_Form button:focus {
   background-color: transparent;
-  border: 2px solid #F05454;
-  color: #F05454;
+  border: 2px solid #f05454;
+  color: #f05454;
   outline: none;
 }
 .comments_Container .comments_Layout .user_DataPhoto {
@@ -11721,6 +11730,6 @@ nav .navbar-toggler .fa-bars:focus {
   width: 100%;
 }
 .comments_Container .comments_Layout .userName {
-  color: #F05454;
+  color: #f05454;
   font-size: 1.2rem;
 }

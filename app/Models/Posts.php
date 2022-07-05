@@ -61,4 +61,7 @@ class Posts extends Model
     public function dislikeCount(){
         return $this->actionPosts()->wherePivot('actions_id','=', 2);
     }
+    public function filterActions($action, $post, $user){
+        return $this->actionPosts()->wherePivot('actions_id','=', $action)->wherePivot('posts_id','=', $post)->wherePivot('users_id','=', $user)->get();
+    }
 }
