@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Posts;
 use App\Models\Action;
+use App\Models\Comments;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePost;
 use App\Http\Controllers\Controller;
@@ -14,15 +15,7 @@ use Symfony\Component\Console\Input\Input;
 class AjaxController extends Controller
 {
 
-    public function index(){
-
-        $data = Posts::orderBy('created_at', 'desc')->take(5)->get();
-        $allCards = Cache::remember('Index', now()->addWeek(1), function() use($data){
-            return $data;
-        });
-        return view('index')->with('postsData' , $allCards);
-    }
-
+    //Index Page LoadMore Data
     public function loadMoreData(Request $request)
     {
         if($request->ajax()){
@@ -31,15 +24,13 @@ class AjaxController extends Controller
             return response()->json(['success'=>true, 'cards' => $html]);
         }
     }
-    public function loadedData(){
-        return view('components.ajax');
-    }
 
+    //Action Like, Dislike 
     public function incrementDecrement(Request $request)
     {
         $id  = $request->input('postId');
         $post = Posts::findOrFail($id);
-        $loggedUser = $request->input('userId');
+        $loggedUser = Auth::user()->id;
         //Duplicate Check
         if (!$post->filterActions(1, $id, $loggedUser)->isEmpty() && $request->input('value') == "true") {
             return response()->json(['success' => true, 'action' => $request->input('action'), 'Message' => "Entry Exists"]);
@@ -64,6 +55,8 @@ class AjaxController extends Controller
                     $test = $post->actionPosts()->wherePivot('actions_id', '=', 2)->wherePivot('posts_id', '=', $post->id)->wherePivot('users_id', '=', $loggedUser)->detach();
                     return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->dislikeCount()->count(), 'Message' => "Detached"]);
                 }
+            } elseif($request->input('action') == "verify"){
+                    return response()->json(['success' => true, 'likeCount' => $post->filterActions(1,$post->id,$loggedUser), 'dislikeCount' => $post->filterActions(2,$post->id,$loggedUser), 'Message' => "Data is here"]);
             } else {
                 abort(404);
             }
@@ -71,7 +64,20 @@ class AjaxController extends Controller
         }
     }
 
-    public function likeDislike(){
-        return view('components.ajax');
+    //Comments Post And Fetch
+    public function commentsSave(Request $request){
+        if($request->ajax()){
+             $post = Posts::findOrFail($request->input('postId'));
+              $comment = Comments::create([
+                  'comment' =>  $request->input('formData'),
+                  'posts_id' => $request->input('postId'),
+                  'users_id' =>  Auth::user()->id,
+              ]);
+           
+            $posts = Posts::find($request->input('postId'));
+            $comments = $posts->comments()->LatestComments()->get();
+            $html = view('components.ajax')->with(compact(['posts','comments']))->render();
+            return response()->json(['success'=>true, 'comments'=>$html]);
+        }
     }
 }

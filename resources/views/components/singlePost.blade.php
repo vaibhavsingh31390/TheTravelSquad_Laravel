@@ -39,12 +39,53 @@
         </div>
     </div>
 </div>
-<?php
-// dd($posts->filterActions(1,$posts->id, 7)->isEmpty());
-?>
+
+{{-- AUTH USER ACTION CHECK --}}
+@auth
+    <script>
+        $(window).on("load", function () {
+            var valuePostId = $('#like_Btn').attr("data-index-number");
+            var valueUserId = $('#like_Btn').attr("data-id");
+            $.ajax({
+                type: "POST",
+                url: "/send-action",
+                data: { action: 'verify', _token: "{{ csrf_token() }}", postId: valuePostId, userId: valueUserId},
+                dataType: "json",
+                success: function (data) {
+                    if(!jQuery.isEmptyObject(data.likeCount[0])){
+                        $("#like_Btn").prop('checked', true);
+                        console.log('checked like');
+                    }else if(!jQuery.isEmptyObject(data.dislikeCount[0])){
+                        $("#dislike_Btn").prop('checked', true);
+                        console.log('checked dislike');
+                    }else{
+                        $("#like_Btn").prop('checked', false);
+                        $("#dislike_Btn").prop('checked', false);
+                    }
+                    // CHECKED DONE
+                    if ($('#like_Btn').is(':checked')) {
+                        $('#like_Btn_Icon').removeClass('far fa-heart actionIcon').addClass('fas fa-heart actionIcon');
+                        $("#dislike_Btn").prop("disabled", true );
+                    }else{
+                        $('#like_Btn_Icon').removeClass('fas fa-heart actionIcon').addClass('far fa-heart actionIcon');
+                        $("#dislike_Btn").prop("disabled", false );
+                    };
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    if(error.status == 401){
+                    alert("Please Login To Perform This Function !")
+                    }
+                },
+            });
+        });
+    </script>
+@endauth
+
+
 <script>
     $(document).ready(function () {
-        //Like Action
+         //Like Action
         $("#like_Btn").click(function (e) {
             if ($('#like_Btn').is(':checked')) {
                 var requestValue = true;
@@ -71,6 +112,7 @@
                     console.log(error.responseText);
                     if(error.status == 401){
                         alert("Please Login To Perform This Function !")
+                        $('#like_Btn_Icon').removeClass('fas fa-heart actionIcon').addClass('far fa-heart actionIcon');
                     }
                 },
             });
@@ -102,6 +144,7 @@
                     console.log(error.responseText);
                     if(error.status == 401){
                         alert("Please Login To Perform This Function !")
+                        $('#like_Btn_Icon').removeClass('fas fa-heart actionIcon').addClass('far fa-heart actionIcon');
                     }
                 },
             });

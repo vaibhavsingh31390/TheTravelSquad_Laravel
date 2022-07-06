@@ -1,7 +1,6 @@
 <?php
 use App\Models\User;
 ?>
-<div class="container px-4 mb-4 comments_Container">
     <div class="row">
         <div class="col-md-12 col-lg-12 col-sm-12 comments_Layout">
             <h1 class="mt-3 headingPost">Comments</h1>
@@ -9,16 +8,15 @@ use App\Models\User;
             <div class="col-md-12 col-lg-12 col-sm-12 comments_Form">
             @guest
                 <p>Please <a href="{{ route('login') }}">login</a> or <a href="{{ route('register') }}">register</a>  to post a comment!</p>
+
             @else
-                <form action="{{ route('add.comment', ['id' => $posts->id]) }}" method="post" id="postComment">
+                <form method="post" id="postCommentForm">
                     @csrf
-                    @method('PUT')
                     <div class="form-floating mb-2">
                         <textarea name="comment" class="form-control" placeholder="Leave a comment here" id="comment" style="height: 100px"></textarea>
                         <label for="comment">Post yout comment here..</label>
                     </div>
-                    {{-- <input type="hidden" name="posts_id" id="postId" value="{{ $posts->id }}"> --}}
-                    <button type="submit" class="btn">Post Now</button>
+                    <button type="submit" class="btn" id="post_Comment_Btn">Post Now</button>
                 </form>
             @endguest
             </div>
@@ -55,6 +53,28 @@ use App\Models\User;
             @endforelse
 
         </div>
-
     </div>
-</div>
+<script>
+    $(document).ready(function () {
+         //Like Action
+        $("#post_Comment_Btn").click(function (e) {
+            e.preventDefault();
+            console.log('Clicked');
+            var form = $('#comment').val();
+            $.ajax({
+                type: "POST",
+                url: "/post-comments",
+                data: { posted_Comment:"posted_Comment", _token: "{{ csrf_token() }}", formData: form, postId: {{ $posts->id }}},
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    $('#comments_Container').html(data.comments);
+                    alert('Comment Added');
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                },
+            });
+        });
+    });
+</script>

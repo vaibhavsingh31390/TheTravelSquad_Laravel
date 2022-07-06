@@ -1,6 +1,6 @@
 
 <?php
-if (isset($_POST['test'])) {
+if (isset($_POST['load_Data'])) {
     ?>
         @foreach ($allCards as $card)
         <div class="col">
@@ -12,5 +12,12 @@ if (isset($_POST['test'])) {
         @endforeach
         <?php
 }
+if (isset($_POST['posted_Comment'])) {
+    ?>
+            @comments(['posts' => $posts, 'comments' => $comments])
+            @endcomments
+        <?php
+}
+
 ?>
 

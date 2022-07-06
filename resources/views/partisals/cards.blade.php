@@ -78,7 +78,7 @@
           $.ajax({
               type: "POST",
               url: "/card-data",
-              data: { test: 'test', _token: "{{ csrf_token() }}",count: countAmt},
+              data: { load_Data: 'load_Data', _token: "{{ csrf_token() }}",count: countAmt},
               dataType: "json",
               success: function (data) {
                 if(data.cards == ""){

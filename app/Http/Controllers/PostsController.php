@@ -25,7 +25,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts =  Cache::remember('index-postsData', now()->addDays(2), function(){
+        $posts =  Cache::remember('index-postsData', now()->addMinutes(10), function(){
             return Posts::with(['comments' => function($query){return $query->LatestComments(); }])->get();
         });
         return view('post.posts', ['posts'=> $posts]);
@@ -128,16 +128,5 @@ class PostsController extends Controller
         $deletePost->delete();
 
         return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
-    }
-
-    public function addComment(Request $request, $id){
-        
-        $post = Posts::findOrFail($id);
-        $comment = Comments::create([
-            'comment' =>  $request->comment,
-            'posts_id' => $post->id,
-            'users_id' =>  Auth::user()->id,
-        ]);
-        return redirect()->back();
     }
 }

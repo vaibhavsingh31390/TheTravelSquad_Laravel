@@ -20,9 +20,17 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public function index(){
+        $data = Posts::orderBy('created_at', 'desc')->take(5)->get();
+        $allCards = Cache::remember('Index', now()->addWeek(1), function() use($data){
+            return $data;
+        });
+        return view('index')->with('postsData' , $allCards);
+    }
+
     public function category($category){
 
-        $categoryCards = Cache::remember('Post_By_Category', now()->addDay(1), function() use ($category){
+        $categoryCards = Cache::remember('Post_By_Category', now()->addMinutes(10), function() use ($category){
             return Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->get(); 
         });
         return view('post.category', ['cardsData'=>$categoryCards]);

@@ -26,4 +26,5 @@ Route::resource('posts', PostsController::class);
 Route::get('/type/{category?}', 'Controller@category')->name('postByCategory');
 Route::get('/userDashboard/{action?}', 'Controller@userDash')->middleware('auth')->name('user.Dashboard');
 Auth::routes();
-Route::put('posts/{id}/post-comments', [PostsController::class, 'addComment'])->name('add.comment');
+Route::post('/post-comments', 'AjaxController@commentsSave')->name('add.comment');
+Route::get('/post-comments',  'AjaxController@commentsFetch')->name('get.comment');
