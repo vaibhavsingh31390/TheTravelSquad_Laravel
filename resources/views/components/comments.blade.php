@@ -16,7 +16,9 @@ use App\Models\User;
                         <textarea name="comment" class="form-control" placeholder="Leave a comment here" id="comment" style="height: 100px"></textarea>
                         <label for="comment">Post yout comment here..</label>
                     </div>
-                    <button type="submit" class="btn" id="post_Comment_Btn">Post Now</button>
+                    <button type="submit" class="btn" id="post_Comment_Btn">
+                        Post Now
+                    </button>
                 </form>
             @endguest
             </div>
@@ -59,7 +61,18 @@ use App\Models\User;
          //Like Action
         $("#post_Comment_Btn").click(function (e) {
             e.preventDefault();
-            console.log('Clicked');
+            $(document).on({
+              ajaxStart: function() { 
+                $("#post_Comment_Btn").text('Posting ');
+                jQuery('<i>', {
+                    class: 'fa fa-spinner fa-spin',
+                }).appendTo('#post_Comment_Btn');
+            },
+              ajaxStop: function() { 
+                $("#post_Comment_Btn").text('Post Now'); 
+            }    
+            });
+            
             var form = $('#comment').val();
             $.ajax({
                 type: "POST",
@@ -69,7 +82,6 @@ use App\Models\User;
                 success: function (data) {
                     console.log(data);
                     $('#comments_Container').html(data.comments);
-                    alert('Comment Added');
                 },
                 error: function (error) {
                     console.log(error.responseText);

@@ -18,6 +18,5 @@ if (isset($_POST['posted_Comment'])) {
             @endcomments
         <?php
 }
-
 ?>
 

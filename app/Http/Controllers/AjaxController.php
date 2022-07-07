@@ -19,7 +19,7 @@ class AjaxController extends Controller
     public function loadMoreData(Request $request)
     {
         if($request->ajax()){
-            $allCards = Posts::orderBy('created_at', 'desc')->skip($request->input('count'))->limit(3)->get();
+            $allCards = Posts::orderBy('created_at', 'desc')->skip($request->input('count'))->limit(6)->get();
             $html = view('components.ajax')->with(compact('allCards'))->render();
             return response()->json(['success'=>true, 'cards' => $html]);
         }
@@ -38,7 +38,6 @@ class AjaxController extends Controller
             return response()->json(['success' => true, 'action' => $request->input('action'), 'Message' => "Entry Exists 2nd"]);
         } 
         else {
-
             if ($request->input('action') == "like") {
                 if ($request->input('value') == "true") {
                     $post->actionPosts()->attach(1, ['posts_id' => $post->id, 'users_id' => $loggedUser]);
@@ -52,15 +51,15 @@ class AjaxController extends Controller
                     $post->actionPosts()->attach(2, ['posts_id' => $post->id, 'users_id' => $loggedUser]);
                     return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->dislikeCount()->count(), 'Message' => "Attached"]);
                 } else {
-                    $test = $post->actionPosts()->wherePivot('actions_id', '=', 2)->wherePivot('posts_id', '=', $post->id)->wherePivot('users_id', '=', $loggedUser)->detach();
+                    $post->actionPosts()->wherePivot('actions_id', '=', 2)->wherePivot('posts_id', '=', $post->id)->wherePivot('users_id', '=', $loggedUser)->detach();
                     return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->dislikeCount()->count(), 'Message' => "Detached"]);
                 }
             } elseif($request->input('action') == "verify"){
-                    return response()->json(['success' => true, 'likeCount' => $post->filterActions(1,$post->id,$loggedUser), 'dislikeCount' => $post->filterActions(2,$post->id,$loggedUser), 'Message' => "Data is here"]);
+
+                    return response()->json(['success' => true, 'likeCount' => $post->filterActions(1,$post->id,$loggedUser), 'dislikeCount' => $post->filterActions(2,$post->id,$loggedUser)]);
             } else {
                 abort(404);
             }
-
         }
     }
 

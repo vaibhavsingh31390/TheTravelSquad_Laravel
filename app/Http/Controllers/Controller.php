@@ -21,7 +21,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function index(){
-        $data = Posts::orderBy('created_at', 'desc')->take(5)->get();
+        $data = Posts::orderBy('created_at', 'desc')->take(6)->get();
         $allCards = Cache::remember('Index', now()->addWeek(1), function() use($data){
             return $data;
         });

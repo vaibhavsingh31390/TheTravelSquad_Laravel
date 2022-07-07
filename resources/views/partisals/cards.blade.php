@@ -45,7 +45,7 @@
 
  <div class="container mt-1 mb-3 px-2">
    <div class="row row-cols-1 row-cols-md-3 g-4" id="data-col">
-     @foreach ($postsData->take(3) as $card)
+     @foreach ($postsData->take(6) as $card)
      <div class="col">
       @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->image_url, 'title'=>$card->title, 
       'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
@@ -67,7 +67,7 @@
 
 
  <script>
-  var countAmt = 5;
+  var countAmt = 6;
   $(document).ready(function () {
       $("#load_More").click(function (e) {
           // console.log('working');
@@ -86,7 +86,7 @@
                 }else{
                   $('#data-col').append(data.cards);
                 }
-                countAmt+=3;
+                countAmt+=6;
               },
               error: function (error) {
                   console.log(error.responseText);
