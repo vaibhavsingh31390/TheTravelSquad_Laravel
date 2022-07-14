@@ -5,18 +5,15 @@
     $post = Posts::find($id);
     }
 ?>
+            <div class="mb-2">
+                @errors
+                @enderrors
+            </div>
+            
             @csrf
             <div class="mb-3">
-                <label for="image_url" class="form-label">Image (url/hosted links only)</label>
-                <input type="text" class="form-control  {{ $errors->has('image_url') ? 'is-invalid' : '' }}"
-                    id="title" name="image_url" value="{{ old('image_url', optional($post ?? null)->image_url) }}">
-                @if ($errors->has('image_url'))
-                    <span class="invalid-feedback">
-                        <strong>
-                            {{ $errors->first() }}
-                        </strong>
-                    </span>
-                @endif
+                <label for="postImage" class="form-label">Upload Thumbnail</label>
+                <input id="upload" name="postImage" type="file" class="form-control border-0">
             </div>
 
             <div class="mb-3">
@@ -30,38 +27,17 @@
                     <option value="Fashion">Fashion</option>
                     <option value="Others">Others</option>
                 </select>
-                @if ($errors->has('image_url'))
-                    <span class="invalid-feedback">
-                        <strong>
-                            {{ $errors->first() }}
-                        </strong>
-                    </span>
-                @endif
             </div>
 
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control  {{ $errors->has('title') ? 'is-invalid' : '' }}"
                     id="title" name="title" value="{{ old('title', optional($post  ?? null)->title) }}">
-                @if ($errors->has('title'))
-                    <span class="invalid-feedback">
-                        <strong>
-                            {{ $errors->first() }}
-                        </strong>
-                    </span>
-                @endif
             </div>
 
             <div class="mb-3">
                 <label for="content" class="form-label">Content</label>
-                <textarea class="form-control" name="content" id="Textarea1" rows="10">{{ old('content', optional($post  ?? null)->content) }}</textarea>
-                @if ($errors->has('content'))
-                    <span class="invalid-feedback">
-                        <strong>
-                            {{ $errors->first() }}
-                        </strong>
-                    </span>
-                @endif
+                <textarea class="form-control" name="content" id="Textarea1" rows="7">{{ old('content', optional($post  ?? null)->content) }}</textarea>
             </div>
 
             <div class="mb-0">

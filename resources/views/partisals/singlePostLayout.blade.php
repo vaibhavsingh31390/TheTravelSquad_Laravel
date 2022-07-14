@@ -12,5 +12,3 @@ use App\Models\Posts;
     @endcomments
 </div>
 
-
-

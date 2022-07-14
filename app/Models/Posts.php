@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Cache;
 
 class Posts extends Model
 {
-    protected $fillable = ['image_url', 'title', 'content', 'users_id'];
+    protected $fillable = ['postImage', 'title', 'content', 'users_id'];
     use HasFactory;
 
     public function user(){
@@ -24,6 +24,10 @@ class Posts extends Model
 
     public function category(){
         return $this->hasMany('App\Models\Category');
+    }
+
+    public function media(){
+        return $this->hasOne('App\Models\Media');
     }
 
     public function scopeLatest(Builder $query){

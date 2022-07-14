@@ -25,7 +25,7 @@ class StorePost extends FormRequest
     public function rules()
     {
         return [
-            'image_url'=> 'required|min:5|max:200',
+            'postImage'=> 'image|mimes:jpg,jpeg,png,gif,svg',
             'title' => 'required|min:5|max:200',
             'content'=> 'required|min:50|max:8000', 
             'users_id' => 'required|min:1|max:100000',
