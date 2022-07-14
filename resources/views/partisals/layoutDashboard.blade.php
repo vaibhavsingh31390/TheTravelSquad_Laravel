@@ -58,10 +58,6 @@ return call_user_func_array('Request::is', (array)$path) ? $active : '';
     $(document).ready(function () {
         $("#toggleMyPost").click(function (e) {
             console.log('toggleMyPost');
-            //   $(document).on({
-            //       ajaxStart: function() { $("#load_More").text('Loading..');},
-            //       ajaxStop: function() { $("#load_More").text('Load More'); }    
-            //   });
             $.ajax({
                 type: "POST",
                 url: "/userDashboard/myPosts",
