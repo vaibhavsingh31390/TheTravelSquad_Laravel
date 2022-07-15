@@ -66,33 +66,3 @@
  </div>
 
 
- <script>
-  var countAmt = 6;
-  $(document).ready(function () {
-      $("#load_More").click(function (e) {
-          // console.log('working');
-          $(document).on({
-              ajaxStart: function() { $("#load_More").text('Loading..');},
-              ajaxStop: function() { $("#load_More").text('Load More'); }    
-          });
-          $.ajax({
-              type: "POST",
-              url: "/card-data",
-              data: { load_Data: 'load_Data', _token: "{{ csrf_token() }}",count: countAmt},
-              dataType: "json",
-              success: function (data) {
-                if(data.cards == ""){
-                  $("#load_More").hide();
-                }else{
-                  $('#data-col').append(data.cards);
-                }
-                countAmt+=6;
-              },
-              error: function (error) {
-                  console.log(error.responseText);
-                  console.log('error');
-              },
-          });
-      });
-  });
-</script>

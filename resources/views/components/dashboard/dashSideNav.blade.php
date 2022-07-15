@@ -12,13 +12,13 @@
     <div class="side-Navigation mt-4">
         <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link {{ set_active(['userDashboard']) }}" href="#" id="toggleDashboardHome">Dashboard</a>
+            <a class="nav-link toggleDashboardHome" href="#" id="toggleDashboardHome">Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ set_active(['userDashboard/myPosts']) }}" href="#" id="toggleMyPost">My Posts</a>
+            <a class="nav-link toggleMyPost" href="#" id="toggleMyPost">My Posts</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ set_active(['userDashboard/newPosts']) }}" href="#" id="toggleNewPost">New Posts</a>
+            <a class="nav-link toggleNewPost" href="#" id="toggleNewPost">New Posts</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Total Likes</a>
@@ -30,3 +30,12 @@
     </div>
 </div>
 {{-- SIDENAV --}}
+<script>
+    $(document).ready(function() {
+        $(".nav-link").first().addClass("active");
+        $(".nav-link").click(function () {
+            $(".nav-link").removeClass("active");
+            $(this).addClass("active");   
+        });
+    });
+</script>

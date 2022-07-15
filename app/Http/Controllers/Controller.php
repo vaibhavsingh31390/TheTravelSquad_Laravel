@@ -20,6 +20,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function index(){
+        Cache::forget('Index');
         $data = Posts::orderBy('created_at', 'desc')->take(6)->get();
         $allCards = Cache::remember('Index', now()->addWeek(1), function() use($data){
             return $data;
@@ -35,7 +36,26 @@ class Controller extends BaseController
         return view('post.category', ['cardsData'=>$categoryCards]);
     }
 
-    public function userDash(){
+    public function userDash(Request $request){
+        $value = $request->input('value');
+        if($request->ajax()){
+            if($value == "Home"){
+                $html = view('components.dashboard.dashHome')->render();
+                return response()->json(['success'=>true, 'Data' => $html]);
+            }elseif($value == "NewPost"){
+                $html = view('components.dashboard.dashNewPost')->render();
+                return response()->json(['success'=>true, 'Data' => $html]);
+            }
+          
+        }
+        return view('auth.userDashboard');
+    }
+
+    public function userDashNewPost(Request $request){
+        if($request->ajax()){
+            $html = view('components.dashboard.dashHome')->render();
+            return response()->json(['success'=>true, 'Data' => $html]);
+        }
         return view('auth.userDashboard');
     }
 

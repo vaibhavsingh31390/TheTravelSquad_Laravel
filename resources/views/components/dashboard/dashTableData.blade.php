@@ -34,17 +34,11 @@
                         <p> {{ $data->category()->first()->category_Menu ?? 'No Category' }}</p>
                     </td>
                     <td class="text-center">
-                        <form action="{{ route('posts.destroy', ['post'=>$data->id]) }}" method="post">
+                        <form class="delete_edit_Form" action="#" method="POST">
                             @csrf
                             @method('DELETE')
-                            <a href="{{ route('user.Dashboard', ['action'=>'editPosts', 'id'=>$data->id]) }}">
-                                <button data-id="{{ $data->id }}" type="button"
-                                    class="btn btn-Dashboard">Edit</button>
-                            </a> 
-                            <a href="{{ route('posts.destroy', ['post' => $data->id]) }}">
-                                <button data-id="{{ $data->id }}" type="submit"
-                                    class="btn btn-Dashboard ms-4">Delete</button>
-                                </a>
+                                <button class="btn btn-Dashboard" type="button" id="toggleEdit" data-id="{{ $data->id }}">Edit</button>
+                                <button class="btn btn-Dashboard ms-4" type="submit" id="toggleDelete" data-id="{{ $data->id }}">Delete</button>
                         </form>
                     </td>
                 <tr>

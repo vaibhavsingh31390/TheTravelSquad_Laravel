@@ -27,8 +27,8 @@
                         </form>
                     </th>
                     <th class="text-center" style="width: 3%" scope="row">{{ $findPost->id }}</th>
-                    <td style="width: 20%">{{ $findPost->title }}</td>
-                    <td style="width: 40%">{{ Str::of($findPost->content)->words(20) }}</td>
+                    <td style="width: 20%">{{ Str::of($findPost->title)->words(5) }}</td>
+                    <td style="width: 40%">{{ Str::of($findPost->content)->words(10) }}</td>
                     <td style="width: 15%">
                         <select data-id="{{ $findPost->id }}" class="form-select"
                             aria-label="Default select example">
@@ -41,17 +41,11 @@
                         </select>
                     </td>
                     <td class="text-center">
-                        <form action="{{ route('posts.destroy', ['post'=>$findPost->id]) }}" method="post">
+                        <form action="#" method="post" id="delete_edit_Form">
                             @csrf
                             @method('DELETE')
-                            <a href="{{ route('user.Dashboard', ['action'=>'editPosts', 'id'=>$findPost->id]) }}">
-                                <button data-id="{{ $findPost->id }}" type="button"
-                                    class="btn btn-Dashboard">Edit</button>
-                            </a> 
-                            <a href="{{ route('posts.destroy', ['post' => $findPost->id]) }}">
-                                <button data-id="{{ $findPost->id }}" type="submit"
-                                    class="btn btn-Dashboard ms-4">Delete</button>
-                                </a>
+                                <button data-id="{{ $findPost->id }}" type="button" class="btn btn-Dashboard" id="edit_This_Post">Edit</button>
+                                <button data-id="{{ $findPost->id }}" type="submit" class="btn btn-Dashboard ms-4" id="delete_This_Post">Delete</button>
                         </form>
                     </td>
                 <tr>
@@ -66,3 +60,8 @@
         </table>
     </div>
 </div>
+<script>
+    $(".delete_edit_Form").submit(function(e) {
+        e.preventDefault();
+    });
+</script>

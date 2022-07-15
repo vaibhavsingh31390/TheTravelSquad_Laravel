@@ -1,10 +1,3 @@
-<?php
-    use App\Models\Posts;
-    if(isset($_GET['id'])){
-    $id=$_GET['id'];
-    $post = Posts::find($id);
-    }
-?>
             <div class="mb-2">
                 @errors
                 @enderrors

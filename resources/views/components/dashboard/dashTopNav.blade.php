@@ -8,7 +8,7 @@
                 </span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <form class="d-flex w-50" method="GET" action="{{ route('user.Dashboard', ['action'=>'search']) }}">
+                <form class="d-flex w-50" method="POST" action="{{ route('user.Dashboard', ['action'=>'search']) }}">
                     <input class="form-control me-2" name="search_Query" type="search" placeholder="Search Posts.." id="serach_String"
                         required>
                     <button class="btn btn-search" type="submit" id="toggleSearchPost">Search</button>
@@ -25,10 +25,10 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                             <li class="dropdown-item">
-                                <a class="nav-link" aria-current="page" href="#" id="toggleMyPost">My Posts</a>
+                                <a class="nav-link toggleMyPost"  aria-current="page" href="#" id="toggleMyPost">My Posts</a>
                             </li>
                             <li class="dropdown-item">
-                                <a class="nav-link" href="#" id="toggleNewPost">New
+                                <a class="nav-link toggleNewPost" href="#" id="toggleNewPost">New
                                     Posts</a>
                             </li>
                             <li class="dropdown-item">
@@ -43,7 +43,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                             <li>
-                                <a class="dropdown-item accountAction" href="" id="toggleDashboardHome">Dashboard</a>
+                                <a class="dropdown-item accountAction toggleDashboardHome" href="#" id="toggleDashboardHome">Dashboard</a>
                             </li>
                             <li>
                                 <a class="dropdown-item accountAction" href="{{ route('logout') }}"
@@ -68,3 +68,12 @@
         </div>
     </nav>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $(".dropdown-item").click(function () {
+            $(".dropdown-item").removeClass("active");
+            $(this).addClass("active");   
+        });
+    });
+</script>

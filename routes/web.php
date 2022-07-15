@@ -24,6 +24,8 @@ Route::post('/send-action', 'AjaxController@incrementDecrement')->middleware('au
 Route::get('/send-action', 'AjaxController@likeDislike')->middleware('auth')->name('home.like_Dislike');
 Route::resource('posts', PostsController::class);
 Route::get('/type/{category?}', 'Controller@category')->name('postByCategory');
+Route::post('/dashHome', 'Controller@userDash')->middleware('auth')->name('user.DashHome');
+Route::get('/dashHome', 'Controller@userDash')->middleware('auth')->name('user.DashHome');
 Route::get('/userDashboard', 'Controller@userDash')->middleware('auth')->name('user.Dashboard');
 Route::get('/userDashboard/{action?}', 'Controller@userDashData')->middleware('auth')->name('user.DashboardDataGet');
 Route::post('/userDashboard/{action?}', 'Controller@userDashData')->middleware('auth')->name('user.DashboardDataPost');

@@ -57,36 +57,5 @@ use App\Models\User;
         </div>
     </div>
 <script>
-    $(document).ready(function () {
-         //Like Action
-        $("#post_Comment_Btn").click(function (e) {
-            e.preventDefault();
-            $(document).on({
-              ajaxStart: function() { 
-                $("#post_Comment_Btn").text('Posting ');
-                jQuery('<i>', {
-                    class: 'fa fa-spinner fa-spin',
-                }).appendTo('#post_Comment_Btn');
-            },
-              ajaxStop: function() { 
-                $("#post_Comment_Btn").text('Post Now'); 
-            }    
-            });
-            
-            var form = $('#comment').val();
-            $.ajax({
-                type: "POST",
-                url: "/post-comments",
-                data: { posted_Comment:"posted_Comment", _token: "{{ csrf_token() }}", formData: form, postId: {{ $posts->id }}},
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                    $('#comments_Container').html(data.comments);
-                },
-                error: function (error) {
-                    console.log(error.responseText);
-                },
-            });
-        });
-    });
+
 </script>
