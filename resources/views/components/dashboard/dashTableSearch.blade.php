@@ -6,7 +6,7 @@
                     <th style="width: 2%" scope="col">
                         <form action="post">
                             @csrf
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <input type="checkbox" class="custom-control-input" id="check_All">
                         </form>
                     </th>
                     <th style="width: 3%" scope="col" class="text-center">#</th>
@@ -22,7 +22,7 @@
                     <th style="width: 2%" scope="col">
                         <form action="post">
                             @csrf
-                            <input type="checkbox" class="custom-control-input" id="customCheck1"
+                            <input type="checkbox" class="custom-control-input check_One" id="check_One_Toggle"
                                 data-id="{{ $findPost->id }}">
                         </form>
                     </th>
@@ -44,8 +44,8 @@
                         <form action="#" method="post" id="delete_edit_Form">
                             @csrf
                             @method('DELETE')
-                                <button data-id="{{ $findPost->id }}" type="button" class="btn btn-Dashboard" id="edit_This_Post">Edit</button>
-                                <button data-id="{{ $findPost->id }}" type="submit" class="btn btn-Dashboard ms-4" id="delete_This_Post">Delete</button>
+                                <button class="btn btn-Dashboard edit_This_Post" type="button" id="toggleEdit" data-id="{{ $findPost->id }}">Edit</button>
+                                <button class="btn btn-Dashboard delete_This_Post ms-4" type="submit" id="toggleDelete" data-id="{{ $findPost->id }}">Delete</button>
                         </form>
                     </td>
                 <tr>
@@ -60,8 +60,3 @@
         </table>
     </div>
 </div>
-<script>
-    $(".delete_edit_Form").submit(function(e) {
-        e.preventDefault();
-    });
-</script>

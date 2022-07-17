@@ -45,8 +45,7 @@ class Controller extends BaseController
             }elseif($value == "NewPost"){
                 $html = view('components.dashboard.dashNewPost')->render();
                 return response()->json(['success'=>true, 'Data' => $html]);
-            }
-          
+            }          
         }
         return view('auth.userDashboard');
     }

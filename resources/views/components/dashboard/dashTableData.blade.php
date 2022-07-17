@@ -6,7 +6,7 @@
                     <th style="width: 2%" scope="col">
                         <form action="post">
                             @csrf
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <input type="checkbox" class="custom-control-input" id="check_All">
                         </form>
                     </th>
                     <th style="width: 5%" scope="col" class="text-center">#</th>
@@ -22,7 +22,7 @@
                     <th style="width: 2%" scope="col">
                         <form action="post">
                             @csrf
-                            <input type="checkbox" class="custom-control-input" id="customCheck1"
+                            <input type="checkbox" class="custom-control-input check_One" id="check_One_Toggle"
                                 data-id="{{ $data->id }}">
                         </form>
                     </th>
@@ -37,8 +37,8 @@
                         <form class="delete_edit_Form" action="#" method="POST">
                             @csrf
                             @method('DELETE')
-                                <button class="btn btn-Dashboard" type="button" id="toggleEdit" data-id="{{ $data->id }}">Edit</button>
-                                <button class="btn btn-Dashboard ms-4" type="submit" id="toggleDelete" data-id="{{ $data->id }}">Delete</button>
+                                <button class="btn btn-Dashboard edit_This_Post" type="button" id="toggleEdit" data-id="{{ $data->id }}">Edit</button>
+                                <button class="btn btn-Dashboard delete_This_Post ms-4" type="submit" id="toggleDelete" data-id="{{ $data->id }}">Delete</button>
                         </form>
                     </td>
                 <tr>

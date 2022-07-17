@@ -1,4 +1,24 @@
 <script type="text/javascript">
+    // TEMP CODE
+    $(window).on("load", function () {
+        console.log('toggleMyPost');
+        $.ajax({
+            type: "POST",
+            url: "/userDashboard/myPosts",
+            data: { load_Data: 'load_Data', _token: "{{ csrf_token() }}" },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $('#ajax_Fetch_Data').html(data.all_Data);
+            },
+            error: function (error) {
+                console.log(error.responseText);
+                console.log('error');
+            },
+        });
+    });
+    // TEMP CODE
+
     $(document).ready(function () {
         // DASHBOARD HOME
         $(".toggleDashboardHome").click(function (e) {
@@ -7,7 +27,7 @@
             $.ajax({
                 type: "POST",
                 url: "/dashHome",
-                data: { dashData: 'load_Data', _token: "{{ csrf_token() }}", value:"Home"},
+                data: { dashData: 'load_Data', _token: "{{ csrf_token() }}", value: "Home" },
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
@@ -20,13 +40,14 @@
             });
         });
         // ALL POSTS
+
         $(".toggleMyPost").click(function (e) {
             e.preventDefault();
             console.log('toggleMyPost');
             $.ajax({
                 type: "POST",
                 url: "/userDashboard/myPosts",
-                data: { load_Data: 'load_Data', _token: "{{ csrf_token() }}"},
+                data: { load_Data: 'load_Data', _token: "{{ csrf_token() }}" },
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
@@ -38,6 +59,7 @@
                 },
             });
         });
+
         // SEARCH POST
         $("#toggleSearchPost").click(function (e) {
             e.preventDefault();
@@ -46,7 +68,7 @@
             $.ajax({
                 type: "POST",
                 url: "/userDashboard/search'",
-                data: { load_Data: 'load_Data', value: val,  _token: "{{ csrf_token() }}"},
+                data: { load_Data: 'load_Data', value: val, _token: "{{ csrf_token() }}" },
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
@@ -65,7 +87,7 @@
             $.ajax({
                 type: "POST",
                 url: "/dashHome",
-                data: { dashData: 'load_Data', _token: "{{ csrf_token() }}", value:"NewPost"},
+                data: { dashData: 'load_Data', _token: "{{ csrf_token() }}", value: "NewPost" },
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
@@ -77,19 +99,61 @@
                 },
             });
         });
-        // EDIT POST
-        $("#delete_edit_Form").submit(function(e) {
-            e.preventDefault();
-            console.log('form submit Clicked');
-        });
-        $("#toggleSearchPost").click(function (e) {
-            e.preventDefault();
-            console.log('serach');
 
+        // SELECT ALL VIA CHECKBOX //
+        $(document).on('click', '#check_All', function () {
+            if ($('#check_All').is(':checked')) {
+                var checkValue = true;
+                console.log(checkValue);
+                $(".check_One").prop('checked', true);
+            } else {
+                var checkValue = false;
+                console.log(checkValue);
+                $(".check_One").prop('checked', false);
+            };
         });
-        $("#delete_This_Post").click(function (e) {
+
+        // EDIT
+        $(document).on('click', '.edit_This_Post', function (e) {
             e.preventDefault();
-            console.log('delete_This_Post');
+            console.log('Edit');
+            var valueUserId = $(this).closest('tr').attr('data-id');
+            console.log(valueUserId);
+            $.ajax({
+                type: "POST",
+                url: "/posts/" + valueUserId + "/edit",
+                data: { dashData: 'load_Data', _token: "{{ csrf_token() }}", value: "EditPost", id: valueUserId },
+                dataType: "json",
+                success: function (data) {
+                    $('#ajax_Fetch_Data').html(data.Edit_Data);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    console.log('error');
+                },
+            });
+        });
+
+        // DELETE
+        $(document).on('click', '.delete_This_Post', function (e) {
+            e.preventDefault();
+            var valueUserId = $(this).closest('tr').attr('data-id');
+            $(this).closest("tr").remove();
+            console.log('Delete & Removes');
+            console.log(valueUserId);
+            $.ajax({
+                type: "POST",
+                url: "/posts/" + valueUserId + "/destroy",
+                data: { dashData: 'delete_Data', _token: "{{ csrf_token() }}", value: "EditPost", id: valueUserId },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data.success);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    console.log('error');
+                },
+            });
         });
     });
 </script>

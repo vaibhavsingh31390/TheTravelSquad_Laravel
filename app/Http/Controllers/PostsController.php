@@ -83,8 +83,13 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {   
+        if($request->ajax()){
+            $id = $request->input('id');
+            $html = view('components.dashboard.dashEditPost')->with(compact('id'))->render();
+            return response()->json(['success'=>true, 'Edit_Data' => $html]);
+        }
         return view('auth.userDashboard', ['action' => "editPosts"]);
     }
 
@@ -120,13 +125,16 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $deletePost = Posts::findOrFail($id);
-        $deletePost->category()->delete();
-        $deletePost->comments()->delete();
-        $deletePost->delete();
-
-        return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
+        if($request->ajax()){
+            $id = $request->input('id');
+            $deletePost = Posts::findOrFail($id);
+            $deletePost->category()->delete();
+            $deletePost->comments()->delete();
+            $deletePost->delete();
+            return response()->json(['success'=>true]);
+        }
+        // return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
     }
 }
