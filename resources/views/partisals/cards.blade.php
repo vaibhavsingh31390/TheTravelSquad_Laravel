@@ -47,7 +47,7 @@
    <div class="row row-cols-1 row-cols-md-3 g-4" id="data-col">
      @foreach ($postsData->take(6) as $card)
      <div class="col">
-      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->media->path, 'title'=>$card->title, 
+      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'media'=>$card->media, 'path' => $card->media->path, 'title'=>$card->title, 
       'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count(), 'post' => $card])
       @endpostCard
      </div>
