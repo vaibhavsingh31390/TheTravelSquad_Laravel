@@ -13,6 +13,11 @@
                 <label for="category_Menu" class="form-label">Category</label>
                 <select name="category_Menu" class="form-select {{ $errors->has('title') ? 'is-invalid' : '' }}"
                     aria-label="Default select example">
+                    @isset($post)
+                        <option selected disabled>
+                            {{ $post->category()->first()->category_Menu ?? "Select one of the following category." }}
+                        </option>
+                    @endisset
                     <option value="Travel">Travel</option>
                     <option value="Technology">Technology</option>
                     <option value="Sports">Sports</option>
@@ -25,7 +30,7 @@
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control  {{ $errors->has('title') ? 'is-invalid' : '' }}"
-                    id="title" name="title" value="{{ old('title', optional($post ?? null)->title) }}">
+                    id="title" name="title" value="{{ old('content', optional($post ?? null)->title) }}">
             </div>
 
             <div class="mb-3">

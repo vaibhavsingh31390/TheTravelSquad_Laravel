@@ -12,21 +12,21 @@
                 <span class="likeContainer">
                     <label>
                         <input type="checkbox" name="likeBtn" id="like_Btn" data-index-number="{{ $posts->id }}" data-id="{{ $posts->users_id }}">
-                        <i class="far fa-heart actionIcon" id="like_Btn_Icon"></i>
+                        <i class='bx bx-heart actionIcon' id="like_Btn_Icon"></i>
                     </label>
                     <span id="like_val">{{ $posts->likeCount()->count() }}</span>
                 </span>
                 <span class="dislikeContainer" >
                     <label>
                         <input type="checkbox" name="dislikeBtn" id="dislike_Btn" data-index-number="{{ $posts->id }}" data-id="{{ $posts->users_id }}">
-                        <i class="far fa-thumbs-down actionIcon" id="dislike_Btn_Icon"></i>
+                        <i class='bx bx-dislike actionIcon' id="dislike_Btn_Icon"></i>
                     </label>
                     <span id="dislike_val">{{ $posts->dislikeCount()->count() }}</span>
                 </span>
             </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 mt-4 banner">
-            <img src="{{ $posts->image_url  }}" alt="Demo_img">
+            <img src=@if ($posts->media){{ $posts->media->path }}@else{{ null }}@endif alt="Demo_img">
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 mt-4 content">

@@ -23,7 +23,7 @@ use App\Models\User;
             @endguest
             </div>
             <h3 class="mt-3 mb-2 headingPost">Recent Comments
-                <i class="fas fa-comment"></i>
+                <i class='bx bxs-message-square-add'></i>
             </h3>
             @forelse ($comments as $comment)
             <div class="col-sm-12 col-md-12 col-lg-12 mt-2 mb-3 p-2 border commentBody">

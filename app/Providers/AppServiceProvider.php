@@ -35,5 +35,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::aliasComponent('components.dashboard.dashTableSearch', 'dashSearchData');
         Blade::aliasComponent('components.dashboard.dashNewPost', 'dashNewPost');
         Blade::aliasComponent('components.dashboard.dashEditPost', 'dashEditPost');
+        Blade::aliasComponent('components.alert', 'alertNodal');
     }
 }

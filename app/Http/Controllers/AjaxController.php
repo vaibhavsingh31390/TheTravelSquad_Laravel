@@ -55,7 +55,6 @@ class AjaxController extends Controller
                     return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->dislikeCount()->count(), 'Message' => "Detached"]);
                 }
             } elseif($request->input('action') == "verify"){
-
                     return response()->json(['success' => true, 'likeCount' => $post->filterActions(1,$post->id,$loggedUser), 'dislikeCount' => $post->filterActions(2,$post->id,$loggedUser)]);
             } else {
                 abort(404);

@@ -5,3 +5,6 @@
     @include('partisals.layoutDashboard')
 @endsection
 
+
+{{-- @alertNodal
+@endalertNodal --}}

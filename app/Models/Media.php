@@ -2,14 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Media extends Model
 {
+  
+    protected $fillable = ['path', 'posts_id'];
     use HasFactory;
-    protected $fillable = ['image_url', 'title', 'content', 'users_id'];
+    
     public function media(){
-        return $this->hasOne('App\Models\Media');
+        return $this->belongsTo('App\Models\Posts');
+    }
+
+    public function url(){
+        return Storage::url($this->path);
     }
 }

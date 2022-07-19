@@ -1,7 +1,7 @@
 <div class="card h-100 border">
     <div class="image-Img">
       <a href="{{ route("$route", [$id]) }}">
-        <img src="{{ $imageUrl }}" class="card-img-top">
+        <img src='@if ($media){{ $path }}@else{{ null }}@endif' class="card-img-top">
       </a>
     </div>
     <div class="card-body">

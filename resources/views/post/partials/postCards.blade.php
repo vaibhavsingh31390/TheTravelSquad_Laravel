@@ -2,7 +2,7 @@
 {{-- $postsData to access the all posts thorugh controllers  --}}
 <div class="container">
   <div class="row">
-    <h1 class="text-left mt-4 heading" style="font-weight: 600"> @if (isset($posts))
+    <h1 class="text-left mt-4 mb-4 heading" style="font-weight: 600"> @if (isset($posts))
       All
       @else
       {{ $cardsData[0]->category[0]->category_Menu }}
@@ -17,7 +17,7 @@
     @if (isset($cardsData))
     @foreach ($cardsData as $card)
     <div class="col">
-      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->image_url, 'title'=>$card->title, 
+      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'media'=>$card->media, 'path' => $card->media->path, 'title'=>$card->title, 
       'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
       @endpostCard
     </div>
@@ -27,7 +27,7 @@
     @else
     @foreach ($posts as $card)
     <div class="col">
-      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->image_url, 'title'=>$card->title, 
+      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'media'=>$card->media, 'path' => $card->media->path, 'title'=>$card->title, 
       'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
       @endpostCard
     </div>

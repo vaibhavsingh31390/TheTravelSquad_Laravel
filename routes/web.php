@@ -27,7 +27,7 @@ Route::get('posts/{post}/edit', [PostsController::class, 'edit'])->name('user.Da
 Route::post('posts/{post}/edit', [PostsController::class, 'edit'])->name('user.DashEdit');
 Route::get('posts/{post}/destroy', [PostsController::class, 'destroy'])->name('user.DashDelete');
 Route::post('posts/{post}/destroy', [PostsController::class, 'destroy'])->name('user.DashDelete');
-Route::post('/type/{category?}', 'Controller@category')->name('postByCategory');
+Route::get('/type/{category?}', 'Controller@category')->name('postByCategory');
 Route::post('/dashHome', 'Controller@userDash')->middleware('auth')->name('user.DashHome');
 Route::get('/dashHome', 'Controller@userDash')->middleware('auth')->name('user.DashHome');
 Route::get('/userDashboard', 'Controller@userDash')->middleware('auth')->name('user.Dashboard');
@@ -36,3 +36,4 @@ Route::post('/userDashboard/{action?}', 'Controller@userDashData')->middleware('
 Auth::routes();
 Route::post('/post-comments', 'AjaxController@commentsSave')->name('add.comment');
 Route::get('/post-comments',  'AjaxController@commentsFetch')->name('get.comment');
+Route::get('/alert', 'Controller@test')->name('get.test');

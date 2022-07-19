@@ -1,5 +1,13 @@
-{{-- {-- AUTH USER ACTION CHECK --}} --}}
-@auth
+<script type="text/javascript">
+// NAV ICON CHANGE 
+$(document).on('click', '.navbar-toggler-icon', function () { 
+    $('#display_advance').toggle('1000');
+    $("#toggle").toggleClass("bx-menu bx-menu-alt-left");
+    console.log('working');
+})
+</script>
+{{-- {-- AUTH USER ACTION CHECK --}}
+@if (Route::is('posts.show'))
     <script>
         $(window).on("load", function () {
             var valuePostId = $('#like_Btn').attr("data-index-number");
@@ -21,13 +29,13 @@
                         $("#dislike_Btn").prop('checked', false);
                     }
                     // CHECKED DONE
-                    if ($('#like_Btn').is(':checked')) {
-                        $('#like_Btn_Icon').removeClass('far fa-heart actionIcon').addClass('fas fa-heart actionIcon');
-                        $("#dislike_Btn").prop("disabled", true );
+                    if ($('#dislike_Btn').is(':checked')) {
+                    $('#dislike_Btn_Icon').removeClass('bx bx-dislike actionIcon').addClass('bx bxs-dislike actionIcon');
+                    $("#like_Btn").prop("disabled", true );
                     }else{
-                        $('#like_Btn_Icon').removeClass('fas fa-heart actionIcon').addClass('far fa-heart actionIcon');
-                        $("#dislike_Btn").prop("disabled", false );
-                    };
+                        $('#like_Btn_Icon').removeClass('bx bx-heart actionIcon').addClass('bx bxs-heart actionIcon');
+                        $("#dislike_Btn").prop("disabled", true );
+                    }
                 },
                 error: function (error) {
                     console.log(error.responseText);
@@ -38,7 +46,7 @@
             });
         });
     </script>
-@endauth
+@endif
 
 <script type="text/javascript">
     var countAmt = 6;
@@ -81,12 +89,12 @@
         $("#like_Btn").click(function (e) {
             if ($('#like_Btn').is(':checked')) {
                 var requestValue = true;
-                $('#like_Btn_Icon').removeClass('far fa-heart actionIcon').addClass('fas fa-heart actionIcon');
+                $('#like_Btn_Icon').removeClass('bx bx-heart actionIcon').addClass('bx bxs-heart actionIcon');
                 $("#dislike_Btn").prop("disabled", true );
                 $('#like_val').text(++countLike)
             }else{
                 var requestValue = false;
-                $('#like_Btn_Icon').removeClass('fas fa-heart actionIcon').addClass('far fa-heart actionIcon');
+                $('#like_Btn_Icon').removeClass('bx bxs-heart actionIcon').addClass('bx bx-heart actionIcon');
                 $("#dislike_Btn").prop("disabled", false );
                 $('#like_val').text(--countLike);
             };
@@ -106,7 +114,7 @@
                     console.log(error.responseText);
                     if(error.status == 401){
                         alert("Please Login To Perform This Function !")
-                        $('#like_Btn_Icon').removeClass('fas fa-heart actionIcon').addClass('far fa-heart actionIcon');
+                        $('#like_Btn_Icon').removeClass('bx bxs-heart actionIcon').addClass('bx bx-heart actionIcon');
                     }
                 },
             });
@@ -116,12 +124,12 @@
         $("#dislike_Btn").click(function (e) {
             if ($('#dislike_Btn').is(':checked')) {
                 var requestValue = true;
-                $('#dislike_Btn_Icon').removeClass('far fa-thumbs-down actionIcon').addClass('fas fa-thumbs-down actionIcon');
+                $('#dislike_Btn_Icon').removeClass('bx bx-dislike actionIcon').addClass('bx bxs-dislike actionIcon');
                 $("#like_Btn").prop( "disabled", true );
                 $('#dislike_val').text(++countDislike)
             }else{
                 var requestValue = false;
-                $('#dislike_Btn_Icon').removeClass('fas fa-thumbs-down actionIcon').addClass('far fa-thumbs-down actionIcon');
+                $('#dislike_Btn_Icon').removeClass('bx bxs-dislike actionIcon').addClass('bx bx-dislike actionIcon');
                 $("#like_Btn").prop( "disabled", false );
                 $('#dislike_val').text(--countDislike)
             };
@@ -140,7 +148,7 @@
                     console.log(error.responseText);
                     if(error.status == 401){
                         alert("Please Login To Perform This Function !")
-                        $('#like_Btn_Icon').removeClass('fas fa-heart actionIcon').addClass('far fa-heart actionIcon');
+                        $('#like_Btn_Icon').removeClass('bx bxs-dislike actionIcon').addClass('bx bx-dislike actionIcon');
                     }
                 },
             });

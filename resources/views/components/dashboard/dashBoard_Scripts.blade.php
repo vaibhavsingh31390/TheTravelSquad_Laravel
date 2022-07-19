@@ -1,23 +1,20 @@
 <script type="text/javascript">
-    // TEMP CODE
-    $(window).on("load", function () {
-        console.log('toggleMyPost');
-        $.ajax({
-            type: "POST",
-            url: "/userDashboard/myPosts",
-            data: { load_Data: 'load_Data', _token: "{{ csrf_token() }}" },
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                $('#ajax_Fetch_Data').html(data.all_Data);
-            },
-            error: function (error) {
-                console.log(error.responseText);
-                console.log('error');
-            },
-        });
-    });
-    // TEMP CODE
+    // CUSTOM NODAL
+    // function async nodal(){
+    //     $(document).on('click','.responseButton', function () {
+    //         var responseValue = $(this).attr('data-id');
+    //         if(responseValue=="true"){
+    //             return responseValue;
+    //         }
+    //         $('.alert_Overlay_Container').remove()
+    //         return false;
+    //     });
+    // }
+    // var x = nodal();
+    // setTimeout(() => {
+    //     console.log(x);
+    // }, 800);
+    
 
     $(document).ready(function () {
         // DASHBOARD HOME
@@ -90,7 +87,7 @@
                 data: { dashData: 'load_Data', _token: "{{ csrf_token() }}", value: "NewPost" },
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     $('#ajax_Fetch_Data').html(data.Data);
                 },
                 error: function (error) {
@@ -125,6 +122,7 @@
                 data: { dashData: 'load_Data', _token: "{{ csrf_token() }}", value: "EditPost", id: valueUserId },
                 dataType: "json",
                 success: function (data) {
+                    console.log(data.Edit_Data);
                     $('#ajax_Fetch_Data').html(data.Edit_Data);
                 },
                 error: function (error) {
@@ -139,7 +137,7 @@
             e.preventDefault();
             var valueUserId = $(this).closest('tr').attr('data-id');
             $(this).closest("tr").remove();
-            console.log('Delete & Removes');
+            console.log('Delete');
             console.log(valueUserId);
             $.ajax({
                 type: "POST",

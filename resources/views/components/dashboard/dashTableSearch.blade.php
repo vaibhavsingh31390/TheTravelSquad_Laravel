@@ -30,15 +30,7 @@
                     <td style="width: 20%">{{ Str::of($findPost->title)->words(5) }}</td>
                     <td style="width: 40%">{{ Str::of($findPost->content)->words(10) }}</td>
                     <td style="width: 15%">
-                        <select data-id="{{ $findPost->id }}" class="form-select"
-                            aria-label="Default select example">
-                            <option value="Travel">Travel</option>
-                            <option value="Technology">Technology</option>
-                            <option value="Food">Food</option>
-                            <option value="Movies">Movies</option>
-                            <option value="Sports">Sports</option>
-                            <option value="Others">Others</option>
-                        </select>
+                        <p> {{ $findPost->category()->first()->category_Menu ?? 'No Category' }}</p>
                     </td>
                     <td class="text-center">
                         <form action="#" method="post" id="delete_edit_Form">

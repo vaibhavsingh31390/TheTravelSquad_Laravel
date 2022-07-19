@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Media;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,6 +22,7 @@ class PostsTableSeeder extends Seeder
 
         \App\Models\Posts::factory()->count($postsCount)->make()->each(function($posts) use ($users, $category){
             $posts->users_id = $users->random()->id;
+            $posts->media = 
             $posts->save();
         });
     }

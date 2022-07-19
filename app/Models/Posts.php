@@ -48,6 +48,9 @@ class Posts extends Model
             $posts->actionPosts()->delete();
         });
 
+        static::deleting(function(Posts $posts){
+            $posts->media()->delete();
+        });
 
         static::updating(function(Posts $posts){
             Cache::forget('index-postsData');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Media;
 use App\Models\Posts;
 use App\Models\User;
 use Egulias\EmailValidator\Parser\Comment;
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class Controller extends BaseController
 {
@@ -29,10 +32,7 @@ class Controller extends BaseController
     }
 
     public function category($category){
-
-        $categoryCards = Cache::remember('Post_By_Category', now()->addMinutes(10), function() use ($category){
-            return Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->get(); 
-        });
+        $categoryCards =  Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->get(); 
         return view('post.category', ['cardsData'=>$categoryCards]);
     }
 
@@ -75,6 +75,14 @@ class Controller extends BaseController
             return response()->json(['success'=>true, 'findPosts', $findPosts, 'all_Data' => $html]);
         }
         
+    }
+
+    public function test(){
+        // $test = File::files('C:\xampp\htdocs\thetravelsquad\public');
+        $test = Storage::files('Sample_Thumbnails');
+        $randomImages = array_rand($test);
+        $randomImage = $test[$randomImages];
+        return view('test')->with(['test'=>$randomImage]);
     }
 }
 

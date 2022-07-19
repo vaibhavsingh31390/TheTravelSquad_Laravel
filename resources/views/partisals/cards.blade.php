@@ -10,13 +10,13 @@
            @if ($loop->first)
            <div class="carousel-item active">
             <a href="{{ route('posts.show', [$IMG->id]) }}">
-             <img src="{{ $IMG->image_url }}" class="d-block w-100" alt="...">
+             <img src="{{ $IMG->media->path }}" class="d-block w-100" alt="...">
             </a>
            </div>
            @else
            <div class="carousel-item">
             <a href="{{ route('posts.show', [$IMG->id]) }}">
-              <img src="{{ $IMG->image_url }}" class="d-block w-100" alt="...">
+              <img src="{{ $IMG->media->path }}" class="d-block w-100" alt="...">
              </a>
            </div>
            @endif
@@ -47,8 +47,8 @@
    <div class="row row-cols-1 row-cols-md-3 g-4" id="data-col">
      @foreach ($postsData->take(6) as $card)
      <div class="col">
-      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->image_url, 'title'=>$card->title, 
-      'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
+      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'imageUrl'=>$card->media->path, 'title'=>$card->title, 
+      'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count(), 'post' => $card])
       @endpostCard
      </div>
      @endforeach

@@ -14,14 +14,14 @@ $CAT = Category::pluck('category_Menu')
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}" />
     <link rel="stylesheet" href="{{ mix('/css/main.css') }}" />
     <script src="{{ mix('/js/app.js') }}" defer></script>
-    <script src="https://kit.fontawesome.com/f65829aefc.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     @if (Route::is('user.Dashboard'))
         @include('components.dashboard.dashBoard_Scripts')
     @else
         @include('components._scripts')
     @endif
-
 </head>
 
 <body>
@@ -34,7 +34,7 @@ $CAT = Category::pluck('category_Menu')
                 The Travel Squad</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon">
-                    <i class="fas fa-bars" style="font-size: 24px"></i>
+                    <i class='bx bx-menu'  id="toggle" style="font-size: 24px"></i>
                 </span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">

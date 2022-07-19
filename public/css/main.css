@@ -11306,6 +11306,9 @@ nav .navbar-brand {
   text-transform: uppercase;
   word-spacing: 5px;
 }
+nav .navbar-toggler-icon i {
+  color: #f05454;
+}
 nav .navbar-collapse .navbar-nav .nav-item {
   font-weight: 600;
   border: 2px solid #dddddd;
@@ -11487,6 +11490,10 @@ nav .navbar-toggler .fa-bars:focus {
   margin-left: 25px;
   font-size: 20px;
   color: #f05454;
+}
+.post-container .like_dislike .likeContainer label,
+.post-container .like_dislike .dislikeContainer label {
+  vertical-align: middle;
 }
 .post-container .like_dislike .likeContainer label .actionIcon,
 .post-container .like_dislike .dislikeContainer label .actionIcon {
@@ -11732,4 +11739,39 @@ nav .navbar-toggler .fa-bars:focus {
 .comments_Container .comments_Layout .userName {
   color: #f05454;
   font-size: 1.2rem;
+}
+
+.alert_Overlay_Container {
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  z-index: 1099;
+}
+.alert_Overlay_Container .alert_Overlay {
+  min-height: 30vh;
+  width: auto;
+  max-width: 50vw;
+  background-color: #dddddd;
+}
+.alert_Overlay_Container .alert_Overlay h3, .alert_Overlay_Container .alert_Overlay .h3 {
+  background-color: #30475e;
+  color: #f05454;
+}
+.alert_Overlay_Container .alert_Overlay h3 i, .alert_Overlay_Container .alert_Overlay .h3 i {
+  font-size: 28px;
+  color: #ffffff;
+}
+.alert_Overlay_Container .alert_Overlay h3 span, .alert_Overlay_Container .alert_Overlay .h3 span {
+  color: #ffffff;
+}
+.alert_Overlay_Container .alert_Overlay button {
+  background-color: #f05454;
+  color: #ffffff;
+  width: 150px;
+  padding: 0.2rem;
+  border: 2px solid #f05454;
+}
+.alert_Overlay_Container .alert_Overlay button:hover {
+  background-color: transparent;
+  color: #f05454;
 }

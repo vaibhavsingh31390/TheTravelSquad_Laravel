@@ -1,11 +1,5 @@
 {{-- $findPosts for user Posts details --}}
 {{-- $userProfile for user details --}}
-<?php 
-function set_active($path, $active = 'active') {
-return call_user_func_array('Request::is', (array)$path) ? $active : '';
-}
-?>
-
 <div class="container-fluid dashArea">
     <div class="row">
 

@@ -37,7 +37,11 @@ nav {
         text-transform: uppercase;
         word-spacing: 5px;
     }
-
+    .navbar-toggler-icon{
+        i{
+            color: $txt_Color2;
+        }
+    }
     .navbar-collapse {
         .navbar-nav {
             .nav-item {
@@ -199,7 +203,6 @@ nav {
 }
 
 // CARDS
-
 .heading {
     color: $txt_Color2 !important;
 }
@@ -270,6 +273,7 @@ nav {
             font-size: 20px;
             color: $txt_Color2;
             label {
+                vertical-align: middle;
                 .actionIcon {
                     cursor: pointer;
                     display: inline-block;
@@ -558,6 +562,43 @@ nav {
         .userName {
             color: $txt_Color2;
             font-size: 1.2rem;
+        }
+    }
+}
+
+// ALERT OVERLAY
+
+.alert_Overlay_Container{
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    z-index: 1099;
+    .alert_Overlay{
+        min-height: 30vh;
+        width: auto;
+        max-width: 50vw;
+        background-color: $bg_Color1;
+        h3{
+            background-color: $bg_Color2;
+            color: $txt_Color2;
+            i{
+                font-size: 28px;
+                color: $bg_White
+            }
+            span{
+                color: $bg_White
+            };
+        }
+        button{
+            background-color: $txt_Color2;
+            color: $bg_White;
+            width: 150px;
+            padding: 0.2rem;
+            border: 2px solid $txt_Color2;
+            &:hover {
+                background-color: transparent;
+                color: $txt_Color2;
+            }
         }
     }
 }
