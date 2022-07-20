@@ -63,15 +63,15 @@ class PostsController extends Controller
         ]);
         $category = $post->category()->create(['category_Menu' => $request->category_Menu]);
         if ($request->hasFile('postImage')) {
-            $file = $request->file('postImage')->storeAs('Thumbnails', $post->id."-".decrypt($request->users_id)."-thumbnail.".$request->file('postImage')->extension());
-            if($post->media){
+            $file = $request->file('postImage')->storeAs('Thumbnails', $post->id . "-" . decrypt($request->users_id) . "-thumbnail." . $request->file('postImage')->extension());
+            if ($post->media) {
                 Storage::delete($post->media->path);
                 $post->media()->save(
-                    Media::create(['path'=>$file])
+                    Media::create(['path' => $file])
                 );
-            }else{
+            } else {
                 $post->media()->save(
-                    Media::create(['path'=>$file])
+                    Media::create(['path' => $file])
                 );
             }
         }
@@ -116,20 +116,43 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StorePost $request, $id)
+    public function update(Request $request, $id)
     {
-        $post = Posts::findOrFail($id);    
-        $validated = $request->validated();
-        $idGet = decrypt($validated['users_id']);
-        if($idGet!=Auth::id()){
-            abort(404);
+        if ($request->ajax()) {
+            //POST UPDATE
+            $post = Posts::findOrFail($request->input('posts_id'));
+            $idGet = decrypt($request->input('users_id'));
+            if ($idGet != Auth::id()) {
+                abort(404);
+            }
+            $post->fill([
+                'title' => $request->input('title'),
+                'content' => $request->input('content'),
+                'users_id' => $idGet,
+            ]);
+            $post->save();
+            //CATEGORY UPDATE
+            if ($post->category->count() == 1) {
+                $post->category()->update(['category_Menu' => $request->input('category_Menu')]);
+            } else {
+                $post->category()->create(['category_Menu' => $request->input('category_Menu')]);
+            }
+            // IMAGE UPDATE
+            if ($request->hasFile('postImage')) {
+                $file = $request->file('postImage')->storeAs('Thumbnails', $post->id . "-" . decrypt($request->users_id) . "-thumbnail." . $request->file('postImage')->extension());
+                if ($post->media) {
+                    Storage::delete($post->media->path);
+                    $post->media()->save(
+                        Media::create(['path' => $file])
+                    );
+                } else {
+                    $post->media()->save(
+                        Media::create(['path' => $file])
+                    );
+                }
+            }
+            return response()->json(['success' => true, 'formData' => $post,]);
         }
-        $validated['users_id'] = $idGet;
-        $post -> fill($validated);
-        dd($validated);
-        $post -> save();
-        $category = $post->category()->update(['category_Menu'=>$request->category_Menu]);
-        return redirect()->route('user.Dashboard');
     }
 
     /**
@@ -141,7 +164,6 @@ class PostsController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-
             $id = $request->input('id');
             $deletePost = Posts::findOrFail($id);
             $deletePost->category()->delete();

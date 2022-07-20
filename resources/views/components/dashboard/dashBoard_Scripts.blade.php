@@ -14,7 +14,7 @@
     // setTimeout(() => {
     //     console.log(x);
     // }, 800);
-    
+
 
     $(document).ready(function () {
         // DASHBOARD HOME
@@ -27,7 +27,7 @@
                 data: { dashData: 'load_Data', _token: "{{ csrf_token() }}", value: "Home" },
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     $('#ajax_Fetch_Data').html(data.Data);
                 },
                 error: function (error) {
@@ -47,7 +47,7 @@
                 data: { load_Data: 'load_Data', _token: "{{ csrf_token() }}" },
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     $('#ajax_Fetch_Data').html(data.all_Data);
                 },
                 error: function (error) {
@@ -68,7 +68,7 @@
                 data: { load_Data: 'load_Data', value: val, _token: "{{ csrf_token() }}" },
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     $('#ajax_Fetch_Data').html(data.search_Data);
                 },
                 error: function (error) {
@@ -146,6 +146,44 @@
                 dataType: "json",
                 success: function (data) {
                     console.log(data.success);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    console.log('error');
+                },
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        // Update Data
+        $(document).on('submit', '.editProfile', function (event) {
+            event.preventDefault();
+            var form = {
+                category_Menu: $('#category_Menu').val(),
+                title: $('#title').val(),
+                content: $('#content').val(),
+                users_id: $('#users_id').val(),
+                post_id: $('#editProfile').attr('data-id')
+            }
+            var file = $('#upload').prop('files')[0];
+            let inputData = new FormData($('#editProfile')[0]);
+            inputData.append('posts_id', $('#editProfile').attr('data-id'));
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: 'posts/' + form.post_id + '/update',
+                data: inputData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    console.log(data.formData);
+                    alert('Updated');
                 },
                 error: function (error) {
                     console.log(error.responseText);

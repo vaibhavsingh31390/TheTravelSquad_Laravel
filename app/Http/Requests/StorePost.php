@@ -25,11 +25,11 @@ class StorePost extends FormRequest
     public function rules()
     {
         return [
-            'postImage'=> 'image|mimes:jpg,jpeg,png,gif,svg',
+            'postImage' => 'image|mimes:jpg,jpeg,png,gif,svg',
             'title' => 'required|min:5|max:200',
-            'content'=> 'required|min:50|max:8000', 
-            'users_id' => 'required|min:1|max:1',
-            'category_Menu'=> 'required'
+            'content' => 'required|min:50|max:8000',
+            'users_id' => 'required|min:1|max:10000',
+            'category_Menu' => 'in:Travel,Technology,Sports,Food,Fashion,Others'
         ];
     }
 }
