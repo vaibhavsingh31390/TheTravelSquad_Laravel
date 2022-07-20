@@ -18,7 +18,6 @@ class PostsFactory extends Factory
     {
 
         return [
-            'image_url' => 'https://placeimg.com/1024/576/any?' . rand(1, 100),
             'created_at'=> $this->faker->dateTimeBetween('-3 months'),
             'title' => $this->faker->text(),
             'content' => $this->faker->paragraph(10),

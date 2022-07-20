@@ -54,6 +54,7 @@ class PostsController extends Controller
     public function store(StorePost $request)
     {
         $validate  = $request->validated();
+        dd($validate);
         $post = Posts::create([
             'id' => $request->id,
             'title' => $request->title,
@@ -63,10 +64,8 @@ class PostsController extends Controller
         $category = $post->category()->create(['category_Menu' => $request->category_Menu]);
         if ($request->hasFile('postImage')) {
             $file = $request->file('postImage')->storeAs('Thumbnails', $post->id."-".decrypt($request->users_id)."-thumbnail.".$request->file('postImage')->extension());
-            if($post->media()){
-                Storage::delete($post->image->path);
-                $post->media->path = $file;
-                $post->media->save();
+            if($post->media){
+                Storage::delete($post->media->path);
                 $post->media()->save(
                     Media::create(['path'=>$file])
                 );
@@ -119,21 +118,18 @@ class PostsController extends Controller
      */
     public function update(StorePost $request, $id)
     {
-        $post = Posts::findOrFail($id);
+        $post = Posts::findOrFail($id);    
         $validated = $request->validated();
         $idGet = decrypt($validated['users_id']);
-        if ($idGet != Auth::id()) {
+        if($idGet!=Auth::id()){
             abort(404);
         }
         $validated['users_id'] = $idGet;
-        $post->fill($validated);
-        if ($post->category->count() > 1) {
-            $post->category()->update(['category_Menu' => $request->category_Menu]);
-        } else {
-            $post->category()->create(['category_Menu' => $request->category_Menu]);
-        }
-        $post->save();
-        return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
+        $post -> fill($validated);
+        dd($validated);
+        $post -> save();
+        $category = $post->category()->update(['category_Menu'=>$request->category_Menu]);
+        return redirect()->route('user.Dashboard');
     }
 
     /**

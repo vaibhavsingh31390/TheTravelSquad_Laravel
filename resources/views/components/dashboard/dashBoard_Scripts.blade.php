@@ -122,7 +122,7 @@
                 data: { dashData: 'load_Data', _token: "{{ csrf_token() }}", value: "EditPost", id: valueUserId },
                 dataType: "json",
                 success: function (data) {
-                    console.log(data.Edit_Data);
+                    console.log(true);
                     $('#ajax_Fetch_Data').html(data.Edit_Data);
                 },
                 error: function (error) {

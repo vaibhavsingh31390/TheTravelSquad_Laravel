@@ -26,7 +26,7 @@ class MediaTableSeeder extends Seeder
         foreach($posts as $post){
             $randomImages = array_rand($images);
             $randomImage = $images[$randomImages];
-            Media::create(['path'=>Storage::url($randomImage), 'posts_id'=>$post->id]);
+            Media::create(['path'=>$randomImage, 'posts_id'=>$post->id]);
         }
     }
 }

@@ -22,7 +22,7 @@ Route::get('/card-data', 'AjaxController@loadedData')->name('home.cardDataGet');
 Route::post('/card-data', 'AjaxController@loadMoreData')->name('home.cardDataPost');
 Route::post('/send-action', 'AjaxController@incrementDecrement')->middleware('auth')->name('home.like_Dislike_Change');
 Route::get('/send-action', 'AjaxController@likeDislike')->middleware('auth')->name('home.like_Dislike');
-Route::resource('posts', PostsController::class)->except('edit','destory');
+Route::resource('posts', PostsController::class)->except('destory');
 Route::get('posts/{post}/edit', [PostsController::class, 'edit'])->name('user.DashEdit');
 Route::post('posts/{post}/edit', [PostsController::class, 'edit'])->name('user.DashEdit');
 Route::get('posts/{post}/destroy', [PostsController::class, 'destroy'])->name('user.DashDelete');

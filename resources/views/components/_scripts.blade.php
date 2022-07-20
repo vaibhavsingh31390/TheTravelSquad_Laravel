@@ -12,6 +12,7 @@ $(document).on('click', '.navbar-toggler-icon', function () {
         $(window).on("load", function () {
             var valuePostId = $('#like_Btn').attr("data-index-number");
             var valueUserId = $('#like_Btn').attr("data-id");
+            var checked = 0;
             $.ajax({
                 type: "POST",
                 url: "/send-action",
@@ -21,18 +22,20 @@ $(document).on('click', '.navbar-toggler-icon', function () {
                     if(!jQuery.isEmptyObject(data.likeCount[0])){
                         $("#like_Btn").prop('checked', true);
                         console.log('checked like');
+                        checked = 1;
                     }else if(!jQuery.isEmptyObject(data.dislikeCount[0])){
                         $("#dislike_Btn").prop('checked', true);
                         console.log('checked dislike');
+                        checked = 2;
                     }else{
                         $("#like_Btn").prop('checked', false);
                         $("#dislike_Btn").prop('checked', false);
                     }
                     // CHECKED DONE
-                    if ($('#dislike_Btn').is(':checked')) {
+                    if (checked == 2) {
                     $('#dislike_Btn_Icon').removeClass('bx bx-dislike actionIcon').addClass('bx bxs-dislike actionIcon');
                     $("#like_Btn").prop("disabled", true );
-                    }else{
+                    }else if(checked == 1){
                         $('#like_Btn_Icon').removeClass('bx bx-heart actionIcon').addClass('bx bxs-heart actionIcon');
                         $("#dislike_Btn").prop("disabled", true );
                     }
@@ -163,6 +166,11 @@ $(document).on('click', '.navbar-toggler-icon', function () {
     $(document).ready(function () {
         $("#post_Comment_Btn").click(function (e) {
             e.preventDefault();
+            var form = $('#comment').val();
+            if(form==''){
+                alert("Please Write Something");
+                return
+            }
             $(document).on({
               ajaxStart: function() { 
                 $("#post_Comment_Btn").text('Posting ');
@@ -174,8 +182,6 @@ $(document).on('click', '.navbar-toggler-icon', function () {
                 $("#post_Comment_Btn").text('Post Now'); 
             }    
             });
-            
-            var form = $('#comment').val();
             $.ajax({
                 type: "POST",
                 url: "/post-comments",

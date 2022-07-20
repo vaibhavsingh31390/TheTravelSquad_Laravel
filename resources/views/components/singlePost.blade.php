@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 mt-4 banner">
-            <img src=@if ($posts->media){{ $posts->media->path }}@else{{ null }}@endif alt="Demo_img">
+            <img src=@if ($posts->media){{ $posts->media->url() }}@else{{ null }}@endif alt="Demo_img">
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 mt-4 content">

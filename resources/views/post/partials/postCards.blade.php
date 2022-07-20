@@ -17,7 +17,7 @@
     @if (isset($cardsData))
     @foreach ($cardsData as $card)
     <div class="col">
-      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'media'=>$card->media, 'path' => $card->media->path, 'title'=>$card->title, 
+      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'media'=>$card->media, 'path' => $card->media->url(), 'title'=>$card->title, 
       'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
       @endpostCard
     </div>
@@ -27,7 +27,7 @@
     @else
     @foreach ($posts as $card)
     <div class="col">
-      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'media'=>$card->media, 'path' => $card->media->path, 'title'=>$card->title, 
+      @postCard(['route'=>'posts.show', 'id'=>$card->id, 'media'=>$card->media, 'path' => $card->media->url(), 'title'=>$card->title, 
       'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count()])
       @endpostCard
     </div>

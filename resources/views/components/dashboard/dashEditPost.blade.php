@@ -2,7 +2,6 @@
     <div class="content_wrapper p-3">
         <h2>Update Post</h2>
         <form action="{{ route('posts.update', ['post'=>$id]) }}" method="post" enctype="multipart/form-data">
-            @csrf
             @method('PUT')
             @include('post.partials.postsForm')
             <button type="submit" class="btn btn-search w-25">Update</button>
