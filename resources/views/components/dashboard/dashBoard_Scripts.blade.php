@@ -157,19 +157,18 @@
 </script>
 <script>
     $(document).ready(function () {
-        // Update Data
-        $(document).on('submit', '.editProfile', function (event) {
+        // NEW 
+        $(document).on('submit', '.postsFormNew', function (event) {
             event.preventDefault();
-            var form = {
+            var formUpdate = {
                 category_Menu: $('#category_Menu').val(),
                 title: $('#title').val(),
                 content: $('#content').val(),
                 users_id: $('#users_id').val(),
-                post_id: $('#editProfile').attr('data-id')
             }
             var file = $('#upload').prop('files')[0];
-            let inputData = new FormData($('#editProfile')[0]);
-            inputData.append('posts_id', $('#editProfile').attr('data-id'));
+            let inputData = new FormData($('#posts_Form_New')[0]);
+            inputData.append('requestType', 'New');
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -177,7 +176,43 @@
             });
             $.ajax({
                 type: 'POST',
-                url: 'posts/' + form.post_id + '/update',
+                url: 'posts/store',
+                data: inputData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    console.log(data.formData);
+                    alert('Created');
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    console.log('error');
+                },
+            });
+        });
+        
+        // UPDATE POST
+        $(document).on('submit', '.postsFormUpdate', function (event) {
+            event.preventDefault();
+            var formUpdate = {
+                category_Menu: $('#category_Menu').val(),
+                title: $('#title').val(),
+                content: $('#content').val(),
+                users_id: $('#users_id').val(),
+                post_id: $('#posts_Form_Update').attr('data-id')
+            };
+            var file = $('#upload').prop('files')[0];
+            let inputData = new FormData($('#posts_Form_Update')[0]);
+            inputData.append('posts_id', $('#posts_Form_Update').attr('data-id'));
+            inputData.append('requestType', 'Update');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: 'posts/' + formUpdate.post_id + '/update',
                 data: inputData,
                 processData: false,
                 contentType: false,

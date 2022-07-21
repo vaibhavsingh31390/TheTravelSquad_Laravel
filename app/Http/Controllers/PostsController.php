@@ -53,19 +53,30 @@ class PostsController extends Controller
      */
     public function store(StorePost $request)
     {
-        $validate  = $request->validated();
-        $post = Posts::create([
-            'id' => $request->id,
-            'title' => $request->title,
-            'content' => $request->content,
-            'users_id' => decrypt($request->users_id)
-        ]);
-        $category = $post->category()->create(['category_Menu' => $request->category_Menu]);
-        if ($request->hasFile('postImage')) {
-            $file = $request->file('postImage')->storeAs('Thumbnails', $post->id . "-" . decrypt($request->users_id) . "-thumbnail." . $request->file('postImage')->extension());
-            $post->media()->save(Media::Create(['path' => $file]));
+        if ($request->ajax()) {
+            //POST UPDATE
+            $validate  = $request->validated();
+            $idGet = decrypt($request->input('users_id'));
+            if ($idGet != Auth::id()) {
+                abort(404);
+            };
+            $post = Posts::create([
+                'id' => $request->id,
+                'title' => $request->title,
+                'content' => $request->content,
+                'users_id' => $idGet
+            ]);
+            $post->save();
+            //CATEGORY UPDATE
+            if($request->category_Menu){
+                $category = $post->category()->create(['category_Menu' => $request->category_Menu]);
+            }
+            if ($request->hasFile('postImage')) {
+                $file = $request->file('postImage')->storeAs('Thumbnails', $post->id . "-" . decrypt($request->users_id) . "-thumbnail." . $request->file('postImage')->extension());
+                $post->media()->save(Media::Create(['path' => $file]));
+            }
+            return response()->json(['success' => true, 'formData' => $post,]);
         }
-        return redirect()->route('user.Dashboard');
     }
     /**
      * Display the specified resource.
@@ -75,11 +86,11 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $Cat = Category::pluck('category_Menu');
-        $findName = Posts::where('id', '=', $id)->pluck('users_id');
-        $author = User::where('id', '=', $findName)->get();
-        $data = compact('Cat', 'author');
-        return view('post.post', ['posts' => Posts::findOrFail($id), 'Data' => $data]);
+        $post = Posts::findOrFail($id);
+        $findName = $post->users_id;
+        $comments = $post->comments()->LatestComments()->get();
+        $author = User::where('id', '=', $findName)->pluck('name');
+        return view('post.post', ['posts' => $post, 'author' => $author->first(), 'comments' => $comments]);
     }
 
     /**
@@ -123,10 +134,8 @@ class PostsController extends Controller
             ]);
             $post->save();
             //CATEGORY UPDATE
-            if ($post->category->count() == 1) {
-                $post->category()->update(['category_Menu' => $request->category_Menu]);
-            } else {
-                $post->category()->create(['category_Menu' => $request->category_Menu]);
+            if($request->category_Menu){
+                $post->category()->updateOrCreate(['category_Menu' => $request->category_Menu]);
             }
             // IMAGE UPDATE
             if ($request->hasFile('postImage')) {

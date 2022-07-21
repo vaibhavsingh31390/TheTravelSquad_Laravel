@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\ViewComposers\StapleData;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::aliasComponent('components.dashboard.dashNewPost', 'dashNewPost');
         Blade::aliasComponent('components.dashboard.dashEditPost', 'dashEditPost');
         Blade::aliasComponent('components.alert', 'alertNodal');
+        view()->composer(['*'], StapleData::class);
     }
 }
