@@ -12,15 +12,15 @@
                 <label for="category_Menu" class="form-label">Category</label>
                 <select name="category_Menu" id="category_Menu" class="form-select {{ $errors->has('title') ? 'is-invalid' : '' }}"
                     aria-label="Default select example">
-                    {{-- @if(isset($post->category()->first()->category_Menu))
-                        <option selected value="{{$post->category()->first()->category_Menu}}">
+                    @if(isset($post))
+                        <option selected value="{{$post->category()->first()->category_Menu}}" disabled>
                             {{ $post->category()->first()->category_Menu}}
                         </option>
                     @else
                     <option selected value="Select one of the following category." disabled>
                         Select one of the following category.
                     </option>
-                    @endif --}}
+                    @endif
                     <option value="Travel">Travel</option>
                     <option value="Technology">Technology</option>
                     <option value="Sports">Sports</option>
