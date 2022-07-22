@@ -547,6 +547,7 @@ class ComposerStaticInit55eba8734ccd96f514e1c370045c3e9b
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\StorePost' => __DIR__ . '/../..' . '/app/Http/Requests/StorePost.php',
+        'App\\Http\\ViewComposers\\StapleData' => __DIR__ . '/../..' . '/app/Http/ViewComposers/StapleData.php',
         'App\\Models\\Action' => __DIR__ . '/../..' . '/app/Models/Action.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Comments' => __DIR__ . '/../..' . '/app/Models/Comments.php',

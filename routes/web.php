@@ -17,24 +17,24 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'AjaxController@index')->name('home.index');
-Route::get('/card-data', 'AjaxController@loadedData')->name('home.cardDataGet');
-Route::post('/card-data', 'AjaxController@loadMoreData')->name('home.cardDataPost');
-Route::post('/send-action', 'AjaxController@incrementDecrement')->middleware('auth')->name('home.like_Dislike_Change');
-Route::get('/send-action', 'AjaxController@likeDislike')->middleware('auth')->name('home.like_Dislike');
-Route::resource('posts', PostsController::class)->except('edit','destory','update', 'store');
-Route::post('posts/{post}/edit', [PostsController::class, 'edit'])->name('user.DashEdit');
-Route::post('posts/{post}/update', [PostsController::class, 'update'])->name('user.DashUpdate');
-Route::post('posts/store', [PostsController::class, 'store'])->name('user.DashStore');
-Route::get('posts/{post}/destroy', [PostsController::class, 'destroy'])->name('user.DashDelete');
-Route::post('posts/{post}/destroy', [PostsController::class, 'destroy'])->name('user.DashDelete');
-Route::get('/type/{category?}', 'Controller@category')->name('postByCategory');
-Route::post('/dashHome', 'Controller@userDash')->middleware('auth')->name('user.DashHome');
-Route::get('/dashHome', 'Controller@userDash')->middleware('auth')->name('user.DashHome');
-Route::get('/userDashboard', 'Controller@userDash')->middleware('auth')->name('user.Dashboard');
-Route::get('/userDashboard/{action?}', 'Controller@userDashData')->middleware('auth')->name('user.DashboardDataGet');
-Route::post('/userDashboard/{action?}', 'Controller@userDashData')->middleware('auth')->name('user.DashboardDataPost');
-Auth::routes();
-Route::post('/post-comments', 'AjaxController@commentsSave')->name('add.comment');
-Route::get('/post-comments',  'AjaxController@commentsFetch')->name('get.comment');
+
+Route::get('/', 'AjaxController@index')->name('home.index'); // INDEX
+Route::post('/card-data', 'AjaxController@loadMoreData')->name('home.cardDataPost'); // LOAD DATA INDEX PAGE
+Route::post('/send-action', 'AjaxController@incrementDecrement')->middleware('auth')->name('home.like_Dislike_Change'); // LIKE DISLIKE CHECK & ACTION
+Route::get('/send-action', 'AjaxController@likeDislike')->middleware('auth')->name('home.like_Dislike'); //LIKE DISLIKE ACTION
+Route::resource('posts', PostsController::class)->except('edit','destory','update', 'store'); // POSTS RESOURCE
+Route::post('posts/{post}/edit', [PostsController::class, 'edit'])->name('user.DashEdit'); // POSTS EDIT
+Route::post('posts/{post}/update', [PostsController::class, 'update'])->name('user.DashUpdate'); // POSTS UPDATE
+Route::post('posts/store', [PostsController::class, 'store'])->name('user.DashStore'); // POSTS STORE
+Route::post('posts/{post}/destroy', [PostsController::class, 'destroy'])->name('user.DashDelete'); // POSTS DELETE
+Route::get('/type/{category?}', 'Controller@category')->name('postByCategory'); // POST BY CATEGORY
+Route::post('/dashHome', 'Controller@userDash')->middleware('auth')->name('user.DashHome'); // DASHBOARD HOME 
+Route::get('/userDashboard', 'Controller@userDash')->middleware('auth')->name('user.Dashboard'); // DASHBOARD HOME AJAX
+Route::post('/userDashboard/{action?}', 'Controller@userDashData')->middleware('auth')->name('user.DashboardDataPost'); // DASHBOARD ALL DATA 
+Route::get('/post-comments',  'AjaxController@commentsFetch')->name('get.comment'); // COMMENTS FETCH
+Route::post('/post-comments', 'AjaxController@commentsSave')->name('add.comment'); // COMMENTS SAVE
+Auth::routes(); // AUTH CONTROLLER
+
+
+// TESTING
 Route::get('/alert', 'Controller@test')->name('get.test');

@@ -11,7 +11,6 @@ use Illuminate\View\View;
 
 class StapleData {
     public function compose(View $view){
-        Cache::forget('staple-data');
         $authenticated_User = Auth::user();
         $category =   Category::pluck('category_Menu');
         $user = User::all();

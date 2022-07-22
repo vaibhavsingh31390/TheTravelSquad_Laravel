@@ -28,8 +28,8 @@ data-id="{{ $data->id }}">
 </th>
 <th class="text-center" style="width: 5%" scope="row">
 <p id="dataID">{{ $data->id }}</p></th>
-<td style="width: 19%"><p>{{ Str::of($data->title )->limit(25)}}</p></td>
-<td style="width: 39%"><p>{{ Str::of($data->content)->limit(55) }}</p></td>
+<td style="width: 19%"><p>{{ Str::of($data->title )->limit(20)}}</p></td>
+<td style="width: 39%"><p>{{ Str::of($data->content)->limit(50) }}</p></td>
 <td style="width: 15%">
 <p> {{ $data->category()->first()->category_Menu ?? 'No Category' }}</p>
 </td>

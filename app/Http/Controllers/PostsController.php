@@ -75,7 +75,15 @@ class PostsController extends Controller
                 $file = $request->file('postImage')->storeAs('Thumbnails', $post->id . "-" . decrypt($request->users_id) . "-thumbnail." . $request->file('postImage')->extension());
                 $post->media()->save(Media::Create(['path' => $file]));
             }
-            return response()->json(['success' => true, 'formData' => $post,]);
+            $response_Type_Created = 'Created';
+            $message='Posts Has Been Created !';
+            $html = view('components.alert')->with(compact(['response_Type_Created','message']))->render();
+            return response()->json(['success' => true, 'formData' => $post, 'responseAlert' => $html]);
+        } else{
+            $response_Type_Fails = 'Failed';
+            $message='Request Failed !';
+            $html = view('components.alert')->with(compact(['response_Type_Fails','message']))->render();
+            return response()->json(['success' => true, 'responseAlert' => $html]);
         }
     }
     /**
@@ -142,7 +150,16 @@ class PostsController extends Controller
                 $file = $request->file('postImage')->storeAs('Thumbnails', $post->id . "-" . $idGet . "-thumbnail." . $request->file('postImage')->extension());
                 $post->media()->save(Media::updateOrCreate(['posts_id'=>$post->id],['path' => $file]));
             }
-            return response()->json(['success' => true, 'formData' => $post,]);
+            // Response Alerts
+            $response_Type_Updated = 'Updated';
+            $message='Posts Has Been Updated !';
+            $html = view('components.alert')->with(compact(['response_Type_Updated','message']))->render();
+            return response()->json(['success' => true, 'formData' => $post, 'responseAlert' => $html]);
+        } else{
+            $response_Type_Fails = 'Failed';
+            $message='Request Failed !';
+            $html = view('components.alert')->with(compact(['response_Type_Fails','message']))->render();
+            return response()->json(['success' => true, 'responseAlert' => $html]);
         }
     }
 

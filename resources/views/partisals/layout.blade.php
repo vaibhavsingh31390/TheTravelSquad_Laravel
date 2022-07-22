@@ -21,7 +21,7 @@ href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
 <body>
 @if (Route::is('user.Dashboard'))
-<section class="body_ContentDashboard">@yield('section')</section>
+<section class="body_ContentDashboard" id="body_Content_Dashboard">@yield('section')</section>
 @else
 <nav class="navbar fixed-top navbar-expand-lg">
 <div class="container">

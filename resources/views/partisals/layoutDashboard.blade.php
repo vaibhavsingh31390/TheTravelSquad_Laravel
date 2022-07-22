@@ -1,6 +1,6 @@
 {{-- $findPosts for user Posts details --}}
 {{-- $userProfile for user details --}}
-<div class="container-fluid dashArea">
+<div class="container-fluid dashArea" id="dash_Area">
 <div class="row">
 @sideNav
 @endsideNav
@@ -35,5 +35,6 @@
 {{-- DASHDATA END --}}
 </div>
 {{-- DASHAREA ROW END --}}
+@include('components.alert')
 </div>
 {{-- DASHAREA END --}}
