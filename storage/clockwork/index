@@ -1,0 +1,9 @@
+1658608038-3957-1976108221,1658608037.9695,GET,/userDashboard,"App\Http\Controllers\Controller@userDash",200,1211.8468284607,request
+1658608101-7990-514948773,1658608101.3543,GET,/userDashboard,"App\Http\Controllers\Controller@userDash",200,1223.7989902496,request
+1658608249-0431-2026852458,1658608248.4218,POST,/userDashboard/myPosts,"App\Http\Controllers\Controller@userDashData",500,1415.7838821411,request
+1658608284-1182-1531720213,1658608283.6827,GET,/userDashboard,"App\Http\Controllers\Controller@userDash",200,1190.8140182495,request
+1658608295-7651-1690215062,1658608295.3241,POST,/userDashboard/myPosts,"App\Http\Controllers\Controller@userDashData",200,1196.5160369873,request
+1658608324-1157-1671750682,1658608323.6997,POST,/dashHome,"App\Http\Controllers\Controller@userDash",200,1155.8349132538,request
+1658608326-0302-57806117,1658608325.6099,POST,/userDashboard/myPosts,"App\Http\Controllers\Controller@userDashData",200,1148.3762264252,request
+1658608704-7229-1276122034,1658608704.2802,GET,/userDashboard,"App\Http\Controllers\Controller@userDash",200,1222.1350669861,request
+1658608717-4546-1207088469,1658608717.0297,GET,/,"App\Http\Controllers\AjaxController@index",200,1936.341047287,request
