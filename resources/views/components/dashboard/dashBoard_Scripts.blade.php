@@ -198,6 +198,21 @@
                 },
             });
         }
+
+        static dahsboard_Loader(){
+            $(document).on({
+              ajaxStart: function() { 
+                $('#loader').fadeIn('fast', function () {
+                    $(this).removeClass('d-none');
+                })
+            },
+              ajaxStop: function() { 
+                $('#loader').fadeOut('fast', function () {
+                    $(this).addClass('d-none');
+                })
+            }    
+            });
+        }
     }
 
     $(document).ready(function () {
@@ -212,6 +227,7 @@
         $(".toggleMyPost").click(function (e) {
             e.preventDefault();
             console.log("toggle_My_Post");
+            ajaxRequest.dahsboard_Loader();
             ajaxRequest.dahsboard_Fetch_All_Posts();
         });
 
@@ -219,6 +235,11 @@
         $("#toggleSearchPost").click(function (e) {
             e.preventDefault();
             var val = $("#serach_String").val();
+            if(val == ''){
+                alert('Please Write The Post Title !')
+                return
+            }
+            ajaxRequest.dahsboard_Loader();
             console.log("Search");
             ajaxRequest.dahsboard_Search_Posts(val);
         });
@@ -266,6 +287,7 @@
             var file = $("#upload").prop("files")[0];
             let inputData = new FormData($("#posts_Form_New")[0]);
             inputData.append("requestType", "New");
+            ajaxRequest.dahsboard_Loader();
             ajaxRequest.dahsboard_Store(inputData);
         });
 
@@ -275,6 +297,7 @@
             console.log("Edit");
             var valueUserId = $(this).closest("tr").attr("data-id");
             console.log(valueUserId);
+            ajaxRequest.dahsboard_Loader();
             ajaxRequest.dahsboard_Edit_View(valueUserId);
         });
 
@@ -294,6 +317,7 @@
                 $("#posts_Form_Update").attr("data-id")
             );
             inputData.append("requestType", "Update");
+            ajaxRequest.dahsboard_Loader();
             ajaxRequest.dahsboard_Update_Post(inputData,formUpdate.post_id);
         });
     });

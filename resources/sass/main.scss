@@ -571,7 +571,7 @@ nav {
 .alert_Overlay_Container{
     height: 100vh;
     background: rgba(0, 0, 0, 0.15);
-    position: absolute;
+    position: fixed;
     z-index: 9999;
     top: 50%;
     left: 50%;
@@ -610,6 +610,27 @@ nav {
                 background-color: transparent;
                 color: $txt_Color2;
             }
+        }
+    }
+}
+
+.loader{
+    height: 100vh;
+    min-width: 100vw;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    z-index: 9999;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: myAnim 0.5s ease;
+    @keyframes myAnim {
+        0% {
+            opacity: 0;
+        }
+    
+        100% {
+            opacity: 1;
         }
     }
 }

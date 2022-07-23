@@ -36,4 +36,10 @@
 </div>
 {{-- DASHAREA ROW END --}}
 @include('components.alert')
+<div class="d-flex justify-content-center align-items-center loader d-none" id="loader">
+    <div class="spinner-border text-light" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
 {{-- DASHAREA END --}}
