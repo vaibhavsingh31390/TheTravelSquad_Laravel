@@ -189,7 +189,7 @@
                     console.log("Updated");
                     $("#body_Content_Dashboard").append(data.responseAlert);
                     setTimeout(function () {
-                        $("#success").remove();
+                        $('#success').remove();
                     }, 3500);
                 },
                 error: function (error) {
