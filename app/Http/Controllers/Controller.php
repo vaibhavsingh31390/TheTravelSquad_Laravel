@@ -60,7 +60,7 @@ class Controller extends BaseController
 
     public function userDashData(Request $request){
         $search_Parameter = $request->input('value') ?? "";
-        $profile = Auth::user();
+        $profile = clock(Auth::user());
         $userData = Posts::where('users_id', '=', $profile->id);
         if($search_Parameter != ""){
             $findIt = $userData->where('title', 'LIKE', '%'.$search_Parameter.'%')->get();
