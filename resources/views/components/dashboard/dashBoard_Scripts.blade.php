@@ -62,7 +62,7 @@
         static dahsboard_Search_Posts(val) {
             $.ajax({
                 type: "POST",
-                url: "/userDashboard/search'",
+                url: "/userDashboard/search",
                 data: {
                     load_Data: "load_Data",
                     value: val,
@@ -219,7 +219,7 @@
         $("#toggleSearchPost").click(function (e) {
             e.preventDefault();
             var val = $("#serach_String").val();
-            console.log("Searach");
+            console.log("Search");
             ajaxRequest.dahsboard_Search_Posts(val);
         });
 
