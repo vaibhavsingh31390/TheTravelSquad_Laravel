@@ -201,13 +201,8 @@
 
         static dahsboard_Loader(){
             $(document).on({
-              ajaxStart: function() { 
-                $('#loader').fadeIn('fast', function () {
-                    $(this).removeClass('d-none');
-                })
-            },
               ajaxStop: function() { 
-                $('#loader').fadeOut('fast', function () {
+                $('#loader').delay(200).fadeOut( function () {
                     $(this).addClass('d-none');
                 })
             }    
@@ -215,7 +210,24 @@
         }
     }
 
+    // dahsboard_NavLink_Active
+        $(document).ready(function() {
+            $(".nav-link").first().addClass("active");
+            $(".nav-link").click(function () {
+            $(".nav-link").removeClass("active");
+            $(this).addClass("active");   
+            $('#loader').removeClass('d-none')
+            });
+
+            $(document).on("click", "#toggleEdit", function () {
+                $('#loader').removeClass('d-none');
+                console.log('eeeeeeeee');            
+            });
+        });
+
     $(document).ready(function () {
+
+
         // DASHBOARD HOME
         $(".toggleDashboardHome").click(function (e) {
             e.preventDefault();

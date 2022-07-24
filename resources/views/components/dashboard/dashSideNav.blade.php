@@ -30,12 +30,3 @@
 </div>
 </div>
 {{-- SIDENAV --}}
-<script>
-    $(document).ready(function() {
-            $(".nav-link").first().addClass("active");
-            $(".nav-link").click(function () {
-            $(".nav-link").removeClass("active");
-            $(this).addClass("active");   
-        });
-    });
-</script>
