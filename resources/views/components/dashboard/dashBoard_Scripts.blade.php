@@ -294,6 +294,10 @@
             inputData.append("requestType", "New");
             ajaxRequest.dahsboard_Loader();
             ajaxRequest.dahsboard_Store(inputData);
+            setTimeout(function() {
+            ajaxRequest.dahsboard_Fetch_All_Posts();
+            $('#toggleMyPost').addClass("active");   
+            }, 1000);
         });
 
         // EDIT AND UPDATE

@@ -52,7 +52,7 @@ if (isset($_POST['requestType'])) {
             </div>
         <?php
             break;
-        default:
+        case: 'dialog'
         ?>
             <div class="container-fluid d-flex justify-content-center align-items-center alert_Overlay_Container" id="ask_Modal">
                 <div class="row">
@@ -79,6 +79,31 @@ if (isset($_POST['requestType'])) {
                     </div>
                 </div>
     <?php
+            break;
+
+            default:
+            ?><div class="container-fluid d-flex justify-content-center align-items-center alert_Overlay_Container" id="failed">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-0 alert_Overlay">
+                        <div>
+                            <h3 class="d-flex align-items-center p-2 mb-0">
+                                <i class='bx bx-info-circle me-2'></i>
+                                <span>Information !</span>
+                            </h3>
+                        </div>
+                        <div class="px-2 py-3">
+                            <h5 class="p-1 text-center">
+                                <span>Thats All Folks..</span>
+                            </h5>
+                            <span>
+                                <img class="response_Image" src="{{ URL::to('/') }}/assets/failed.gif">
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        <?php
             break;
     }
 }

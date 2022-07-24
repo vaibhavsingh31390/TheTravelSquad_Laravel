@@ -25,6 +25,15 @@ class AjaxController extends Controller
         }
     }
 
+    public function loadMoreDataOnScroll(Request $request){
+        if($request->ajax()){
+            $category = $request->input('categoryType');
+            $allCards = Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->orderBy('created_at', 'desc')->skip($request->input('count'))->limit(6)->get();
+            $html = view('components.ajax')->with(compact('allCards'))->render();
+            return response()->json(['success'=>true, 'cards' => $html]);
+        }
+    }
+
     //Action Like, Dislike 
     public function incrementDecrement(Request $request)
     {

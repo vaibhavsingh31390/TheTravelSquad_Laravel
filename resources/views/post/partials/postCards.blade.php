@@ -12,7 +12,7 @@ All
 </div>
 
 <div class="container mt-1 mb-3 px-2">
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="row row-cols-1 row-cols-md-3 g-4" id="data-col">
 {{-- CARDS FOR CATEGORY WISE POSTS --}}
 @if (isset($cardsData))
 @foreach ($cardsData as $card)

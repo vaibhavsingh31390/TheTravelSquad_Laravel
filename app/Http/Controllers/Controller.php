@@ -32,7 +32,7 @@ class Controller extends BaseController
     }
 
     public function category($category){
-        $categoryCards =  Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->get(); 
+        $categoryCards =  Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->take(6)->get(); 
         return view('post.category', ['cardsData'=>$categoryCards]);
     }
 
