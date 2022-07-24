@@ -40,9 +40,13 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('auth.userDashboard', ['action' => 'newPosts']);
+        if($request->ajax()){
+            $html = view('components.dashboard.dashNewPost')->render();
+            return response()->json(['success'=>true, 'Data' => $html]);
+        }
+        return abort(404);
     }
 
     /**
@@ -143,7 +147,8 @@ class PostsController extends Controller
             $post->save();
             //CATEGORY UPDATE
             if($request->category_Menu){
-                $post->category()->updateOrCreate(['category_Menu' => $request->category_Menu]);
+                $category = $post->category()->updateOrCreate(['posts_id' => $post->id],['category_Menu' => $request->category_Menu]);
+                $test = "updated";
             }
             // IMAGE UPDATE
             if ($request->hasFile('postImage')) {
@@ -154,7 +159,7 @@ class PostsController extends Controller
             $response_Type_Updated = 'Updated';
             $message='Posts Has Been Updated !';
             $html = view('components.alert')->with(compact(['response_Type_Updated','message']))->render();
-            return response()->json(['success' => true, 'formData' => $post, 'responseAlert' => $html]);
+            return response()->json(['success' => true, 'formData' => $post, 'responseAlert' => $html, 'test' => $category]);
         } else{
             $response_Type_Fails = 'Failed';
             $message='Request Failed !';

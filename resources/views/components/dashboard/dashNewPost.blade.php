@@ -8,7 +8,7 @@
 <label for="category_Menu" class="form-label">Category</label>
 <select name="category_Menu" id="category_Menu" class="form-select {{ $errors->has('title') ? 'is-invalid' : '' }}"
 aria-label="Default select example">
-<option disabled>
+<option selected disabled>
 {{ 'Select One Of The Following Category'}}
 </option>
 <option value="Travel">Travel</option>

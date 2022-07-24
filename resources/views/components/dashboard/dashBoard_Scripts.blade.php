@@ -1,26 +1,5 @@
 <script type="text/javascript">
     class ajaxRequest {
-        static load_Data_Index() {
-            $.ajax({
-                type: "POST",
-                url: "/dashHome",
-                data: {
-                    dashData: "load_Data",
-                    _token: "{{ csrf_token() }}",
-                    value: "Home",
-                },
-                dataType: "json",
-                success: function (data) {
-                    // console.log(data);
-                    $("#ajax_Fetch_Data").html(data.Data);
-                },
-                error: function (error) {
-                    console.log(error.responseText);
-                    console.log("error");
-                },
-            });
-        }
-
         static dahsboard_Home() {
             $.ajax({
                 type: "POST",
@@ -103,7 +82,7 @@
         static dahsboard_New_Post() {
             $.ajax({
                 type: "POST",
-                url: "/dashHome",
+                url: "posts/new",
                 data: {
                     dashData: "load_Data",
                     _token: "{{ csrf_token() }}",
@@ -186,7 +165,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    console.log("Updated");
+                    console.log(data.test);
                     $("#body_Content_Dashboard").append(data.responseAlert);
                     setTimeout(function () {
                         $('#success').remove();
@@ -212,16 +191,23 @@
 
     // dahsboard_NavLink_Active
         $(document).ready(function() {
-            $(".nav-link").first().addClass("active");
-            $(".nav-link").click(function () {
-            $(".nav-link").removeClass("active");
-            $(this).addClass("active");   
-            $('#loader').removeClass('d-none')
+            $(".sidanav_link").first().addClass("active");
+            $(".sidanav_link").click(function () {
+            $(".sidanav_link").removeClass("active");
+                $(this).addClass("active");   
+                $('#loader').removeClass('d-none')
             });
 
             $(document).on("click", "#toggleEdit", function () {
                 $('#loader').removeClass('d-none');
-                console.log('eeeeeeeee');            
+            });
+        });
+
+        $(document).ready(function() {
+            $(".dropdown-item").click(function () {
+            $(".dropdown-item").removeClass("active");
+            $(this).addClass("active");   
+            $('#loader').removeClass('d-none')
             });
         });
 
@@ -232,10 +218,11 @@
         $(".toggleDashboardHome").click(function (e) {
             e.preventDefault();
             console.log("toggle_Dashboard_Home");
-            ajaxRequest.load_Data_Index();
+            ajaxRequest.dahsboard_Loader();
+            ajaxRequest.dahsboard_Home();
         });
-        // ALL POSTS
 
+        // ALL POSTS
         $(".toggleMyPost").click(function (e) {
             e.preventDefault();
             console.log("toggle_My_Post");
@@ -251,6 +238,11 @@
                 alert('Please Write The Post Title !')
                 return
             }
+            $(document).on({
+              ajaxStart: function() { 
+                $('#loader').removeClass('d-none');
+              }
+            });
             ajaxRequest.dahsboard_Loader();
             console.log("Search");
             ajaxRequest.dahsboard_Search_Posts(val);
@@ -285,6 +277,7 @@
         $(".toggleNewPost").click(function (e) {
             e.preventDefault();
             console.log("toggleNewPost");
+            ajaxRequest.dahsboard_Loader();
             ajaxRequest.dahsboard_New_Post();
         });
 
@@ -331,6 +324,11 @@
             inputData.append("requestType", "Update");
             ajaxRequest.dahsboard_Loader();
             ajaxRequest.dahsboard_Update_Post(inputData,formUpdate.post_id);
+            setTimeout(function() {
+                ajaxRequest.dahsboard_Fetch_All_Posts();
+                $('#toggleMyPost').addClass("active");   
+            }, 1000);
+            
         });
     });
 </script>

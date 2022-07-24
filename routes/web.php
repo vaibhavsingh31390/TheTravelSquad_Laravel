@@ -22,7 +22,8 @@ Route::get('/', 'AjaxController@index')->name('home.index'); // INDEX
 Route::post('/card-data', 'AjaxController@loadMoreData')->name('home.cardDataPost'); // LOAD DATA INDEX PAGE
 Route::post('/send-action', 'AjaxController@incrementDecrement')->middleware('auth')->name('home.like_Dislike_Change'); // LIKE DISLIKE CHECK & ACTION
 Route::get('/send-action', 'AjaxController@likeDislike')->middleware('auth')->name('home.like_Dislike'); //LIKE DISLIKE ACTION
-Route::resource('posts', PostsController::class)->except('edit','destory','update', 'store'); // POSTS RESOURCE
+Route::resource('posts', PostsController::class)->except('create','edit','destory','update', 'store'); // POSTS RESOURCE
+Route::post('posts/new', [PostsController::class, 'create'])->name('user.DashNew'); // POSTS NEW
 Route::post('posts/{post}/edit', [PostsController::class, 'edit'])->name('user.DashEdit'); // POSTS EDIT
 Route::post('posts/{post}/update', [PostsController::class, 'update'])->name('user.DashUpdate'); // POSTS UPDATE
 Route::post('posts/store', [PostsController::class, 'store'])->name('user.DashStore'); // POSTS STORE

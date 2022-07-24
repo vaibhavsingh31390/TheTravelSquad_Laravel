@@ -39,19 +39,6 @@ class Controller extends BaseController
     public function userDash(Request $request){
         $value = $request->input('value');
         if($request->ajax()){
-            if($value == "Home"){
-                $html = view('components.dashboard.dashHome')->render();
-                return response()->json(['success'=>true, 'Data' => $html]);
-            }elseif($value == "NewPost"){
-                $html = view('components.dashboard.dashNewPost')->render();
-                return response()->json(['success'=>true, 'Data' => $html]);
-            }          
-        }
-        return view('auth.userDashboard');
-    }
-
-    public function userDashNewPost(Request $request){
-        if($request->ajax()){
             $html = view('components.dashboard.dashHome')->render();
             return response()->json(['success'=>true, 'Data' => $html]);
         }
@@ -60,7 +47,7 @@ class Controller extends BaseController
 
     public function userDashData(Request $request){
         $search_Parameter = $request->input('value') ?? "";
-        $profile = clock(Auth::user());
+        $profile = Auth::user();
         $userData = Posts::where('users_id', '=', $profile->id);
         if($search_Parameter != ""){
             $findIt = $userData->where('title', 'LIKE', '%'.$search_Parameter.'%')->get();

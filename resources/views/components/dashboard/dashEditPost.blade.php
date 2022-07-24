@@ -8,9 +8,15 @@
 <label for="category_Menu" class="form-label">Category</label>
 <select name="category_Menu" id="category_Menu" class="form-select {{ $errors->has('title') ? 'is-invalid' : '' }}"
 aria-label="Default select example">
-<option selected value="{{$post->category()->first()->category_Menu}}" disabled>
-{{ $post->category()->first()->category_Menu}}
-</option>
+@if ($post->category()->count() > 0)
+    <option selected value="{{$post->category()->first()->category_Menu}}" disabled>
+        {{ $post->category()->first()->category_Menu}}
+    </option>
+    @else
+    <option selected disabled>
+        {{ 'Select One Of The Following Category'}}
+    </option>
+@endif
 <option value="Travel">Travel</option>
 <option value="Technology">Technology</option>
 <option value="Sports">Sports</option>

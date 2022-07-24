@@ -12,19 +12,19 @@
 <div class="side-Navigation mt-4">
 <ul class="nav flex-column">
 <li class="nav-item">
-<a class="nav-link toggleDashboardHome" href="#" id="toggleDashboardHome">Dashboard</a>
+<a class="nav-link toggleDashboardHome sidanav_link" href="#" id="toggleDashboardHome">Dashboard</a>
 </li>
 <li class="nav-item">
-<a class="nav-link toggleMyPost" href="#" id="toggleMyPost">My Posts</a>
+<a class="nav-link toggleMyPost sidanav_link" href="#" id="toggleMyPost">My Posts</a>
 </li>
 <li class="nav-item">
-<a class="nav-link toggleNewPost" href="#" id="toggleNewPost">New Posts</a>
+<a class="nav-link toggleNewPost sidanav_link" href="#" id="toggleNewPost">New Posts</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="#">Total Likes</a>
+<a class="nav-link sidanav_link" href="#">Total Likes</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="#">Customer Care</a>
+<a class="nav-link sidanav_link" href="#">Customer Care</a>
 </li>
 </ul>
 </div>

@@ -31,9 +31,9 @@ Features
 <a class="nav-link toggleNewPost" href="#" id="toggleNewPost">New
 Posts</a>
 </li>
-<li class="dropdown-item">
-<a class="nav-link" href="#">Total Likes</a>
-</li>
+{{-- <li class="dropdown-item">
+<a class="nav-link" href="/#">Total Likes</a>
+</li> --}}
 </ul>
 </li>
 <li class="nav-item dropdown">
@@ -68,12 +68,3 @@ Out</a>
 </div>
 </nav>
 </div>
-
-<script>
-    $(document).ready(function() {
-            $(".dropdown-item").click(function () {
-            $(".dropdown-item").removeClass("active");
-            $(this).addClass("active");   
-        });
-    });
-</script>
