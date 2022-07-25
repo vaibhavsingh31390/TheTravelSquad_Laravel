@@ -512,10 +512,24 @@ nav {
 // COMMENTS  SECTION
 .comments_Container {
     .comments_Layout {
-        // min-height: 500px;
+        position: relative;
         background-color: $bg_White;
         border-radius: 5px;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        .loader_Comments{
+            height: -webkit-fill-available;
+            min-height: 100%;
+            width: inherit;
+            background: rgba(0, 0, 0, 0.15);
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            .spinner{
+                color: $txt_Color2;
+            }
+        }
         h1 {
             color: $txt_Color1;
         }
@@ -639,9 +653,9 @@ nav {
     // }
 }
 .loader_Bottom{
+    height: 35px;
+    overflow: hidden;
     .spinner{
         color: $txt_Color2;
-        width: 1.5rem;
-        height: 1.5rem;
     }   
 }

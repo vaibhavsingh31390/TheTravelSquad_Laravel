@@ -89,9 +89,12 @@ Account
 <section class="body_Content">@yield('section')</section>
 @include('components.alert')
 <div class="d-flex justify-content-center align-items-center mb-2 loader_Bottom d-none" id="loader">
-<div class="spinner-border spinner" role="status">
+{{-- <div class="spinner-border spinner" role="status">
 <span class="sr-only">Loading...</span>
-</div>
+</div> --}}
+<span>
+    <img class="response_Bottom_Loader" src="{{ URL::to('/') }}/assets/loader_Bottom.gif">
+</span>
 </div>
 @endif
 <script src="{{ mix('/js/main.js') }}"></script>

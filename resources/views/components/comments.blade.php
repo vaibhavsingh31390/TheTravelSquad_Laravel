@@ -22,7 +22,7 @@ Post Now
 <i class='bx bxs-message-square-add'></i>
 </h3>
 @forelse ($comments as $comment)
-<div class="col-sm-12 col-md-12 col-lg-12 mt-2 mb-3 p-2 border commentBody">
+<div class="col-sm-12 col-md-12 col-lg-12 mt-2 mb-3 p-2 border-bottom commentBody">
 <div class="user_Img d-flex justify-content-start align-items-center mb-2">
 <div class="user_DataPhoto">
 <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61" alt="user_Photo">
@@ -47,5 +47,10 @@ $user->where('id', '=', $comment->users_id)->pluck('name')->first()
 </div>
 </div>
 @endforelse
+<div class="d-flex justify-content-center align-items-center loader_Comments d-none" id="loader_Comments">
+<div class="spinner-border spinner" role="status" style="">
+<span class="sr-only">Loading...</span>
+</div>
+</div>
 </div>
 </div>

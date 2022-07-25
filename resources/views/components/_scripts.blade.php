@@ -73,7 +73,7 @@
                             $("#load_More").hide();
                         } else {
                             setTimeout(() => {
-                            $('#data-col').append(data.cards);
+                            $(data.cards).hide().appendTo('#data-col').fadeIn(1000);
                             $("#load_More").text('Load More'); 
                         }, 1000);
                         }
@@ -120,7 +120,7 @@
                                 console.log('Data Empty Now.')
                                 return
                             } else {
-                                $('#data-col').append(data.cards);
+                                $(data.cards).hide().appendTo('#data-col').fadeIn(1000);
                             }
                             count+=6;
                             isPosting = false;
@@ -218,36 +218,35 @@
 <script type="text/javascript">
     //POST COMMENT
     $(document).ready(function () {
-        $("#post_Comment_Btn").click(function (e) {
+        $(document).on('click',"#post_Comment_Btn",function (e) {
             e.preventDefault();
             var form = $('#comment').val();
             if (form == '') {
                 alert("Please Write Something");
                 return
             }
-            $(document).on({
-                ajaxStart: function () {
-                    $("#post_Comment_Btn").text('Posting ');
-                    jQuery('<i>', {
-                        class: 'fa fa-spinner fa-spin',
-                    }).appendTo('#post_Comment_Btn');
-                },
-                ajaxStop: function () {
-                    $("#post_Comment_Btn").text('Post Now');
-                }
-            });
+            $('#loader_Comments').removeClass('d-none');
+            $("#post_Comment_Btn").text('Posting ');
+            jQuery('<i>', {class: 'fa fa-spinner fa-spin',}).appendTo('#post_Comment_Btn');
             $.ajax({
                 type: "POST",
                 url: "/post-comments",
-                data: { posted_Comment: "posted_Comment", _token: "{{ csrf_token() }}", formData: form, postId: {{ $posts-> id}}},
-        dataType: "json",
-        success: function (data) {
-            console.log(data);
-            $('#comments_Container').html(data.comments);
-        },
-        error: function (error) {
-            console.log(error.responseText);
-        },
+                data: { requestType: "posted_Comment", _token: "{{ csrf_token() }}", formData: form, postId: {{ $posts-> id}}},
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    setTimeout(() => {
+                    $("#post_Comment_Btn").text('Post Now');
+                    $('#loader_Comments').addClass('d-none')
+                    $("#comments_Container").fadeOut(0,function(){
+                        $(this).html(data.comments).fadeIn();
+                    }); 
+                    }, 1000);
+                    
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                },
             });
         });
     });
