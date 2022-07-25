@@ -42,7 +42,7 @@ The Travel Squad</a>
 Categories
 </a>
 <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-<li class="dropdown-item{{ Route::is('posts.index') ? 'active' : '' }}">
+<li class="dropdown-item {{ Route::is('posts.index') ? 'active' : '' }}">
 <a class="nav-link" href="{{ route('posts.index') }}">All Posts</a>
 </li>
 @foreach ($category->unique() as $key)

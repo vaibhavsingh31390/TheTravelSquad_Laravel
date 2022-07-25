@@ -84,49 +84,88 @@
 
 </script>
 
-@if (Route::is('postByCategory'))
+@if (Route::is('postByCategory')  || Route::is('posts.index'))
 <script>
-    $(document).ready(function () {
-        var count = 6;
-        $(window).scroll(function () {
-            var processing = false;
-            if (processing)
-                return false;
-
-            if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-                processing = true; //sets a processing AJAX request flag
-                var category = $('li.dropdown-item.active').text();
-                category = category.trim();
-                console.log('scrolled at 80% ' + category);
-                $(document).on({
-                    ajaxStart: function () { console.log('Loading..'); },
-                    ajaxStop: function () { console.log('Loaded'); }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "/card-data-category",
-                    data: { requestType: 'load_Data_Category', _token: "{{ csrf_token() }}", count: count, categoryType: category },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.cards == "") {
-                        console.log('Data Empty Now.')
-                        return
-                    } else {
-                        $('#data-col').append(data.cards);
-                    }
-                    count += 6;
-                    },
-                    error: function (error) {
+    // SCROLL TO ADD DATA
+     $(document).ready(function () {
+         var count = 6;
+         $(window).on('scroll',function () {
+             var processing = false;
+            // console.log('SCROLLTOP:'+ $(window).scrollTop() + '  WINDOW HEIGHT: ' + $(window).height() + '  WINDOW HEIGHT: ' + $(document).height())
+             if (processing)
+                 return false;
+             if ($(window).scrollTop() + $(window).height() >= $(document).height() - 1) {
+                 processing = true; //sets a processing AJAX request flag
+                 var category = $('li.dropdown-item.active').text();
+                 category = category.trim();
+                 console.log('scrolled ' + category);
+                  $(document).on({
+                      ajaxStart: function () { console.log('Loading..'); },
+                      ajaxStop: function () { console.log('Loaded'); }
+                  });
+                  $.ajax({
+                      type: "POST",
+                      url: "/card-data-category",
+                      data: { requestType: 'load_Data_Category', _token: "{{ csrf_token() }}", count: count, categoryType: category },
+                      dataType: "json",
+                      success: function (data) {
+                          if (data.cards == "") {
+                          console.log('Data Empty Now.')
+                          return
+                      } else {
+                          $('#data-col').append(data.cards);
+                      }
+                      count += 6;
+                      },
+                      error: function (error) {
                         console.log(error.responseText);
-                        console.log('error');
-                    },
-                });
-            }
-        });
-    });
+                          console.log('error');
+                      },
+                  });
+             }
+         });
+     });
+
+    // var page = 1;
+    // count = 6;
+    // $(window).scroll(function() {
+    //   if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+    //     var category = $('li.dropdown-item.active').text();
+    //     category = category.trim();
+    //   page++;
+    //   $(document).on({
+    //     ajaxStart: function () { console.log('Loading..'); },
+    //     ajaxStop: function () { console.log('Loaded'); }
+    //     });
+    //   load_more(page,category);
+    //   }
+    // });
+
+    // function load_more(page, category){
+    //     $.ajax({
+    //                 type: "POST",
+    //                 url: "/card-data-category?page=" + page,
+    //                 data: { requestType: 'load_Data_Category', _token: "{{ csrf_token() }}", count: count, categoryType: category },
+    //                 dataType: "json",
+    //                 success: function (data) {
+    //                     console.log(data)
+    //                     if (data.cards == "") {
+    //                     console.log('Data Empty Now.')
+    //                     return
+    //                 } else {
+    //                     $('#data-col').append(data.cards);
+    //                 }
+    //                 count += 6;
+    //                 },
+    //                 error: function (error) {
+    //                     console.log(error.responseText);
+    //                     console.log('error');
+    //                 },
+    //             });
+    //         };
 </script>
 @endif
-// SCROLL TO ADD DATA
+
 
 <script>
     // LIKE AND DISLIKE ACTION

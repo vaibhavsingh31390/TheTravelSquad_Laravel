@@ -30,7 +30,7 @@ class PostsController extends Controller
         $posts =  Cache::remember('index-postsData', now()->addMinutes(10), function () {
             return Posts::with(['comments' => function ($query) {
                 return $query->LatestComments();
-            }])->get();
+            }])->take(6)->get();
         });
         return view('post.posts', ['posts' => $posts]);
     }
