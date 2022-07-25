@@ -58,98 +58,82 @@
         $("#load_More").click(function (e) {
             // console.log('working');
             $(document).on({
-                ajaxStart: function () { $("#load_More").text('Loading..'); },
-                ajaxStop: function () { $("#load_More").text('Load More'); }
+                ajaxStart: function () { 
+                $('#load_More').text('');
+                $('#load_More').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="color: #f05454"></span> Loading..');
+            }
             });
-            $.ajax({
-                type: "POST",
-                url: "/card-data",
-                data: { requestType: 'load_Data', _token: "{{ csrf_token() }}", count: countAmt },
-                dataType: "json",
-                success: function (data) {
-                    if (data.cards == "") {
-                        $("#load_More").hide();
-                    } else {
-                        $('#data-col').append(data.cards);
-                    }
-                    countAmt += 6;
-                },
-                error: function (error) {
-                    console.log(error.responseText);
-                    console.log('error');
-                },
-            });
+                    $.ajax({
+                    type: "POST",
+                    url: "/card-data",
+                    data: { requestType: 'load_Data', _token: "{{ csrf_token() }}", count: countAmt },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.cards == "") {
+                            $("#load_More").hide();
+                        } else {
+                            setTimeout(() => {
+                            $('#data-col').append(data.cards);
+                            $("#load_More").text('Load More'); 
+                        }, 1000);
+                        }
+                        countAmt += 6;
+                    },
+                    error: function (error) {
+                        console.log(error.responseText);
+                        console.log('error');
+                    },
+                });
         });
     });
 
 </script>
 
-@if (Route::is('postByCategory')  || Route::is('posts.index'))
+@if (Route::is('postByCategory') || Route::is('posts.index'))
 <script>
     // SCROLL TO ADD DATA
-     $(document).ready(function () {
-         var count = 6;
-         $(window).on('scroll',function () {
-             var processing = false;
-             if (processing)
-                 return false;
-            var scroll_position_for_posts_load = Math.ceil($(window).height() + $(window).scrollTop());
-            var documentHeight= $(document).height();
-             if (scroll_position_for_posts_load >= documentHeight) {
+
+    $(document).ready(function () {
+        var isPosting = false;
+        var count = 6;
+        $(window).on('scroll', function () {
+            var last_Card_Id = $(".card").last().attr("data-id");
+            console.log(last_Card_Id);
+            var scroll_position_for_posts_load = $(document).height() - $(window).height() - 10;
+            var scrollHeight = $(window).scrollTop();
+            if (!isPosting && scrollHeight >= scroll_position_for_posts_load) {
+                isPosting = true;
                 $('#loader').removeClass('d-none')
-                const counts = {};
-                var card_Data_Id  = [];
-                $(".card").each(function(){
-                    card_Data_Id.push($(this).attr("data-id"));
-                    console.log(card_Data_Id);
-                })
-                 card_Data_Id.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; 
-                    if(counts[x] == 2){
-                        console.log(counts[x]);
-                        console.log(card_Data_Id[x]);
-                    }
-                });
-                var found = {};
-                $('[data-id]').each(function(){
-                    var $this = $(this);
-                    if(found[$this.data('id')]){
-                        $this.parent().remove();   
-                    }
-                    else{
-                        found[$this.data('id')] = true;   
-                    }
-                });
-                 console.log(counts)
-                 processing = true; //sets a processing AJAX request flag
-                 var category = $('li.dropdown-item.active').text();
-                 category = category.trim();
+                var category = $('li.dropdown-item.active').text();
+                category = category.trim();
                 $(document).on({
-                ajaxStop: function () {  $('#loader').addClass('d-none') }
+                    ajaxStop: function () { $('#loader').addClass('d-none') }
                 });
-                setTimeout(function() {
-                  $.ajax({
-                      type: "POST",
-                      url: "/card-data-category",
-                      data: { requestType: 'load_Data_Category', _token: "{{ csrf_token() }}", count: count, categoryType: category},
-                      dataType: "json",
-                      success: function (data) {
-                          if (data.cards == "") {
-                          console.log('Data Empty Now.')
-                          return
-                      } else {
-                          $('#data-col').append(data.cards);
-                      }
-                      count += 6;
-                      },
-                      error: function (error) {
-                        console.log(error.responseText);
-                          console.log('error');
-                      },
-                  });
-                },1000);
-             }
-         });
-     });
+                setTimeout(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/card-data-category",
+                        data: { requestType: 'load_Data_Category', _token: "{{ csrf_token() }}", last_Id: last_Card_Id, categoryType: category, count: count },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.cards == "") {
+                                console.log('Data Empty Now.')
+                                return
+                            } else {
+                                $('#data-col').append(data.cards);
+                            }
+                            count+=6;
+                            isPosting = false;
+                        },
+                        error: function (error) {
+                            console.log(error.responseText);
+                            console.log('error');
+                        }
+                    });
+                }, 1000);
+            }
+        });
+    });
 </script>
 @endif
 

@@ -28,8 +28,9 @@ class AjaxController extends Controller
     public function loadMoreDataOnScroll(Request $request){
         if($request->ajax()){
             $category = $request->input('categoryType');
+            $last_Id = $request->input('last_Id');
             if($request->input('categoryType') == 'All Posts'){
-                $allCards = Posts::skip($request->input('count'))->limit(6)->get();
+                $allCards = Posts::where('id', '>', $last_Id)->limit(6)->get();
                 $html = view('components.ajax')->with(compact('allCards'))->render();
                 return response()->json(['success'=>true, 'cards' => $html]);
             }else{

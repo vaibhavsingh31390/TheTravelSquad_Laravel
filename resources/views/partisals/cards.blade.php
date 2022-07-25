@@ -49,12 +49,14 @@
 @endforeach
 </div>
 </div>
+
 <div class="container">
 <div class="row">
-<div class="col-sm-12">
-<div class="load_More text-center">
-<button type="submit" class="btn load_MoreBtn mb-3 mt-1" id="load_More">Load More</button>
-</div>
+<div class="col-sm-12 text-center">
+    <button class="btn load_MoreBtn mb-3 mt-1 text-center" type="button" id="load_More">
+        {{-- <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="color: #f05454"></span> --}}
+        Load More.
+    </button>
 </div>
 </div>
 </div>
