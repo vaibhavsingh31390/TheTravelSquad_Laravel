@@ -623,6 +623,9 @@ nav {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    .spinner{
+        color: $txt_Color2;
+    }
     // animation: myAnim 0.5s ease;
     // @keyframes myAnim {
     //     0% {
@@ -633,4 +636,9 @@ nav {
     //         opacity: 1;
     //     }
     // }
+}
+.loader_Bottom{
+    .spinner{
+        color: $txt_Color2;
+    }   
 }

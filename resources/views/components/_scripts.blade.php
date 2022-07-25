@@ -91,22 +91,46 @@
          var count = 6;
          $(window).on('scroll',function () {
              var processing = false;
-            // console.log('SCROLLTOP:'+ $(window).scrollTop() + '  WINDOW HEIGHT: ' + $(window).height() + '  WINDOW HEIGHT: ' + $(document).height())
              if (processing)
                  return false;
-             if ($(window).scrollTop() + $(window).height() >= $(document).height() - 1) {
+            var scroll_position_for_posts_load = Math.ceil($(window).height() + $(window).scrollTop());
+            var documentHeight= $(document).height();
+             if (scroll_position_for_posts_load >= documentHeight) {
+                $('#loader').removeClass('d-none')
+                const counts = {};
+                var card_Data_Id  = [];
+                $(".card").each(function(){
+                    card_Data_Id.push($(this).attr("data-id"));
+                    console.log(card_Data_Id);
+                })
+                 card_Data_Id.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; 
+                    if(counts[x] == 2){
+                        console.log(counts[x]);
+                        console.log(card_Data_Id[x]);
+                    }
+                });
+                var found = {};
+                $('[data-id]').each(function(){
+                    var $this = $(this);
+                    if(found[$this.data('id')]){
+                        $this.parent().remove();   
+                    }
+                    else{
+                        found[$this.data('id')] = true;   
+                    }
+                });
+                 console.log(counts)
                  processing = true; //sets a processing AJAX request flag
                  var category = $('li.dropdown-item.active').text();
                  category = category.trim();
-                 console.log('scrolled ' + category);
-                  $(document).on({
-                      ajaxStart: function () { console.log('Loading..'); },
-                      ajaxStop: function () { console.log('Loaded'); }
-                  });
+                $(document).on({
+                ajaxStop: function () {  $('#loader').addClass('d-none') }
+                });
+                setTimeout(function() {
                   $.ajax({
                       type: "POST",
                       url: "/card-data-category",
-                      data: { requestType: 'load_Data_Category', _token: "{{ csrf_token() }}", count: count, categoryType: category },
+                      data: { requestType: 'load_Data_Category', _token: "{{ csrf_token() }}", count: count, categoryType: category},
                       dataType: "json",
                       success: function (data) {
                           if (data.cards == "") {
@@ -122,47 +146,10 @@
                           console.log('error');
                       },
                   });
+                },1000);
              }
          });
      });
-
-    // var page = 1;
-    // count = 6;
-    // $(window).scroll(function() {
-    //   if($(window).scrollTop() + $(window).height() >= $(document).height()) {
-    //     var category = $('li.dropdown-item.active').text();
-    //     category = category.trim();
-    //   page++;
-    //   $(document).on({
-    //     ajaxStart: function () { console.log('Loading..'); },
-    //     ajaxStop: function () { console.log('Loaded'); }
-    //     });
-    //   load_more(page,category);
-    //   }
-    // });
-
-    // function load_more(page, category){
-    //     $.ajax({
-    //                 type: "POST",
-    //                 url: "/card-data-category?page=" + page,
-    //                 data: { requestType: 'load_Data_Category', _token: "{{ csrf_token() }}", count: count, categoryType: category },
-    //                 dataType: "json",
-    //                 success: function (data) {
-    //                     console.log(data)
-    //                     if (data.cards == "") {
-    //                     console.log('Data Empty Now.')
-    //                     return
-    //                 } else {
-    //                     $('#data-col').append(data.cards);
-    //                 }
-    //                 count += 6;
-    //                 },
-    //                 error: function (error) {
-    //                     console.log(error.responseText);
-    //                     console.log('error');
-    //                 },
-    //             });
-    //         };
 </script>
 @endif
 

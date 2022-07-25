@@ -86,6 +86,12 @@ Account
 </div>
 </nav>
 <section class="body_Content">@yield('section')</section>
+@include('components.alert')
+<div class="d-flex justify-content-center align-items-center mb-2 loader_Bottom d-none" id="loader">
+<div class="spinner-border spinner" role="status" style="">
+<span class="sr-only">Loading...</span>
+</div>
+</div>
 @endif
 <script src="{{ mix('/js/main.js') }}"></script>
 </body>

@@ -29,13 +29,13 @@ class AjaxController extends Controller
         if($request->ajax()){
             $category = $request->input('categoryType');
             if($request->input('categoryType') == 'All Posts'){
-                $allCards = Posts::skip($request->input('count'))->take(6)->get();
+                $allCards = Posts::skip($request->input('count'))->limit(6)->get();
                 $html = view('components.ajax')->with(compact('allCards'))->render();
                 return response()->json(['success'=>true, 'cards' => $html]);
             }else{
             $allCards = Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->orderBy('created_at', 'desc')->skip($request->input('count'))->limit(6)->get();
             $html = view('components.ajax')->with(compact('allCards'))->render();
-            return response()->json(['success'=>true, 'cards' => $html]);
+            return response()->json(['success'=>true, 'cards' => $html, 'count'=>$request->input('count')]);
         }
         }
     }

@@ -11797,3 +11797,10 @@ nav .navbar-toggler .fa-bars:focus {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.loader .spinner {
+  color: #f05454;
+}
+
+.loader_Bottom .spinner {
+  color: #f05454;
+}

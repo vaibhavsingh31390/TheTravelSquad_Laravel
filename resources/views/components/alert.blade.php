@@ -52,7 +52,7 @@ if (isset($_POST['requestType'])) {
             </div>
         <?php
             break;
-        case: 'dialog'
+        case 'dialog':
         ?>
             <div class="container-fluid d-flex justify-content-center align-items-center alert_Overlay_Container" id="ask_Modal">
                 <div class="row">
