@@ -4,11 +4,11 @@
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 <span class="navbar-toggler-icon">
-<i class="fas fa-bars" style="font-size:24px;"></i>
+<i class='bx bx-menu'  id="toggle" style="font-size: 24px"></i>
 </span>
 </button>
 <div class="collapse navbar-collapse" id="navbarNav">
-<form class="d-flex w-50" method="POST" action="{{ route('user.Dashboard', ['action'=>'search']) }}">
+<form class="d-flex w-50 dashboad_Search_Form" method="POST" action="{{ route('user.Dashboard', ['action'=>'search']) }}">
 <input class="form-control me-2" name="search_Query" type="search" placeholder="Search Posts.." id="serach_String"
 required>
 <button class="btn btn-search" type="submit" id="toggleSearchPost">Search</button>

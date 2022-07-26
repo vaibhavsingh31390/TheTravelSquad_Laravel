@@ -25,6 +25,27 @@ body {
     overflow-x: hidden;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: $bg_Color3; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $txt_Color2; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: $txt_Color2; 
+    opacity: 0.6;
+}
+
 // NAVIGATION
 nav {
     background-color: $bg_Color1;
@@ -151,10 +172,6 @@ nav {
         margin-left: 0px !important;
     }
 
-    .navbar-brand {
-        // margin-left: 1rem;
-    }
-
     .nav-item {
         padding-right: 1rem;
         padding-left: 1rem;
@@ -184,6 +201,14 @@ nav {
         display: none;
     }
 }
+
+@media (max-width: 576px) {
+    .dashboad_Search_Form{
+        width: 100% !important;
+        margin-top: 8px;
+    }
+}
+
 
 //   CAROUSEL HERO SECTION
 .hero_Carousel {
@@ -253,6 +278,7 @@ nav {
     padding-left: 1rem;
     transition: 0.35s ease;
     height: 38px;
+    line-height: 1;
     color: $bg_Color1;
     &:hover {
         background-color: transparent;

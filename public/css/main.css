@@ -11295,6 +11295,27 @@ body {
   overflow-x: hidden;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f7f5f2;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f05454;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #f05454;
+  opacity: 0.6;
+}
+
 nav {
   background-color: #dddddd;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
@@ -11420,6 +11441,12 @@ nav .navbar-toggler .fa-bars:focus {
     display: none;
   }
 }
+@media (max-width: 576px) {
+  .dashboad_Search_Form {
+    width: 100% !important;
+    margin-top: 8px;
+  }
+}
 .hero_Carousel .carousel-inner .carousel-item {
   height: 400px;
   overflow: hidden;
@@ -11474,6 +11501,7 @@ nav .navbar-toggler .fa-bars:focus {
   padding-left: 1rem;
   transition: 0.35s ease;
   height: 38px;
+  line-height: 1;
   color: #dddddd;
 }
 .load_MoreBtn:hover {

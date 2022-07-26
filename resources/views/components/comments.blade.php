@@ -19,7 +19,7 @@ Post Now
 @endguest
 </div>
 <h3 class="mt-3 mb-2 headingPost">Recent Comments
-<i class='bx bxs-message-square-add'></i>
+{{-- <i class='bx bxs-message-square-add'></i> --}}
 </h3>
 @forelse ($comments as $comment)
 <div class="col-sm-12 col-md-12 col-lg-12 mt-2 mb-3 p-2 border-bottom commentBody">
@@ -43,7 +43,7 @@ $user->where('id', '=', $comment->users_id)->pluck('name')->first()
 @empty
 <div class="col-sm-12 col-md-12 col-lg-12 mt-3 mb-4 p-2 border">
 <div class="user_Comment px-2">
-<p>No comments posted.</p>
+<p class="mb-0">No comments posted.</p>
 </div>
 </div>
 @endforelse

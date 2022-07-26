@@ -60,7 +60,7 @@
             $(document).on({
                 ajaxStart: function () { 
                 $('#load_More').text('');
-                $('#load_More').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="color: #f05454"></span> Loading..');
+                $('#load_More').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="color: #f05454"></span>');
             }
             });
                     $.ajax({
@@ -92,7 +92,6 @@
 @if (Route::is('postByCategory') || Route::is('posts.index'))
 <script>
     // SCROLL TO ADD DATA
-
     $(document).ready(function () {
         var isPosting = false;
         var count = 6;

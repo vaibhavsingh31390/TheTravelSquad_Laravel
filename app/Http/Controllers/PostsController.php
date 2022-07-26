@@ -159,7 +159,7 @@ class PostsController extends Controller
             $response_Type_Updated = 'Updated';
             $message='Posts Has Been Updated !';
             $html = view('components.alert')->with(compact(['response_Type_Updated','message']))->render();
-            return response()->json(['success' => true, 'formData' => $post, 'responseAlert' => $html, 'test' => $category]);
+            return response()->json(['success' => true, 'formData' => $post, 'responseAlert' => $html]);
         } else{
             $response_Type_Fails = 'Failed';
             $message='Request Failed !';
