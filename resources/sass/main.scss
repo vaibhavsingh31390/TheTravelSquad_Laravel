@@ -27,12 +27,12 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
-    width: 0px;
+    width: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: $bg_Color3; 
+    background: $bg_Color1; 
 }
 
 /* Handle */

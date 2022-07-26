@@ -1,7 +1,7 @@
 <div class="col-lg-2 col-md-2 side-Nav">
 <div class="user_Data d-flex justify-content-start align-items-center mt-3">
 <div class="user_DataPhoto">
-<img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61" alt="user_Photo">
+<img src="{{ auth()->user()->media->url() }}" alt="user_Photo">
 </div>
 <div class="userDataName ms-2">
 <p>

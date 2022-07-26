@@ -5,9 +5,58 @@
         $("#toggle").toggleClass("bx-menu bx-menu-alt-left");
         console.log('working');
     })
+
+    // LOAD MORE DATA [POST CARDS]
+    var countAmt = 6;
+    $(document).ready(function () {
+        $("#load_More").click(function (e) {
+            // console.log('working');
+            $(document).on({
+                ajaxStart: function () { 
+                $('#load_More').text('');
+                $('#load_More').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="color: #f05454"></span>');
+            }
+            });
+                    $.ajax({
+                    type: "POST",
+                    url: "/card-data",
+                    data: { requestType: 'load_Data', _token: "{{ csrf_token() }}", count: countAmt },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.cards == "") {
+                            $("#load_More").hide();
+                        } else {
+                            setTimeout(() => {
+                            $(data.cards).hide().appendTo('#data-col').fadeIn(1000);
+                            $("#load_More").text('Load More'); 
+                        }, 1000);
+                        }
+                        countAmt += 6;
+                    },
+                    error: function (error) {
+                        console.log(error.responseText);
+                        console.log('error');
+                    },
+                });
+        });
+    });
 </script>
+
+@guest
+    <script>
+        $(document).on("click","#like_Btn", function (e) {
+            alert('Please Login To Perform This Action !!')
+        });
+
+        $(document).on("click","#dislike_Btn",function (e) {
+            alert('Please Login To Perform This Action !!')
+        });
+    </script>
+@endguest
+
+
 {{-- {-- AUTH USER ACTION CHECK --}}
-@if (Route::is('posts.show'))
+@if (Route::is('posts.show') && Auth::check())
 <script>
     $(window).on("load", function () {
         var valuePostId = $('#like_Btn').attr("data-index-number");
@@ -51,92 +100,7 @@
 </script>
 @endif
 
-<script type="text/javascript">
-    var countAmt = 6;
-    // LOAD MORE DATA [POST CARDS]
-    $(document).ready(function () {
-        $("#load_More").click(function (e) {
-            // console.log('working');
-            $(document).on({
-                ajaxStart: function () { 
-                $('#load_More').text('');
-                $('#load_More').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="color: #f05454"></span>');
-            }
-            });
-                    $.ajax({
-                    type: "POST",
-                    url: "/card-data",
-                    data: { requestType: 'load_Data', _token: "{{ csrf_token() }}", count: countAmt },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.cards == "") {
-                            $("#load_More").hide();
-                        } else {
-                            setTimeout(() => {
-                            $(data.cards).hide().appendTo('#data-col').fadeIn(1000);
-                            $("#load_More").text('Load More'); 
-                        }, 1000);
-                        }
-                        countAmt += 6;
-                    },
-                    error: function (error) {
-                        console.log(error.responseText);
-                        console.log('error');
-                    },
-                });
-        });
-    });
-
-</script>
-
-@if (Route::is('postByCategory') || Route::is('posts.index'))
-<script>
-    // SCROLL TO ADD DATA
-    $(document).ready(function () {
-        var isPosting = false;
-        var count = 6;
-        $(window).on('scroll', function () {
-            var last_Card_Id = $(".card").last().attr("data-id");
-            console.log(last_Card_Id);
-            var scroll_position_for_posts_load = $(document).height() - $(window).height() - 10;
-            var scrollHeight = $(window).scrollTop();
-            if (!isPosting && scrollHeight >= scroll_position_for_posts_load) {
-                isPosting = true;
-                $('#loader').removeClass('d-none')
-                var category = $('li.dropdown-item.active').text();
-                category = category.trim();
-                $(document).on({
-                    ajaxStop: function () { $('#loader').addClass('d-none') }
-                });
-                setTimeout(function () {
-                    $.ajax({
-                        type: "POST",
-                        url: "/card-data-category",
-                        data: { requestType: 'load_Data_Category', _token: "{{ csrf_token() }}", last_Id: last_Card_Id, categoryType: category, count: count },
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.cards == "") {
-                                console.log('Data Empty Now.')
-                                return
-                            } else {
-                                $(data.cards).hide().appendTo('#data-col').fadeIn(1000);
-                            }
-                            count+=6;
-                            isPosting = false;
-                        },
-                        error: function (error) {
-                            console.log(error.responseText);
-                            console.log('error');
-                        }
-                    });
-                }, 1000);
-            }
-        });
-    });
-</script>
-@endif
-
-
+@auth
 <script>
     // LIKE AND DISLIKE ACTION
     $(document).ready(function () {
@@ -211,7 +175,54 @@
         });
     });
 </script>
+@endauth
 
+@if (Route::is('postByCategory') || Route::is('posts.index'))
+<script>
+    // SCROLL TO ADD DATA
+    $(document).ready(function () {
+        var isPosting = false;
+        var count = 6;
+        $(window).on('scroll', function () {
+            var last_Card_Id = $(".card").last().attr("data-id");
+            console.log(last_Card_Id);
+            var scroll_position_for_posts_load = $(document).height() - $(window).height() - 10;
+            var scrollHeight = $(window).scrollTop();
+            if (!isPosting && scrollHeight >= scroll_position_for_posts_load) {
+                isPosting = true;
+                $('#loader').removeClass('d-none')
+                var category = $('li.dropdown-item.active').text();
+                category = category.trim();
+                $(document).on({
+                    ajaxStop: function () { $('#loader').addClass('d-none') }
+                });
+                setTimeout(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/card-data-category",
+                        data: { requestType: 'load_Data_Category', _token: "{{ csrf_token() }}", last_Id: last_Card_Id, categoryType: category, count: count },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.cards == "") {
+                                console.log('Data Empty Now.')
+                                return
+                            } else {
+                                $(data.cards).hide().appendTo('#data-col').fadeIn(1000);
+                            }
+                            count+=6;
+                            isPosting = false;
+                        },
+                        error: function (error) {
+                            console.log(error.responseText);
+                            console.log('error');
+                        }
+                    });
+                }, 1000);
+            }
+        });
+    });
+</script>
+@endif
 
 @if(Route::is('posts.show'))
 <script type="text/javascript">

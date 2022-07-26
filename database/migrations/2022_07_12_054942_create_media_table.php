@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('path', 255);
-            $table->unsignedBigInteger('posts_id')->nullable();
+            $table->morphs('mediaable');
             $table->timestamps();
         });
     }

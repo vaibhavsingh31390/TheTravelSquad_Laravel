@@ -27,7 +27,7 @@ class Posts extends Model
     }
 
     public function media(){
-        return $this->hasOne('App\Models\Media');
+        return $this->morphOne('App\Models\Media', 'mediaable');
     }
 
     public function scopeLatest(Builder $query){

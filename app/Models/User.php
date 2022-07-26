@@ -46,7 +46,13 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Posts');
     }
 
+    public function media(){
+        return $this->morphOne('App\Models\Media', 'mediaable');
+    }
+
     public function actionUsers(){
         return $this->belongsToMany('App\Models\Action', 'posts_action', 'posts_id', 'actions_id', 'users_id')->withTimestamps();
     }
+
+
 }

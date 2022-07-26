@@ -77,7 +77,7 @@ class PostsController extends Controller
             }
             if ($request->hasFile('postImage')) {
                 $file = $request->file('postImage')->storeAs('Thumbnails', $post->id . "-" . decrypt($request->users_id) . "-thumbnail." . $request->file('postImage')->extension());
-                $post->media()->save(Media::Create(['path' => $file]));
+                $post->media()->save(Media::make(['path' => $file]));
             }
             $response_Type_Created = 'Created';
             $message='Posts Has Been Created !';
@@ -153,7 +153,7 @@ class PostsController extends Controller
             // IMAGE UPDATE
             if ($request->hasFile('postImage')) {
                 $file = $request->file('postImage')->storeAs('Thumbnails', $post->id . "-" . $idGet . "-thumbnail." . $request->file('postImage')->extension());
-                $post->media()->save(Media::updateOrCreate(['posts_id'=>$post->id],['path' => $file]));
+                $post->media()->save(Media::updateOrCreate([],['path' => $file,]));
             }
             // Response Alerts
             $response_Type_Updated = 'Updated';

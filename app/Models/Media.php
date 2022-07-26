@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Media extends Model
 {
   
-    protected $fillable = ['path', 'posts_id'];
+    protected $fillable = ['path'];
     use HasFactory;
     
-    public function media(){
-        return $this->belongsTo('App\Models\Posts');
+    public function mediaable(){
+        return $this->morphTo();
     }
 
     public function url(){

@@ -25,7 +25,7 @@ Post Now
 <div class="col-sm-12 col-md-12 col-lg-12 mt-2 mb-3 p-2 border-bottom commentBody">
 <div class="user_Img d-flex justify-content-start align-items-center mb-2">
 <div class="user_DataPhoto">
-<img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61" alt="user_Photo">
+<img src="{{ $user->find($comment->users_id)->media->url() }}" alt="user_Photo">
 </div>
 <small class="ms-2 userName">
 {{ 

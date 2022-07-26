@@ -11297,12 +11297,12 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f7f5f2;
+  background: #dddddd;
 }
 
 /* Handle */
