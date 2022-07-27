@@ -32,8 +32,8 @@ class Controller extends BaseController
     }
 
     public function category($category){
-        $categoryCards =  Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->take(6)->get(); 
-        return view('post.category', ['cardsData'=>$categoryCards]);
+        $post_By_Category =  Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->take(6)->get(); 
+        return view('post.category', ['post_By_Category'=>$post_By_Category]);
     }
 
     public function userDash(Request $request){
