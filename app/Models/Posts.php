@@ -19,7 +19,7 @@ class Posts extends Model
         return $this->belongsTo('App\Models\User');
     }
     public function comments(){
-        return $this->hasMany('App\Models\Comments');
+        return $this->morphMany('App\Models\Comments', 'commentsable');
     }
 
     public function category(){

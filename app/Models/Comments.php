@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Comments extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'comment', 'posts_id', 'users_id'
-    ];
-    public function post(){
-        return $this->BelongsTo('App\Models\Posts');
+    protected $fillable = ['comment', 'users_id','commentsable_type','commentsable_id'];
+
+    public function commentsable(){
+        return $this->morphTo();
     }
 
     public function scopeLatestComments(Builder $query){

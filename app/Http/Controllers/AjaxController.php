@@ -84,8 +84,9 @@ class AjaxController extends Controller
              $post = Posts::findOrFail($request->input('postId'));
               $comment = Comments::create([
                   'comment' =>  $request->input('formData'),
-                  'posts_id' => $request->input('postId'),
-                  'users_id' =>  Auth::user()->id,
+                  'commentsable_type' =>  'App\Models\Posts',
+                  'commentsable_id' =>  $request->input('postId'),
+                  'users_id' =>  Auth::user()->id  
               ]);
            
             $posts = Posts::find($request->input('postId'));

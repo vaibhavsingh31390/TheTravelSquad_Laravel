@@ -16,13 +16,17 @@ $txt_Color2: #f05454;
 $navHeight: 60px;
 $transition: 0.35s ease;
 
+html{
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
 body {
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
     background-color: $bg_Color3;
-    height: 100%;
-    overflow-x: hidden;
+    height: auto;
+    overflow-x: hidden !important;
 }
 
 /* width */
@@ -59,6 +63,7 @@ nav {
         word-spacing: 5px;
     }
     .navbar-toggler-icon{
+        background-size: 0 !important;
         i{
             color: $txt_Color2;
         }

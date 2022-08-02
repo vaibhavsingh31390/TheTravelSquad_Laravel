@@ -22,7 +22,6 @@ class PostsTableSeeder extends Seeder
 
         \App\Models\Posts::factory()->count($postsCount)->make()->each(function($posts) use ($users, $category){
             $posts->users_id = $users->random()->id;
-            $posts->media = 
             $posts->save();
         });
     }
