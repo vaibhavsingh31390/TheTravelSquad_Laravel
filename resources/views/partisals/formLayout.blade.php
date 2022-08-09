@@ -76,7 +76,7 @@
 </div>
 </div>
 
-@section('script')
+
 <script>
     var loginForm = document.getElementById("login_Form");
     var registerForm = document.getElementById("register_Form");
@@ -91,4 +91,3 @@
         registerForm.classList.add("d-none");
     });
 </script>
-@endsection

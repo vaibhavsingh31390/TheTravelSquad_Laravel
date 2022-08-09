@@ -21,26 +21,29 @@ class AjaxController extends Controller
     //Index Page LoadMore Data
     public function loadMoreData(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $allCards = Posts::orderBy('created_at', 'desc')->skip($request->input('count'))->limit(6)->get();
             $html = view('components.ajax')->with(compact('allCards'))->render();
-            return response()->json(['success'=>true, 'cards' => $html]);
+            return response()->json(['success' => true, 'cards' => $html]);
         }
     }
 
-    public function loadMoreDataOnScroll(Request $request){
-        if($request->ajax()){
+    public function loadMoreDataOnScroll(Request $request)
+    {
+        if ($request->ajax()) {
             $category = $request->input('categoryType');
             $last_Id = $request->input('last_Id');
-            if($request->input('categoryType') == 'All Posts'){
+            if ($request->input('categoryType') == 'All Posts') {
                 $allCards = Posts::where('id', '>', $last_Id)->limit(6)->get();
                 $html = view('components.ajax')->with(compact('allCards'))->render();
-                return response()->json(['success'=>true, 'cards' => $html]);
-            }else{
-            $allCards = Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->orderBy('created_at', 'desc')->skip($request->input('count'))->limit(6)->get();
-            $html = view('components.ajax')->with(compact('allCards'))->render();
-            return response()->json(['success'=>true, 'cards' => $html, 'count'=>$request->input('count')]);
-        }
+                return response()->json(['success' => true, 'cards' => $html]);
+            } else {
+                $allCards = Posts::whereHas('category', function ($query) use ($category) {
+                    $query->where('category_Menu', 'like', '%' . $category . '%');
+                })->with('category')->orderBy('created_at', 'desc')->skip($request->input('count'))->limit(6)->get();
+                $html = view('components.ajax')->with(compact('allCards'))->render();
+                return response()->json(['success' => true, 'cards' => $html, 'count' => $request->input('count')]);
+            }
         }
     }
 
@@ -50,18 +53,19 @@ class AjaxController extends Controller
         $id  = $request->input('postId');
         $post = Posts::findOrFail($id);
         $loggedUser = Auth::user()->id;
+        $like = false;
+        $userAction = User::find($loggedUser);
         //Duplicate Check
         if (!$post->filterActions(1, $id, $loggedUser)->isEmpty() && $request->input('value') == "true") {
             return response()->json(['success' => true, 'action' => $request->input('action'), 'Message' => "Entry Exists"]);
         } else if (!$post->filterActions(2, $id, $loggedUser)->isEmpty() && $request->input('value') == "true") {
             return response()->json(['success' => true, 'action' => $request->input('action'), 'Message' => "Entry Exists 2nd"]);
-        } 
-        else {
+        } else {
             if ($request->input('action') == "like") {
                 if ($request->input('value') == "true") {
                     $post->actionPosts()->attach(1, ['posts_id' => $post->id, 'users_id' => $loggedUser]);
                     Mail::to($post->user)->send(
-                        new TriggerLikeActionMail()
+                        new TriggerLikeActionMail($post, $userAction)
                     );
                     return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->likeCount()->count(), 'Message' => "Attached"]);
                 } else {
@@ -76,30 +80,35 @@ class AjaxController extends Controller
                     $post->actionPosts()->wherePivot('actions_id', '=', 2)->wherePivot('posts_id', '=', $post->id)->wherePivot('users_id', '=', $loggedUser)->detach();
                     return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->dislikeCount()->count(), 'Message' => "Detached"]);
                 }
-            } elseif($request->input('action') == "verify"){
-                    return response()->json(['success' => true, 'likeCount' => $post->filterActions(1,$post->id,$loggedUser), 'dislikeCount' => $post->filterActions(2,$post->id,$loggedUser)]);
+            } elseif ($request->input('action') == "verify") {
+                return response()->json(['success' => true, 'likeCount' => $post->filterActions(1, $post->id, $loggedUser), 'dislikeCount' => $post->filterActions(2, $post->id, $loggedUser)]);
             } else {
                 abort(404);
             }
         }
+
+
+        if($like == true){
+
+        }
     }
 
     //Comments Post And Fetch
-    public function commentsSave(Request $request){
-        if($request->ajax()){
-             $post = Posts::findOrFail($request->input('postId'));
-              $comment = Comments::create([
-                  'comment' =>  $request->input('formData'),
-                  'commentsable_type' =>  'App\Models\Posts',
-                  'commentsable_id' =>  $request->input('postId'),
-                  'users_id' =>  Auth::user()->id  
-              ]);
-           
+    public function commentsSave(Request $request)
+    {
+        if ($request->ajax()) {
+            $post = Posts::findOrFail($request->input('postId'));
+            $comment = Comments::create([
+                'comment' =>  $request->input('formData'),
+                'commentsable_type' =>  'App\Models\Posts',
+                'commentsable_id' =>  $request->input('postId'),
+                'users_id' =>  Auth::user()->id
+            ]);
+
             $posts = Posts::find($request->input('postId'));
             $comments = $posts->comments()->LatestComments()->get();
-            $html = view('components.ajax')->with(compact(['posts','comments']))->render();
-            return response()->json(['success'=>true, 'comments'=>$html]);
+            $html = view('components.ajax')->with(compact(['posts', 'comments']))->render();
+            return response()->json(['success' => true, 'comments' => $html]);
         }
     }
 }
-

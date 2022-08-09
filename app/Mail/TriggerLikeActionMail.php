@@ -19,10 +19,12 @@ class TriggerLikeActionMail extends Mailable
      *
      * @return void
      */
+    public $action, $post, $userAction;
 
-    public function __construct()
+    public function __construct(Posts $post,$userAction)
     {
-
+        $this->post = $post;
+        $this->userAction = $userAction;
     }
     // User::find($post->actionPosts->pluck('pivot')->pluck('users_id')->first())
     /**
@@ -32,6 +34,6 @@ class TriggerLikeActionMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('New Like On Your Post !')->markdown('emailer.like-action-notification');
+        return $this->subject('New Like On Your Post')->markdown('emailer.like-action-notification');
     }
 }
