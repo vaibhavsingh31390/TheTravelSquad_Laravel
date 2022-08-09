@@ -16,7 +16,7 @@ class Posts extends Model
     use HasFactory;
 
     public function user(){
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'users_id');
     }
     public function comments(){
         return $this->morphMany('App\Models\Comments', 'commentsable');
@@ -58,7 +58,7 @@ class Posts extends Model
     }
 
     public function actionPosts(){
-        return $this->belongsToMany('App\Models\Action', 'posts_action', 'posts_id', 'actions_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\Action', 'posts_action', 'posts_id', 'actions_id')->withPivot('users_id')->withTimestamps();
     }
 
     public function likeCount(){

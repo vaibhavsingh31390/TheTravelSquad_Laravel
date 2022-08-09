@@ -3,4 +3,3 @@
 @section('section')
 @include('partisals.cards')
 @endsection
-

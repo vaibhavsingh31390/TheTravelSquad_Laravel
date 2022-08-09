@@ -29,6 +29,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\StorePost' => $baseDir . '/app/Http/Requests/StorePost.php',
     'App\\Http\\ViewComposers\\StapleData' => $baseDir . '/app/Http/ViewComposers/StapleData.php',
+    'App\\Mail\\TriggerLikeActionMail' => $baseDir . '/app/Mail/TriggerLikeActionMail.php',
     'App\\Models\\Action' => $baseDir . '/app/Models/Action.php',
     'App\\Models\\Category' => $baseDir . '/app/Models/Category.php',
     'App\\Models\\Comments' => $baseDir . '/app/Models/Comments.php',

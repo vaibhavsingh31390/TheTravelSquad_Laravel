@@ -1,3 +1,7 @@
+<?php
+use App\Models\User;
+ 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,9 +19,7 @@ href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 @include('components.dashboard.dashBoard_Scripts')
 @else
-<?php
-$test3 = "tested";
-?>
+{{ User::find(1)}}
 @include('components._scripts')
 @endif
 </head>

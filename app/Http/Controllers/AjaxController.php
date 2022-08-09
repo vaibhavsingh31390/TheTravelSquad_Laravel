@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Posts;
 use App\Models\Action;
 use App\Models\Comments;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePost;
+use App\Mail\TriggerLikeActionMail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
 use Symfony\Component\Console\Input\Input;
 
@@ -57,6 +60,9 @@ class AjaxController extends Controller
             if ($request->input('action') == "like") {
                 if ($request->input('value') == "true") {
                     $post->actionPosts()->attach(1, ['posts_id' => $post->id, 'users_id' => $loggedUser]);
+                    Mail::to($post->user)->send(
+                        new TriggerLikeActionMail()
+                    );
                     return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->likeCount()->count(), 'Message' => "Attached"]);
                 } else {
                     $test = $post->actionPosts()->wherePivot('actions_id', '=', 1)->wherePivot('posts_id', '=', $post->id)->wherePivot('users_id', '=', $loggedUser)->detach();

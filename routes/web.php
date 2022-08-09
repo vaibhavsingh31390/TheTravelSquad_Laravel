@@ -3,7 +3,10 @@
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PostsController;
+use App\Mail\TriggerLikeActionMail;
+use App\Models\Action;
 use App\Models\Posts;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +42,9 @@ Auth::routes(); // AUTH CONTROLLER
 
 
 // TESTING
-Route::get('/alert', 'Controller@test')->name('get.test');
+Route::get('alert',  function(){
+    $action = Action::find(1);
+    $post = Posts::find(1);
+    $userAction = User::find(1);
+    return new TriggerLikeActionMail($action, $post, $userAction);
+});
