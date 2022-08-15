@@ -10,7 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TriggerLikeActionMail extends Mailable implements ShouldQueue
+class TriggerLikeActionMail extends Mailable  
 {
     use Queueable, SerializesModels;
 
@@ -26,7 +26,6 @@ class TriggerLikeActionMail extends Mailable implements ShouldQueue
         $this->post = $post;
         $this->userAction = $userAction;
     }
-    // User::find($post->actionPosts->pluck('pivot')->pluck('users_id')->first())
     /**
      * Build the message.
      *

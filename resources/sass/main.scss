@@ -61,6 +61,12 @@ nav {
         font-weight: 700;
         text-transform: uppercase;
         word-spacing: 5px;
+        &:hover{
+            color: $txt_Color2;
+            font-weight: 700;
+            text-transform: uppercase;
+            word-spacing: 5px;
+        }
     }
     .navbar-toggler-icon{
         background-size: 0 !important;

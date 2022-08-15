@@ -10948,6 +10948,12 @@ nav .navbar-brand {
   text-transform: uppercase;
   word-spacing: 5px;
 }
+nav .navbar-brand:hover {
+  color: #f05454;
+  font-weight: 700;
+  text-transform: uppercase;
+  word-spacing: 5px;
+}
 nav .navbar-toggler-icon {
   background-size: 0 !important;
 }
