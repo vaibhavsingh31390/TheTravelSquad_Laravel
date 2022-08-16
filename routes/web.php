@@ -43,8 +43,5 @@ Auth::routes(); // AUTH CONTROLLER
 
 // TESTING
 Route::get('alert',  function(){
-    $action = Action::find(1);
-    $post = Posts::find(1);
-    $userAction = User::find(1);
-    return new TriggerLikeActionMail($action, $post, $userAction);
+    return view('test');
 });
