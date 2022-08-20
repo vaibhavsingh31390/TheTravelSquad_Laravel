@@ -2,31 +2,32 @@
 
 namespace App\Jobs;
 
-use App\Models\Posts;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
-use App\Mail\TriggerLikeActionMail;
+use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 
-class PostLikedMailJob implements ShouldQueue
+class RateLimitMailsV1 implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $mailable;
+    public $user;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public $action, $post, $userAction;
-
-    public function __construct(Posts $post,$userAction)
+    public function __construct(Mailable $mailable, User $user)
     {
-        $this->post = $post;
-        $this->userAction = $userAction;
+        $this->mailable = $mailable;
+        $this->user = $user;
     }
 
     /**
@@ -36,6 +37,10 @@ class PostLikedMailJob implements ShouldQueue
      */
     public function handle()
     {
-        RateLimitMailsV1::dispatch(new TriggerLikeActionMail($this->post, $this->userAction), $this->post->user);
+        Redis::throttle('mailtrap_Travel_Squad')->allow(2)->every(12)->then(function () {
+            Mail::to($this->user)->send($this->mailable);
+        }, function () {
+            return $this->release(5);
+        });
     }
 }
