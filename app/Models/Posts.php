@@ -34,29 +34,6 @@ class Posts extends Model
         return $query->orderBy(static::CREATED_AT, 'desc');
     }
 
-    public static function boot()
-    {
-        parent::boot();
-
-        // static::addGlobalScope(new sortByLatest);
-
-        static::deleting(function(Posts $posts){
-            $posts->comments()->delete();
-        });
-
-        static::deleting(function(Posts $posts){
-            $posts->actionPosts()->delete();
-        });
-
-        static::deleting(function(Posts $posts){
-            $posts->media()->delete();
-        });
-
-        static::updating(function(Posts $posts){
-            Cache::forget('index-postsData');
-        });
-    }
-
     public function actionPosts(){
         return $this->belongsToMany('App\Models\Action', 'posts_action', 'posts_id', 'actions_id')->withPivot('users_id')->withTimestamps();
     }

@@ -40,8 +40,11 @@ Route::get('/post-comments',  'AjaxController@commentsFetch')->name('get.comment
 Route::post('/post-comments', 'AjaxController@commentsSave')->name('add.comment'); // COMMENTS SAVE
 Auth::routes(); // AUTH CONTROLLER
 
-
+// Route::group('testing', function(){
+    
+//     Route::get('alert',  function(){
+//         return view('test');
+//     });
+// });
 // TESTING
-Route::get('alert',  function(){
-    return view('test');
-});
+
