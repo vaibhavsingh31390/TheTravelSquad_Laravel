@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LikedPost;
 use App\Models\User;
 use App\Models\Posts;
 use App\Models\Action;
@@ -65,7 +66,7 @@ class AjaxController extends Controller
             if ($request->input('action') == "like") {
                 if ($request->input('value') == "true") {
                     $post->actionPosts()->attach(1, ['posts_id' => $post->id, 'users_id' => $loggedUser]);
-                    PostLikedMailJob::dispatch($post, $userAction);
+                    event(new LikedPost($post, $userAction));
                     return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->likeCount()->count(), 'Message' => "Attached"]);
                 } else {
                     $test = $post->actionPosts()->wherePivot('actions_id', '=', 1)->wherePivot('posts_id', '=', $post->id)->wherePivot('users_id', '=', $loggedUser)->detach();
