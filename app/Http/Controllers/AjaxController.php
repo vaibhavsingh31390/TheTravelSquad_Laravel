@@ -2,113 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\LikedPost;
-use App\Models\User;
-use App\Models\Posts;
-use App\Models\Action;
-use App\Models\Comments;
-use Illuminate\Http\Request;
-use App\Http\Requests\StorePost;
-use App\Mail\TriggerLikeActionMail;
 use App\Http\Controllers\Controller;
-use App\Jobs\PostLikedMailJob;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Cache;
-use Symfony\Component\Console\Input\Input;
+use App\Services\AjaxData;
+use App\Services\UserAction;
+use App\Services\UserComments;
 
 class AjaxController extends Controller
 {
-
-    //Index Page LoadMore Data
-    public function loadMoreData(Request $request)
+    private $ajaxData;
+    private $userAction;
+    private $userComments;
+    public function __construct(AjaxData $ajaxData, UserAction $userAction, UserComments $userComments)
     {
-        if ($request->ajax()) {
-            $allCards = Posts::orderBy('created_at', 'desc')->skip($request->input('count'))->limit(6)->get();
-            $html = view('components.ajax')->with(compact('allCards'))->render();
-            return response()->json(['success' => true, 'cards' => $html]);
-        }
+        $this->ajaxData = $ajaxData;
+        $this->userAction = $userAction;
+        $this->userComments = $userComments;
     }
 
-    public function loadMoreDataOnScroll(Request $request)
+    //Index Page LoadMore Data
+    public function loadMoreData()
     {
-        if ($request->ajax()) {
-            $category = $request->input('categoryType');
-            $last_Id = $request->input('last_Id');
-            if ($request->input('categoryType') == 'All Posts') {
-                $allCards = Posts::where('id', '>', $last_Id)->limit(6)->get();
-                $html = view('components.ajax')->with(compact('allCards'))->render();
-                return response()->json(['success' => true, 'cards' => $html]);
-            } else {
-                $allCards = Posts::whereHas('category', function ($query) use ($category) {
-                    $query->where('category_Menu', 'like', '%' . $category . '%');
-                })->with('category')->orderBy('created_at', 'desc')->skip($request->input('count'))->limit(6)->get();
-                $html = view('components.ajax')->with(compact('allCards'))->render();
-                return response()->json(['success' => true, 'cards' => $html, 'count' => $request->input('count')]);
-            }
-        }
+        return $this->ajaxData->Load_More_Data_On_Click();
+    }
+
+    public function loadMoreDataOnScroll()
+    {
+        return $this->ajaxData->Load_More_Data_On_Scroll();
     }
 
     //Action Like, Dislike 
-    public function incrementDecrement(Request $request)
+    public function incrementDecrement()
     {
-        $id  = $request->input('postId');
-        $post = Posts::findOrFail($id);
-        $loggedUser = Auth::user()->id;
-        $like = false;
-        $userAction = User::find($loggedUser);
-        //Duplicate Check
-        if (!$post->filterActions(1, $id, $loggedUser)->isEmpty() && $request->input('value') == "true") {
-            return response()->json(['success' => true, 'action' => $request->input('action'), 'Message' => "Entry Exists"]);
-        } else if (!$post->filterActions(2, $id, $loggedUser)->isEmpty() && $request->input('value') == "true") {
-            return response()->json(['success' => true, 'action' => $request->input('action'), 'Message' => "Entry Exists 2nd"]);
-        } else {
-            if ($request->input('action') == "like") {
-                if ($request->input('value') == "true") {
-                    $post->actionPosts()->attach(1, ['posts_id' => $post->id, 'users_id' => $loggedUser]);
-                    event(new LikedPost($post, $userAction));
-                    return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->likeCount()->count(), 'Message' => "Attached"]);
-                } else {
-                    $test = $post->actionPosts()->wherePivot('actions_id', '=', 1)->wherePivot('posts_id', '=', $post->id)->wherePivot('users_id', '=', $loggedUser)->detach();
-                    return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->likeCount()->count(),  'Message' => "Detached"]);
-                }
-            } elseif ($request->input('action') == "dislike") {
-                if ($request->input('value') == "true") {
-                    $post->actionPosts()->attach(2, ['posts_id' => $post->id, 'users_id' => $loggedUser]);
-                    return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->dislikeCount()->count(), 'Message' => "Attached"]);
-                } else {
-                    $post->actionPosts()->wherePivot('actions_id', '=', 2)->wherePivot('posts_id', '=', $post->id)->wherePivot('users_id', '=', $loggedUser)->detach();
-                    return response()->json(['success' => true, 'action' => $request->input('action'), 'count' => $post->dislikeCount()->count(), 'Message' => "Detached"]);
-                }
-            } elseif ($request->input('action') == "verify") {
-                return response()->json(['success' => true, 'likeCount' => $post->filterActions(1, $post->id, $loggedUser), 'dislikeCount' => $post->filterActions(2, $post->id, $loggedUser)]);
-            } else {
-                abort(404);
-            }
-        }
-
-
-        if($like == true){
-
-        }
+        return $this->userAction->User_Take_Action();
     }
 
     //Comments Post And Fetch
-    public function commentsSave(Request $request)
+    public function commentsSave()
     {
-        if ($request->ajax()) {
-            $post = Posts::findOrFail($request->input('postId'));
-            $comment = Comments::create([
-                'comment' =>  $request->input('formData'),
-                'commentsable_type' =>  'App\Models\Posts',
-                'commentsable_id' =>  $request->input('postId'),
-                'users_id' =>  Auth::user()->id
-            ]);
-
-            $posts = Posts::find($request->input('postId'));
-            $comments = $posts->comments()->LatestComments()->get();
-            $html = view('components.ajax')->with(compact(['posts', 'comments']))->render();
-            return response()->json(['success' => true, 'comments' => $html]);
-        }
+        return $this->userComments->Comments_Post();
     }
 }

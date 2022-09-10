@@ -21,7 +21,7 @@ class PostLikedMailJob implements ShouldQueue
      *
      * @return void
      */
-    public $action, $post, $userAction;
+    public  $post, $userAction;
 
     public function __construct(Posts $post,$userAction)
     {

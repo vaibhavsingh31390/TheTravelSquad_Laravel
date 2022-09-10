@@ -42,9 +42,7 @@ Auth::routes(); // AUTH CONTROLLER
 
 // Route::group('testing', function(){
     
-//     Route::get('alert',  function(){
-//         return view('test');
-//     });
+Route::get('alert', [Controller::class, 'test'])->name('testing');
 // });
 // TESTING
 

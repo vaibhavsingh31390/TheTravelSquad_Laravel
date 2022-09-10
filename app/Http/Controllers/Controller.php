@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Media;
 use App\Models\Posts;
 use App\Models\User;
+use App\Services\AjaxData;
 use Egulias\EmailValidator\Parser\Comment;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -21,6 +22,12 @@ use Illuminate\Support\Facades\Storage;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    private $ajaxData;
+    public function __construct(AjaxData $ajaxData)
+    {
+        $this->ajaxData = $ajaxData;
+    }
 
     public function index(){
         Cache::forget('Index');
@@ -65,11 +72,11 @@ class Controller extends BaseController
     }
 
     public function test(){
-        // $test = File::files('C:\xampp\htdocs\thetravelsquad\public');
-        $test = Storage::files('Sample_Thumbnails');
-        $randomImages = array_rand($test);
-        $randomImage = $test[$randomImages];
-        return view('test')->with(['test'=>$randomImage]);
+        // // $test = File::files('C:\xampp\htdocs\thetravelsquad\public');
+        // $test = Storage::files('Sample_Thumbnails');
+        // $randomImages = array_rand($test);
+        // $randomImage = $test[$randomImages];
+        return view('test')->with(['test'=>$this->ajaxData->test()]);
     }
 }
 
