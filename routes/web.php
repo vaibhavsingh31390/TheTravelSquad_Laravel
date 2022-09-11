@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'AjaxController@index')->name('home.index'); // INDEX
+Route::get('/', 'Controller@index')->name('home.index'); // INDEX
 Route::post('/card-data', 'AjaxController@loadMoreData')->name('home.cardDataPost'); // LOAD DATA INDEX PAGE
 Route::post('/card-data-category', 'AjaxController@loadMoreDataOnScroll')->name('home.cardDataScroll'); // LOAD DATA CATEGORY ON SCROLL
 Route::post('/send-action', 'AjaxController@incrementDecrement')->middleware('auth')->name('home.like_Dislike_Change'); // LIKE DISLIKE CHECK & ACTION

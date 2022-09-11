@@ -2,81 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Media;
-use App\Models\Posts;
-use App\Models\User;
-use App\Services\AjaxData;
-use Egulias\EmailValidator\Parser\Comment;
+use App\Services\Pages;
+use App\Services\userDashboard;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    private $ajaxData;
-    public function __construct(AjaxData $ajaxData)
+    private $userDashboard;
+    private $pages;
+    public function __construct(userDashboard $userDashboard, Pages $pages)
     {
-        $this->ajaxData = $ajaxData;
+        $this->userDashboard = $userDashboard;
+        $this->pages = $pages;
     }
 
-    public function index(){
-        Cache::forget('Index');
-        $data = Posts::orderBy('created_at', 'desc')->take(6)->get();
-        $allCards = Cache::remember('Index', now()->addWeek(1), function() use($data){
-            return $data;
-        });
-        return view('index')->with('postsData' , $allCards);
+    public function index()
+    {
+        return $this->pages->indexPage_User();
     }
 
-    public function category($category){
-        $post_By_Category =  Posts::whereHas('category', function($query) use($category) {$query->where('category_Menu', 'like', '%'.$category.'%');})->with('category')->take(6)->get(); 
-        return view('post.category', ['post_By_Category'=>$post_By_Category]);
+    public function category($category)
+    {
+        return $this->pages->posts_Category($category);
     }
 
-    public function userDash(Request $request){
-        $value = $request->input('value');
-        if($request->ajax()){
-            $html = view('components.dashboard.dashHome')->render();
-            return response()->json(['success'=>true, 'Data' => $html]);
-        }
-        return view('auth.userDashboard');
+    public function userDash()
+    {
+        return $this->userDashboard->home_Post();
     }
 
-    public function userDashData(Request $request){
-        $search_Parameter = $request->input('value') ?? "";
-        $profile = Auth::user();
-        $userData = Posts::where('users_id', '=', $profile->id);
-        if($search_Parameter != ""){
-            $findIt = $userData->where('title', 'LIKE', '%'.$search_Parameter.'%')->get();
-            $findPosts = compact('profile', 'findIt', 'search_Parameter');
-            $html = view('components.dashboard.dashTableSearch')->with(compact('findPosts'))->render();
-            return response()->json(['success'=>true, 'findPosts', 'value' => $search_Parameter, $findPosts, 'search_Data' => $html]);
-        }
-        else{
-            $findIt = Posts::where('users_id', '=', $profile->id)->get();
-            $findPosts = compact('profile', 'findIt', 'search_Parameter');
-            $html = view('components.dashboard.dashTableData')->with(compact('findPosts'))->render();
-            return response()->json(['success'=>true, 'findPosts', $findPosts, 'all_Data' => $html]);
-        }
-        
+    public function userDashData()
+    {
+        return $this->userDashboard->post_Data_Search();
     }
 
-    public function test(){
-        // // $test = File::files('C:\xampp\htdocs\thetravelsquad\public');
-        // $test = Storage::files('Sample_Thumbnails');
-        // $randomImages = array_rand($test);
-        // $randomImage = $test[$randomImages];
-        return view('test')->with(['test'=>$this->ajaxData->test()]);
+    public function test()
+    {
+        return view('test')->with(['test' => 'success']);
     }
 }
-
