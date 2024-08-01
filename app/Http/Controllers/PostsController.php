@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Posts;
 use App\Http\Requests\StorePost;
 use App\Services\Pages;
-use App\Services\userDashboard;
+use App\Services\UserDashboard;
 use Illuminate\Support\Facades\Cache;
 
 class PostsController extends Controller
@@ -22,7 +22,7 @@ class PostsController extends Controller
 
     public function index()
     {
-       return $this->pages->posts_All();
+        return $this->pages->posts_All();
     }
 
     public function create()
@@ -45,9 +45,9 @@ class PostsController extends Controller
         return $this->userDashboard->edit_Post($id);
     }
 
-    public function update(StorePost $request,$id)
+    public function update(StorePost $request, $id)
     {
-        return $this->userDashboard->update_Post($request,$id);
+        return $this->userDashboard->update_Post($request, $id);
     }
 
     public function destroy($id)
