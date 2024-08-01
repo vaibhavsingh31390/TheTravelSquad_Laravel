@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Pages;
-use App\Services\userDashboard;
+use App\Services\UserDashboard;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -15,7 +15,7 @@ class Controller extends BaseController
 
     private $userDashboard;
     private $pages;
-    public function __construct(userDashboard $userDashboard, Pages $pages)
+    public function __construct(UserDashboard $userDashboard, Pages $pages)
     {
         $this->userDashboard = $userDashboard;
         $this->pages = $pages;

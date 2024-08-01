@@ -13,7 +13,7 @@ class PostsController extends Controller
 {
     private $userDashboard;
     private $pages;
-    public function __construct(userDashboard $userDashboard, Pages $pages)
+    public function __construct(UserDashboard $userDashboard, Pages $pages)
     {
         $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destroy']);
         $this->userDashboard = $userDashboard;
