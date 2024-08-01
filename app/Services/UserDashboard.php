@@ -7,46 +7,48 @@ use App\Models\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class userDashboard{
+class UserDashboard
+{
 
     private $request;
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
-  
-    public function home_Post(){
+
+    public function home_Post()
+    {
         $value = $this->request->input('value');
-        if($this->request->ajax()){
+        if ($this->request->ajax()) {
             $html = view('components.dashboard.dashHome')->render();
-            return response()->json(['success'=>true, 'Data' => $html]);
+            return response()->json(['success' => true, 'Data' => $html]);
         }
         return view('auth.userDashboard');
     }
 
-    public function post_Data_Search(){
+    public function post_Data_Search()
+    {
         $search_Parameter = $this->request->input('value') ?? "";
         $profile = Auth::user();
         $userData = Posts::where('users_id', '=', $profile->id);
-        if($search_Parameter != ""){
-            $findIt = $userData->where('title', 'LIKE', '%'.$search_Parameter.'%')->get();
+        if ($search_Parameter != "") {
+            $findIt = $userData->where('title', 'LIKE', '%' . $search_Parameter . '%')->get();
             $findPosts = compact('profile', 'findIt', 'search_Parameter');
             $html = view('components.dashboard.dashTableSearch')->with(compact('findPosts'))->render();
-            return response()->json(['success'=>true, 'findPosts', 'value' => $search_Parameter, $findPosts, 'search_Data' => $html]);
-        }
-        else{
+            return response()->json(['success' => true, 'findPosts', 'value' => $search_Parameter, $findPosts, 'search_Data' => $html]);
+        } else {
             $findIt = Posts::where('users_id', '=', $profile->id)->get();
             $findPosts = compact('profile', 'findIt', 'search_Parameter');
             $html = view('components.dashboard.dashTableData')->with(compact('findPosts'))->render();
-            return response()->json(['success'=>true, 'findPosts', $findPosts, 'all_Data' => $html]);
+            return response()->json(['success' => true, 'findPosts', $findPosts, 'all_Data' => $html]);
         }
     }
 
     public function create_Post()
     {
-        if($this->request->ajax()){
+        if ($this->request->ajax()) {
             $html = view('components.dashboard.dashNewPost')->render();
-            return response()->json(['success'=>true, 'Data' => $html]);
+            return response()->json(['success' => true, 'Data' => $html]);
         }
         return abort(404);
     }
@@ -68,7 +70,7 @@ class userDashboard{
             ]);
             $post->save();
             //CATEGORY UPDATE
-            if($request->category_Menu){
+            if ($request->category_Menu) {
                 $category = $post->category()->create(['category_Menu' => $request->category_Menu]);
             }
             if ($request->hasFile('postImage')) {
@@ -76,13 +78,13 @@ class userDashboard{
                 $post->media()->save(Media::make(['path' => $file]));
             }
             $response_Type_Created = 'Created';
-            $message='Posts Has Been Created !';
-            $html = view('components.alert')->with(compact(['response_Type_Created','message']))->render();
+            $message = 'Posts Has Been Created !';
+            $html = view('components.alert')->with(compact(['response_Type_Created', 'message']))->render();
             return response()->json(['success' => true, 'formData' => $post, 'responseAlert' => $html]);
-        } else{
+        } else {
             $response_Type_Fails = 'Failed';
-            $message='Request Failed !';
-            $html = view('components.alert')->with(compact(['response_Type_Fails','message']))->render();
+            $message = 'Request Failed !';
+            $html = view('components.alert')->with(compact(['response_Type_Fails', 'message']))->render();
             return response()->json(['success' => true, 'responseAlert' => $html]);
         }
     }
@@ -114,24 +116,24 @@ class userDashboard{
             ]);
             $post->save();
             //CATEGORY UPDATE
-            if($request->category_Menu){
-                $category = $post->category()->updateOrCreate(['posts_id' => $post->id],['category_Menu' => $request->category_Menu]);
+            if ($request->category_Menu) {
+                $category = $post->category()->updateOrCreate(['posts_id' => $post->id], ['category_Menu' => $request->category_Menu]);
                 $test = "updated";
             }
             // IMAGE UPDATE
             if ($request->hasFile('postImage')) {
                 $file = $request->file('postImage')->storeAs('Thumbnails', $post->id . "-" . $idGet . "-thumbnail." . $request->file('postImage')->extension());
-                $post->media()->save(Media::updateOrCreate([],['path' => $file,]));
+                $post->media()->save(Media::updateOrCreate([], ['path' => $file,]));
             }
             // Response Alerts
             $response_Type_Updated = 'Updated';
-            $message='Posts Has Been Updated !';
-            $html = view('components.alert')->with(compact(['response_Type_Updated','message']))->render();
+            $message = 'Posts Has Been Updated !';
+            $html = view('components.alert')->with(compact(['response_Type_Updated', 'message']))->render();
             return response()->json(['success' => true, 'formData' => $post, 'responseAlert' => $html]);
-        } else{
+        } else {
             $response_Type_Fails = 'Failed';
-            $message='Request Failed !';
-            $html = view('components.alert')->with(compact(['response_Type_Fails','message']))->render();
+            $message = 'Request Failed !';
+            $html = view('components.alert')->with(compact(['response_Type_Fails', 'message']))->render();
             return response()->json(['success' => true, 'responseAlert' => $html]);
         }
     }
