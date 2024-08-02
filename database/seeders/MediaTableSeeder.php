@@ -28,7 +28,7 @@ class MediaTableSeeder extends Seeder
             $this->command->info('There are no posts, so no media will be added');
             return;
         }
-        $images_Thumbnails = Storage::disk('public')->files('Sample_Thumbnails');;
+        $images_Thumbnails = Storage::files('Sample_Thumbnails');
         foreach ($posts as $post) {
             $randomImages = array_rand($images_Thumbnails);
             $randomImage = $images_Thumbnails[$randomImages];
@@ -36,8 +36,7 @@ class MediaTableSeeder extends Seeder
                 Media::make(['path' => $randomImage])
             );
         };
-        $images_User_Thumbnails = Storage::disk('public')->files('Sample_Profile_Pictures');
-
+        $images_User_Thumbnails = Storage::files('Sample_Profile_Pictures');
         foreach ($users as $user) {
             $randomImages = array_rand($images_User_Thumbnails);
             $randomImage = $images_User_Thumbnails[$randomImages];
