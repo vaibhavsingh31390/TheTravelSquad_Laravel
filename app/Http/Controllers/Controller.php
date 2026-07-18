@@ -42,6 +42,11 @@ class Controller extends BaseController
         return $this->pages->posts_By_Tag($tag);
     }
 
+    public function search()
+    {
+        return $this->pages->posts_Search();
+    }
+
     public function about()
     {
         return $this->pages->about_Page();

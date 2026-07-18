@@ -12407,10 +12407,10 @@ a:hover {
   max-width: 1200px;
 }
 .site-nav .navbar-brand {
-  font-weight: 800;
-  font-size: 1.1rem;
+  padding: 0;
+}
+.site-nav .site-logo--nav {
   color: var(--text) !important;
-  letter-spacing: -0.03em;
 }
 @media (min-width: 992px) {
   .site-nav .navbar-nav-center {
@@ -12518,16 +12518,68 @@ a:hover {
   padding: 0 1.25rem;
 }
 .dash-header-bar .dash-logo {
-  font-weight: 800;
-  font-size: 1rem;
-  color: var(--text);
-  text-decoration: none;
-  letter-spacing: -0.02em;
+  padding: 0;
 }
 .dash-header-bar .dash-header-actions {
   display: flex;
   align-items: center;
   gap: 0.65rem;
+}
+
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: opacity 0.2s ease;
+}
+.site-logo:hover {
+  opacity: 0.82;
+  color: var(--text);
+  text-decoration: none;
+}
+.site-logo__mark {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+.site-logo__text {
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.site-logo--nav .site-logo__mark {
+  width: 30px;
+  height: 30px;
+}
+.site-logo--nav .site-logo__text {
+  font-size: 1.08rem;
+}
+.site-logo--dash .site-logo__mark {
+  width: 26px;
+  height: 26px;
+}
+.site-logo--dash .site-logo__text {
+  font-size: 0.95rem;
+}
+.site-logo--footer {
+  color: #fff;
+  margin-bottom: 0.15rem;
+}
+.site-logo--footer:hover {
+  color: #fff;
+  opacity: 0.9;
+}
+.site-logo--footer .site-logo__mark {
+  width: 32px;
+  height: 32px;
+}
+.site-logo--footer .site-logo__text {
+  font-size: 1.12rem;
 }
 
 .hero-featured {
@@ -12564,6 +12616,44 @@ a:hover {
   gap: 0.75rem;
   padding: 1.25rem 0 1.75rem;
   overflow: hidden;
+}
+.filter-bar .archive-search-form {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-shrink: 0;
+}
+.filter-bar .archive-search-form .archive-search-field {
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: width 0.25s ease, opacity 0.2s ease;
+}
+.filter-bar .archive-search-form.is-open .archive-search-field {
+  width: min(280px, 52vw);
+  opacity: 1;
+}
+.filter-bar .archive-search-form .archive-search-input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 50rem;
+  background: var(--bg-card);
+  color: var(--text);
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+  outline: none;
+  transition: 0.22s ease;
+}
+.filter-bar .archive-search-form .archive-search-input::-moz-placeholder {
+  color: var(--text-faint);
+}
+.filter-bar .archive-search-form .archive-search-input::placeholder {
+  color: var(--text-faint);
+}
+.filter-bar .archive-search-form .archive-search-input:focus {
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--text) 10%, transparent);
 }
 .filter-bar .search-btn {
   flex-shrink: 0;
@@ -12996,11 +13086,7 @@ a:hover {
   margin-top: 3rem;
 }
 .site-footer .footer-brand {
-  font-weight: 800;
-  font-size: 1.15rem;
-  color: #fff;
   margin-bottom: 0.5rem;
-  letter-spacing: -0.02em;
 }
 .site-footer .footer-heading {
   color: #fff;

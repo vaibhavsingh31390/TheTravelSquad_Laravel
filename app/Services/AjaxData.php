@@ -42,12 +42,18 @@ class AjaxData
 
         $category = $this->request->input('categoryType', 'All Posts');
         $tagSlug = $this->request->input('tagSlug');
+        $searchQuery = trim($this->request->input('searchQuery', ''));
         $offset = (int) $this->request->input('count', 6);
         $limit = 6;
 
         $query = Posts::query()->orderBy('created_at', 'desc');
 
-        if ($tagSlug) {
+        if ($searchQuery !== '') {
+            $query->where(function ($q) use ($searchQuery) {
+                $q->where('title', 'LIKE', '%'.$searchQuery.'%')
+                    ->orWhere('content', 'LIKE', '%'.$searchQuery.'%');
+            });
+        } elseif ($tagSlug) {
             $query->whereHas('tags', function ($q) use ($tagSlug) {
                 $q->where('slug', $tagSlug);
             });

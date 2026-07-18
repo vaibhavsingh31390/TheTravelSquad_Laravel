@@ -24,6 +24,7 @@ Route::post('posts/{post}/update', [PostsController::class, 'update'])->name('us
 Route::post('posts/store', [PostsController::class, 'store'])->name('user.DashStore');
 Route::post('editor/upload-image', [PostsController::class, 'uploadEditorImage'])->middleware('auth')->name('editor.upload');
 Route::post('posts/{post}/destroy', [PostsController::class, 'destroy'])->name('user.DashDelete');
+Route::get('/search', [Controller::class, 'search'])->name('posts.search');
 Route::get('/type/{category?}', [Controller::class, 'category'])->name('postByCategory');
 Route::get('/tag/{tag}', [Controller::class, 'tag'])->name('postByTag');
 Route::post('/dashHome', [Controller::class, 'userDash'])->middleware('auth')->name('user.DashHome');

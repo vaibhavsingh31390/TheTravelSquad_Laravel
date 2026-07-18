@@ -48,17 +48,7 @@
 
 {{-- FILTER BAR --}}
 <section class="page-wrap">
-<div class="filter-bar">
-<button type="button" class="search-btn" aria-label="Search" onclick="document.getElementById('serach_String')?.focus()">
-<i class='bx bx-search'></i>
-</button>
-<div class="category-pills">
-<a href="{{ route('posts.index') }}" class="category-pill {{ Route::is('posts.index') ? 'active' : '' }}">All</a>
-@foreach ($category->unique() as $key)
-<a href="{{ route('postByCategory', ['category' => $key]) }}" class="category-pill {{ request()->is("type/$key") ? 'active' : '' }}">{{ $key }}</a>
-@endforeach
-</div>
-</div>
+@include('partisals.filterBar')
 </section>
 
 {{-- ARTICLE GRID --}}

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="The Travel Squad">
+  <style>
+    .frame { fill: none; stroke: #111111; }
+    .mark { fill: #111111; stroke: #111111; }
+    @media (prefers-color-scheme: dark) {
+      .frame { stroke: #f4f4f4; }
+      .mark { fill: #f4f4f4; stroke: #f4f4f4; }
+    }
+  </style>
+  <rect class="frame" x="2" y="2" width="28" height="28" rx="8" stroke-width="1.75"/>
+  <circle class="mark" cx="11" cy="21" r="2" stroke="none"/>
+  <circle class="mark" cx="21" cy="21" r="2" stroke="none"/>
+  <circle class="mark" cx="16" cy="11" r="2" stroke="none"/>
+  <path class="mark" d="M11 21L16 11L21 21" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

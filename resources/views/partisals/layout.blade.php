@@ -6,7 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <title>@yield('title')</title>
 @include('components.seo')
-<link rel="icon" type="image/x-icon" href="{{ URL::to('/') }}/assets/favicon.ico">
+<link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+<link rel="icon" type="image/svg+xml" href="{{ asset('assets/favicon.svg') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon-32x32.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon-16x16.png') }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/apple-touch-icon.png') }}">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
 <script>
 (function () {
     var key = 'tts-theme';
@@ -36,7 +42,7 @@
 <body>
 @if (Route::is('user.Dashboard'))
 <header class="dash-header-bar">
-<a href="{{ route('home.index') }}" class="dash-logo">The Travel Squad</a>
+<x-site-logo href="{{ route('home.index') }}" variant="dash" class="dash-logo" />
 <div class="dash-header-actions">
 <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
 <i class='bx bx-moon' id="theme-icon"></i>
@@ -48,7 +54,7 @@
 @else
 <nav class="navbar fixed-top navbar-expand-lg site-nav">
 <div class="container position-relative">
-<a class="navbar-brand" href="{{ route('home.index') }}">The Travel Squad</a>
+<x-site-logo href="{{ route('home.index') }}" variant="nav" class="navbar-brand" />
 
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 <span class="navbar-toggler-icon"><i class='bx bx-menu' id="toggle" style="font-size: 22px"></i></span>
@@ -99,7 +105,7 @@
 <div class="container">
 <div class="row g-4">
 <div class="col-lg-4">
-<div class="footer-brand">The Travel Squad</div>
+<x-site-logo variant="footer" as="div" class="footer-brand" />
 <p>Stories worth the journey — travel tips and adventures from our community.</p>
 </div>
 <div class="col-6 col-lg-2">

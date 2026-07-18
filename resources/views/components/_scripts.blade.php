@@ -178,7 +178,7 @@
 </script>
 @endauth
 
-@if (Route::is('postByCategory') || Route::is('posts.index') || Route::is('postByTag'))
+@if (Route::is('postByCategory') || Route::is('posts.index') || Route::is('postByTag') || Route::is('posts.search'))
 <script>
     $(document).ready(function () {
         var $grid = $('#data-col');
@@ -188,6 +188,7 @@
         var offset = parseInt($grid.data('offset'), 10) || 6;
         var category = $grid.data('category') || 'All Posts';
         var tagSlug = $grid.data('tag') || '';
+        var searchQuery = $grid.data('search') || '';
         var loading = false;
         var hasMore = true;
 
@@ -204,6 +205,7 @@
                     _token: "{{ csrf_token() }}",
                     categoryType: category,
                     tagSlug: tagSlug,
+                    searchQuery: searchQuery,
                     count: offset
                 },
                 dataType: "json",

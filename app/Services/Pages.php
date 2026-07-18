@@ -49,6 +49,30 @@ class Pages{
         return view('post.category', ['post_By_Category' => $post_By_Category, 'categoryName' => $category]);
     }
 
+    public function posts_Search(){
+        $q = trim($this->request->query('q', ''));
+        if ($q === '') {
+            return redirect()->route('posts.index');
+        }
+
+        $posts_Search = Posts::query()
+            ->where(function ($query) use ($q) {
+                $query->where('title', 'LIKE', '%'.$q.'%')
+                    ->orWhere('content', 'LIKE', '%'.$q.'%');
+            })
+            ->with(['comments' => function ($query) {
+                return $query->LatestComments();
+            }, 'tags', 'media', 'category'])
+            ->orderByDesc('created_at')
+            ->take(6)
+            ->get();
+
+        return view('post.search', [
+            'posts_Search' => $posts_Search,
+            'searchQuery' => $q,
+        ]);
+    }
+
     public function posts_By_Tag($tag){
         $tagModel = Tag::where('slug', $tag)->firstOrFail();
         $post_By_Tag = $tagModel->posts()
