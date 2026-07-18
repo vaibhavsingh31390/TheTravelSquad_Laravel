@@ -1,37 +1,103 @@
-{{-- $cardsData to access the posts by category thorugh controllers  --}}
-{{-- $postsData to access the all posts thorugh controllers  --}}
-<div class="container">
-<div class="row">
-<h1 class="text-left mt-4 mb-4 heading" style="font-weight: 600"> @if (isset($posts_All))
-All
-@else
-{{ $post_By_Category[0]->category[0]->category_Menu }}
-@endif Posts
-</h1>
-</div>
-</div>
+@php
+    $archivePosts = $posts_All ?? $post_By_Category ?? $post_By_Tag ?? collect();
+    $isAll = isset($posts_All);
+    $isCategory = isset($post_By_Category);
+    $isTag = isset($post_By_Tag);
 
-<div class="container mt-1 mb-3 px-2">
-<div class="row row-cols-1 row-cols-md-3 g-4" id="data-col">
-{{-- CARDS FOR CATEGORY WISE POSTS --}}
-@if (isset($post_By_Category))
-@foreach ($post_By_Category as $card)
-<div class="col">
-@postCard(['route'=>'posts.show', 'id'=>$card->id, 'media'=>$card->media, 'path' => $card->media->url(), 'title'=>$card->title, 
-'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count(), 'post' => $card])
-@endpostCard
-</div>
-@endforeach
+    if ($isTag) {
+        $archiveTitle = $tagName;
+        $archiveSubtitle = 'Stories tagged with this topic from our community.';
+        $archiveBadge = 'Tag';
+        $scrollCategory = 'All Posts';
+        $scrollTag = $tagSlug;
+    } elseif ($isCategory) {
+        $archiveTitle = $categoryName ?? ($post_By_Category[0]->category[0]->category_Menu ?? request()->route('category') ?? 'Articles');
+        $archiveSubtitle = 'Curated reads in the '.$archiveTitle.' category.';
+        $archiveBadge = 'Category';
+        $scrollCategory = request()->route('category') ?? 'All Posts';
+        $scrollTag = '';
+    } else {
+        $archiveTitle = 'All Articles';
+        $archiveSubtitle = 'Every travel story, guide, and tip from The Travel Squad.';
+        $archiveBadge = 'Archive';
+        $scrollCategory = 'All Posts';
+        $scrollTag = '';
+    }
 
-{{-- CARDS FOR ALL POSTS --}}
+    $initialCount = $archivePosts->count();
+@endphp
+
+<section class="archive-shell page-wrap pb-5">
+<header class="archive-hero">
+<nav class="breadcrumb-nav breadcrumb-nav--archive" aria-label="Breadcrumb">
+<a href="{{ route('home.index') }}">Home</a>
+<span class="breadcrumb-sep" aria-hidden="true">›</span>
+<a href="{{ route('posts.index') }}">Articles</a>
+@if ($isCategory)
+<span class="breadcrumb-sep" aria-hidden="true">›</span>
+<span aria-current="page">{{ $archiveTitle }}</span>
+@elseif ($isTag)
+<span class="breadcrumb-sep" aria-hidden="true">›</span>
+<span aria-current="page">#{{ $archiveTitle }}</span>
 @else
-@foreach ($posts_All as $card)
-<div class="col">
-@postCard(['route'=>'posts.show', 'id'=>$card->id, 'media'=>$card->media, 'path' => $card->media->url(), 'title'=>$card->title, 
-'content'=>$card->content, 'createdAt'=>$card->created_at->diffForHumans(), 'comments'=>$card->comments->count(), 'post' => $card])
-@endpostCard
-</div>
+<span class="breadcrumb-sep" aria-hidden="true">›</span>
+<span aria-current="page">All</span>
+@endif
+</nav>
+<span class="archive-badge">{{ $archiveBadge }}</span>
+<h1 class="archive-title">{{ $isTag ? '#'.$archiveTitle : $archiveTitle }}</h1>
+<p class="archive-subtitle">{{ $archiveSubtitle }}</p>
+<p class="archive-count">{{ $initialCount }}+ articles</p>
+</header>
+
+<div class="archive-toolbar">
+<div class="filter-bar">
+<button type="button" class="search-btn" aria-label="Search"><i class='bx bx-search'></i></button>
+<div class="category-pills">
+<a href="{{ route('posts.index') }}" class="category-pill {{ Route::is('posts.index') ? 'active' : '' }}">All</a>
+@foreach ($category->unique() as $key)
+<a href="{{ route('postByCategory', ['category' => $key]) }}" class="category-pill {{ request()->is("type/$key") ? 'active' : '' }}">{{ $key }}</a>
 @endforeach
+</div>
+</div>
+@if (isset($popularTags) && $popularTags->isNotEmpty())
+<div class="tag-filter-bar">
+<span class="tag-filter-label">Popular tags</span>
+<div class="tag-pills">
+@foreach ($popularTags as $tag)
+<a href="{{ route('postByTag', ['tag' => $tag->slug]) }}" class="tag-pill {{ (isset($tagSlug) && $tagSlug === $tag->slug) ? 'active' : '' }}">#{{ $tag->name }}</a>
+@endforeach
+</div>
+</div>
 @endif
 </div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 g-xl-5 archive-grid" id="data-col" data-offset="{{ $initialCount }}" data-category="{{ $scrollCategory }}" data-tag="{{ $scrollTag }}">
+@forelse ($archivePosts as $card)
+<div class="col d-flex">
+@postCard([
+    'route' => 'posts.show',
+    'id' => $card->id,
+    'media' => $card->media,
+    'path' => $card->media?->url(),
+    'title' => $card->title,
+    'content' => $card->content,
+    'createdAt' => $card->created_at->format('M d, Y'),
+    'comments' => $card->comments->count(),
+    'post' => $card,
+    'categoryName' => $card->category()->first()->category_Menu ?? 'Travel',
+    'tags' => $card->tags,
+])
+@endpostCard
 </div>
+@empty
+<div class="col-12">
+<div class="archive-empty">
+<h2>No articles yet</h2>
+<p>Check back soon or explore <a href="{{ route('posts.index') }}">all articles</a>.</p>
+</div>
+</div>
+@endforelse
+</div>
+<div id="scroll-sentinel" class="scroll-sentinel" aria-hidden="true"></div>
+</section>

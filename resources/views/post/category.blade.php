@@ -1,5 +1,7 @@
 @extends('partisals.layout')
-@section('title', $post_By_Category[0]->category[0]->category_Menu.' Posts - The Travel Squad')
+@section('title', $categoryName.' Articles | The Travel Squad')
+@section('meta_description', 'Read '.$categoryName.' articles on The Travel Squad — curated travel stories and guides from our community.')
+@section('canonical_url', route('postByCategory', ['category' => request()->route('category')]))
 @section('section')
     @include('post.partials.postCards')
 @endsection

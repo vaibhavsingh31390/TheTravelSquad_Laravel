@@ -1,2 +1,9 @@
 User-agent: *
-Disallow:
+Allow: /
+
+Disallow: /userDashboard
+Disallow: /dashHome
+Disallow: /posts/new
+Disallow: /posts/store
+
+Sitemap: /sitemap.xml

@@ -1,0 +1,6 @@
+*
+!.gitignore
+!Sample_Thumbnails/
+!Sample_Thumbnails/**
+!Sample_Profile_Pictures/
+!Sample_Profile_Pictures/**

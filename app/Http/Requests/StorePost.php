@@ -2,34 +2,46 @@
 
 namespace App\Http\Requests;
 
+use App\Services\HtmlSanitizer;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
 
 class StorePost extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'postImage' => 'image:allow_svg|mimes:jpg,jpeg,png,gif,svg',
+            'postImage' => 'nullable|image:allow_svg|mimes:jpg,jpeg,png,gif,svg,webp',
             'title' => 'required|min:5|max:200',
-            'content' => 'required|min:50|max:8000',
+            'content' => 'required|string|max:100000',
             'users_id' => 'required|min:1|max:10000',
-            'category_Menu' => 'in:Travel,Technology,Sports,Food,Fashion,Others'
+            'category_Menu' => 'required|in:Travel,Technology,Sports,Food,Fashion,Others',
+            'tags' => 'nullable|string|max:500',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if (! $this->has('content')) {
+            return;
+        }
+
+        $this->merge([
+            'content' => HtmlSanitizer::clean($this->input('content', '')),
+        ]);
+    }
+
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator) {
+            if (HtmlSanitizer::plainTextLength($this->input('content', '')) < 50) {
+                $validator->errors()->add('content', 'Content must be at least 50 characters of text.');
+            }
+        });
     }
 }

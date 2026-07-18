@@ -24,10 +24,12 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             PostsTableSeeder::class,
             CategoryTableSeeder::class,
+            TagTableSeeder::class,
             CommentsTableSeeder::class,
             ActionTableSeeder::class,
             PostsActionTableSeeder::class,
-            MediaTableSeeder::class
+            MediaTableSeeder::class,
+            RichPostContentSeeder::class,
         ]);
     }
 }

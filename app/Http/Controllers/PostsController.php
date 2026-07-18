@@ -2,22 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Posts;
 use App\Http\Requests\StorePost;
+use App\Http\Requests\UploadEditorImageRequest;
 use App\Services\Pages;
+use App\Services\PostEditor;
+use App\Services\TagSearch;
 use App\Services\UserDashboard;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
     private $userDashboard;
+
     private $pages;
-    public function __construct(UserDashboard $userDashboard, Pages $pages)
-    {
-        $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destroy']);
+
+    private $postEditor;
+
+    private $tagSearch;
+
+    public function __construct(
+        UserDashboard $userDashboard,
+        Pages $pages,
+        PostEditor $postEditor,
+        TagSearch $tagSearch
+    ) {
+        $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destroy', 'uploadEditorImage', 'searchTags']);
         $this->userDashboard = $userDashboard;
         $this->pages = $pages;
+        $this->postEditor = $postEditor;
+        $this->tagSearch = $tagSearch;
     }
 
     public function index()
@@ -53,6 +66,20 @@ class PostsController extends Controller
     public function destroy($id)
     {
         return $this->userDashboard->destroy_Post($id);
-        // return redirect()->route('user.Dashboard', ['action' => 'myPosts']);
+    }
+
+    public function uploadEditorImage(UploadEditorImageRequest $request)
+    {
+        return $this->postEditor->upload_Image($request);
+    }
+
+    public function searchTags(Request $request)
+    {
+        return response()->json(
+            collect($this->tagSearch->suggest($request->query('q'), 12))
+                ->map(fn (string $name) => ['value' => $name])
+                ->values()
+                ->all()
+        );
     }
 }
