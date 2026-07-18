@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class Posts extends Model
 {
@@ -24,6 +25,10 @@ class Posts extends Model
 
     public function category(){
         return $this->hasMany('App\Models\Category');
+    }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class, 'post_tag', 'posts_id', 'tag_id')->withTimestamps();
     }
 
     public function media(){
@@ -47,5 +52,14 @@ class Posts extends Model
     }
     public function filterActions($action, $post, $user){
         return $this->actionPosts()->wherePivot('actions_id','=', $action)->wherePivot('posts_id','=', $post)->wherePivot('users_id','=', $user)->get();
+    }
+
+    public static function totalLikesForUser(int $userId): int
+    {
+        return (int) DB::table('posts_action')
+            ->join('posts', 'posts.id', '=', 'posts_action.posts_id')
+            ->where('posts.users_id', $userId)
+            ->where('posts_action.actions_id', 1)
+            ->count();
     }
 }

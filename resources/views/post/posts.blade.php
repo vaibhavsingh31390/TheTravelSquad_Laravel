@@ -1,5 +1,7 @@
 @extends('partisals.layout')
-@section('title','All Posts - The Travel Squad')
+@section('title', 'All Articles | The Travel Squad')
+@section('meta_description', 'Browse all travel articles on The Travel Squad — destination guides, food stories, sports travel, technology on the road, and community tips.')
+@section('canonical_url', route('posts.index'))
 @section('section')
-@include('post.partials.postCards')
+    @include('post.partials.postCards')
 @endsection

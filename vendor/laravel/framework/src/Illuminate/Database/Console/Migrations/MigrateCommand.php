@@ -3,13 +3,22 @@
 namespace Illuminate\Database\Console\Migrations;
 
 use Illuminate\Console\ConfirmableTrait;
-use Illuminate\Console\View\Components\Task;
+use Illuminate\Contracts\Console\Isolatable;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Events\SchemaLoaded;
 use Illuminate\Database\Migrations\Migrator;
+use Illuminate\Database\SQLiteDatabaseDoesNotExistException;
 use Illuminate\Database\SqlServerConnection;
+use Illuminate\Support\Str;
+use PDOException;
+use RuntimeException;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Throwable;
 
-class MigrateCommand extends BaseCommand
+use function Laravel\Prompts\confirm;
+
+#[AsCommand(name: 'migrate')]
+class MigrateCommand extends BaseCommand implements Isolatable
 {
     use ConfirmableTrait;
 
@@ -26,7 +35,8 @@ class MigrateCommand extends BaseCommand
                 {--pretend : Dump the SQL queries that would be run}
                 {--seed : Indicates if the seed task should be re-run}
                 {--seeder= : The class name of the root seeder}
-                {--step : Force the migrations to be run so they can be rolled back individually}';
+                {--step : Force the migrations to be run so they can be rolled back individually}
+                {--graceful : Return a successful exit code even if an error occurs}';
 
     /**
      * The console command description.
@@ -54,7 +64,6 @@ class MigrateCommand extends BaseCommand
      *
      * @param  \Illuminate\Database\Migrations\Migrator  $migrator
      * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
-     * @return void
      */
     public function __construct(Migrator $migrator, Dispatcher $dispatcher)
     {
@@ -75,17 +84,39 @@ class MigrateCommand extends BaseCommand
             return 1;
         }
 
+        try {
+            $this->runMigrations();
+        } catch (Throwable $e) {
+            if ($this->option('graceful')) {
+                $this->components->warn($e->getMessage());
+
+                return 0;
+            }
+
+            throw $e;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Run the pending migrations.
+     *
+     * @return void
+     */
+    protected function runMigrations()
+    {
         $this->migrator->usingConnection($this->option('database'), function () {
             $this->prepareDatabase();
 
             // Next, we will check to see if a path option has been defined. If it has
             // we will use the path relative to the root of this installation folder
             // so that migrations may be run for any path within the applications.
-            $migrations = $this->migrator->setOutput($this->output)
-                    ->run($this->getMigrationPaths(), [
-                        'pretend' => $this->option('pretend'),
-                        'step' => $this->option('step'),
-                    ]);
+            $this->migrator->setOutput($this->output)
+                ->run($this->getMigrationPaths(), [
+                    'pretend' => $this->option('pretend'),
+                    'step' => $this->option('step'),
+                ]);
 
             // Finally, if the "seed" option has been given, we will re-run the database
             // seed task to re-populate the database, which is convenient when adding
@@ -97,8 +128,6 @@ class MigrateCommand extends BaseCommand
                 ]);
             }
         });
-
-        return 0;
     }
 
     /**
@@ -108,7 +137,7 @@ class MigrateCommand extends BaseCommand
      */
     protected function prepareDatabase()
     {
-        if (! $this->migrator->repositoryExists()) {
+        if (! $this->repositoryExists()) {
             $this->components->info('Preparing database.');
 
             $this->components->task('Creating migration table', function () {
@@ -122,6 +151,132 @@ class MigrateCommand extends BaseCommand
 
         if (! $this->migrator->hasRunAnyMigrations() && ! $this->option('pretend')) {
             $this->loadSchemaState();
+        }
+    }
+
+    /**
+     * Determine if the migrator repository exists.
+     *
+     * @return bool
+     */
+    protected function repositoryExists()
+    {
+        return retry(2, fn () => $this->migrator->repositoryExists(), 0, function ($e) {
+            try {
+                return $this->handleMissingDatabase($e->getPrevious());
+            } catch (Throwable) {
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Attempt to create the database if it is missing.
+     *
+     * @param  \Throwable  $e
+     * @return bool
+     */
+    protected function handleMissingDatabase(Throwable $e)
+    {
+        if ($e instanceof SQLiteDatabaseDoesNotExistException) {
+            return $this->createMissingSqliteDatabase($e->path);
+        }
+
+        $connection = $this->migrator->resolveConnection($this->option('database'));
+
+        if (! $e instanceof PDOException) {
+            return false;
+        }
+
+        if (($e->getCode() === 1049 && in_array($connection->getDriverName(), ['mysql', 'mariadb'])) ||
+            (($e->errorInfo[0] ?? null) == '08006' &&
+              $connection->getDriverName() == 'pgsql' &&
+              Str::contains($e->getMessage(), '"'.$connection->getDatabaseName().'"'))) {
+            return $this->createMissingMySqlOrPgsqlDatabase($connection);
+        }
+
+        return false;
+    }
+
+    /**
+     * Create a missing SQLite database.
+     *
+     * @param  string  $path
+     * @return bool
+     *
+     * @throws \RuntimeException
+     */
+    protected function createMissingSqliteDatabase($path)
+    {
+        if ($this->option('force')) {
+            return touch($path);
+        }
+
+        if ($this->option('no-interaction')) {
+            return false;
+        }
+
+        $this->components->warn('The SQLite database configured for this application does not exist: '.$path);
+
+        if (! confirm('Would you like to create it?', default: true)) {
+            $this->components->info('Operation cancelled. No database was created.');
+
+            throw new RuntimeException('Database was not created. Aborting migration.');
+        }
+
+        return touch($path);
+    }
+
+    /**
+     * Create a missing MySQL or Postgres database.
+     *
+     * @param  \Illuminate\Database\Connection  $connection
+     * @return bool
+     *
+     * @throws \RuntimeException
+     */
+    protected function createMissingMySqlOrPgsqlDatabase($connection)
+    {
+        if ($this->laravel['config']->get("database.connections.{$connection->getName()}.database") !== $connection->getDatabaseName()) {
+            return false;
+        }
+
+        if (! $this->option('force') && $this->option('no-interaction')) {
+            return false;
+        }
+
+        if (! $this->option('force') && ! $this->option('no-interaction')) {
+            $this->components->warn("The database '{$connection->getDatabaseName()}' does not exist on the '{$connection->getName()}' connection.");
+
+            if (! confirm('Would you like to create it?', default: true)) {
+                $this->components->info('Operation cancelled. No database was created.');
+
+                throw new RuntimeException('Database was not created. Aborting migration.');
+            }
+        }
+        try {
+            $this->laravel['config']->set(
+                "database.connections.{$connection->getName()}.database",
+                match ($connection->getDriverName()) {
+                    'mysql', 'mariadb' => null,
+                    'pgsql' => 'postgres',
+                },
+            );
+
+            $this->laravel['db']->purge();
+
+            $freshConnection = $this->migrator->resolveConnection($this->option('database'));
+
+            return tap($freshConnection->unprepared(
+                match ($connection->getDriverName()) {
+                    'mysql', 'mariadb' => "CREATE DATABASE IF NOT EXISTS `{$connection->getDatabaseName()}`",
+                    'pgsql' => 'CREATE DATABASE "'.$connection->getDatabaseName().'"',
+                }
+            ), function () {
+                $this->laravel['db']->purge();
+            });
+        } finally {
+            $this->laravel['config']->set("database.connections.{$connection->getName()}.database", $connection->getDatabaseName());
         }
     }
 

@@ -16,7 +16,7 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
-        $category = ['Travel','Technology','Sports','Food','Food','Others'];
+        $category = ['Travel', 'Technology', 'Sports', 'Food', 'Fashion', 'Others'];
         return [
             'category_Menu' => $category[array_rand($category)],
             'posts_id' => rand(1,50),

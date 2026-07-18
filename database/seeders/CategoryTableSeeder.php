@@ -21,7 +21,7 @@ class CategoryTableSeeder extends Seeder
             $this->command->info('There are no posts, so no comments will be added');
             return;
         }
-        $category = ['Travel','Technology','Sports','Food','Food','Others'];
+        $category = ['Travel', 'Technology', 'Sports', 'Food', 'Fashion', 'Others'];
         foreach($posts as $post){
             $category_Menu = array_rand($category);
             $categoryCreate = Category::create(['posts_id'=>$post->id, 'category_Menu'=>$category[$category_Menu]]);

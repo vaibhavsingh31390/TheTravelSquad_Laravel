@@ -10,34 +10,35 @@
     var countAmt = 6;
     $(document).ready(function () {
         $("#load_More").click(function (e) {
-            // console.log('working');
-            $(document).on({
-                ajaxStart: function () { 
-                $('#load_More').text('');
-                $('#load_More').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="color: #f05454"></span>');
-            }
-            });
-                    $.ajax({
-                    type: "POST",
-                    url: "/card-data",
-                    data: { requestType: 'load_Data', _token: "{{ csrf_token() }}", count: countAmt },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.cards == "") {
-                            $("#load_More").hide();
-                        } else {
-                            setTimeout(() => {
-                            $(data.cards).hide().appendTo('#data-col').fadeIn(1000);
-                            $("#load_More").text('Load More'); 
-                        }, 1000);
-                        }
+            var $button = $('#load_More');
+            if ($button.prop('disabled')) return;
+            $button.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading');
+
+            $.ajax({
+                type: "POST",
+                url: "/card-data",
+                data: { requestType: 'load_Data', _token: "{{ csrf_token() }}", count: countAmt },
+                dataType: "json",
+                success: function (data) {
+                    if (data.cards && data.cards.trim() !== '') {
+                        $('#data-col').append(data.cards);
+                    }
+                    if (data.nextOffset) {
+                        countAmt = data.nextOffset;
+                    } else {
                         countAmt += 6;
-                    },
-                    error: function (error) {
-                        console.log(error.responseText);
-                        console.log('error');
-                    },
-                });
+                    }
+                    if (!data.hasMore || !data.cards || data.cards.trim() === '') {
+                        $button.hide();
+                    } else {
+                        $button.prop('disabled', false).text('Load More');
+                    }
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    $button.prop('disabled', false).text('Load More');
+                },
+            });
         });
     });
 </script>
@@ -177,49 +178,78 @@
 </script>
 @endauth
 
-@if (Route::is('postByCategory') || Route::is('posts.index'))
+@if (Route::is('postByCategory') || Route::is('posts.index') || Route::is('postByTag') || Route::is('posts.search'))
 <script>
-    // SCROLL TO ADD DATA
     $(document).ready(function () {
-        var isPosting = false;
-        var count = 6;
-        $(window).on('scroll', function () {
-            var last_Card_Id = $(".card").last().attr("data-id");
-            console.log(last_Card_Id);
-            var scroll_position_for_posts_load = $(document).height() - $(window).height() - 10;
-            var scrollHeight = $(window).scrollTop();
-            if (!isPosting && scrollHeight >= scroll_position_for_posts_load) {
-                isPosting = true;
-                $('#loader').removeClass('d-none')
-                var category = $('li.dropdown-item.active').text();
-                category = category.trim();
-                $(document).on({
-                    ajaxStop: function () { $('#loader').addClass('d-none') }
-                });
-                setTimeout(function () {
-                    $.ajax({
-                        type: "POST",
-                        url: "/card-data-category",
-                        data: { requestType: 'load_Data_Category', _token: "{{ csrf_token() }}", last_Id: last_Card_Id, categoryType: category, count: count },
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.cards == "") {
-                                console.log('Data Empty Now.')
-                                return
-                            } else {
-                                $(data.cards).hide().appendTo('#data-col').fadeIn(1000);
-                            }
-                            count+=6;
-                            isPosting = false;
-                        },
-                        error: function (error) {
-                            console.log(error.responseText);
-                            console.log('error');
-                        }
-                    });
-                }, 1000);
-            }
-        });
+        var $grid = $('#data-col');
+        var $sentinel = $('#scroll-sentinel');
+        if (!$grid.length || !$sentinel.length) return;
+
+        var offset = parseInt($grid.data('offset'), 10) || 6;
+        var category = $grid.data('category') || 'All Posts';
+        var tagSlug = $grid.data('tag') || '';
+        var searchQuery = $grid.data('search') || '';
+        var loading = false;
+        var hasMore = true;
+
+        function loadMorePosts() {
+            if (loading || !hasMore) return;
+            loading = true;
+            $('#loader').removeClass('d-none');
+
+            $.ajax({
+                type: "POST",
+                url: "/card-data-category",
+                data: {
+                    requestType: 'load_Data_Category',
+                    _token: "{{ csrf_token() }}",
+                    categoryType: category,
+                    tagSlug: tagSlug,
+                    searchQuery: searchQuery,
+                    count: offset
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.cards && data.cards.trim() !== '') {
+                        $grid.append(data.cards);
+                    }
+                    if (data.nextOffset) {
+                        offset = data.nextOffset;
+                    } else {
+                        offset += 6;
+                    }
+                    if (data.hasMore === false || !data.cards || data.cards.trim() === '') {
+                        hasMore = false;
+                        $sentinel.remove();
+                    }
+                    loading = false;
+                    $('#loader').addClass('d-none');
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    loading = false;
+                    $('#loader').addClass('d-none');
+                }
+            });
+        }
+
+        if ('IntersectionObserver' in window) {
+            var observer = new IntersectionObserver(function (entries) {
+                if (entries[0].isIntersecting) {
+                    loadMorePosts();
+                }
+            }, { rootMargin: '240px' });
+            observer.observe($sentinel[0]);
+        } else {
+            var scrollTimer;
+            $(window).on('scroll', function () {
+                clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(function () {
+                    var nearBottom = $(window).scrollTop() + $(window).height() >= $(document).height() - 320;
+                    if (nearBottom) loadMorePosts();
+                }, 120);
+            });
+        }
     });
 </script>
 @endif

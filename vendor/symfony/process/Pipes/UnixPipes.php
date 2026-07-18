@@ -22,25 +22,21 @@ use Symfony\Component\Process\Process;
  */
 class UnixPipes extends AbstractPipes
 {
-    private $ttyMode;
-    private $ptyMode;
-    private $haveReadSupport;
-
-    public function __construct(?bool $ttyMode, bool $ptyMode, mixed $input, bool $haveReadSupport)
-    {
-        $this->ttyMode = $ttyMode;
-        $this->ptyMode = $ptyMode;
-        $this->haveReadSupport = $haveReadSupport;
-
+    public function __construct(
+        private ?bool $ttyMode,
+        private bool $ptyMode,
+        mixed $input,
+        private bool $haveReadSupport,
+    ) {
         parent::__construct($input);
     }
 
-    public function __sleep(): array
+    public function __serialize(): array
     {
         throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
     }
 
-    public function __wakeup()
+    public function __unserialize(array $data): void
     {
         throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
     }
@@ -50,9 +46,6 @@ class UnixPipes extends AbstractPipes
         $this->close();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDescriptors(): array
     {
         if (!$this->haveReadSupport) {
@@ -77,7 +70,7 @@ class UnixPipes extends AbstractPipes
             return [
                 ['pty'],
                 ['pty'],
-                ['pty'],
+                ['pipe', 'w'], // stderr needs to be in a pipe to correctly split error and output, since PHP will use the same stream for both
             ];
         }
 
@@ -88,17 +81,11 @@ class UnixPipes extends AbstractPipes
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFiles(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function readAndWrite(bool $blocking, bool $close = false): array
     {
         $this->unblock();
@@ -145,17 +132,11 @@ class UnixPipes extends AbstractPipes
         return $read;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function haveReadSupport(): bool
     {
         return $this->haveReadSupport;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function areOpen(): bool
     {
         return (bool) $this->pipes;

@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
@@ -17,7 +15,18 @@ class Media extends Model
         return $this->morphTo();
     }
 
-    public function url(){
-        return Storage::url($this->path);
+    public function url(): string
+    {
+        return asset('storage/'.$this->path);
+    }
+
+    public static function placeholderPostUrl(): string
+    {
+        return asset('assets/placeholder-post.svg');
+    }
+
+    public static function placeholderAvatarUrl(): string
+    {
+        return asset('assets/placeholder-avatar.svg');
     }
 }

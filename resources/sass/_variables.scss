@@ -1,7 +1,40 @@
-// Body
-$body-bg: #f8fafc;
+$primary: #000000;
+$secondary: #666666;
+$success: #22c55e;
+$danger: #ef4444;
+$light: #f5f5f5;
+$dark: #1a1a1a;
 
-// Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
-$font-size-base: 0.9rem;
-$line-height-base: 1.6;
+$body-bg: #ffffff;
+$body-color: #1a1a1a;
+
+$font-family-sans-serif: 'Inter', system-ui, -apple-system, sans-serif;
+$font-size-base: 0.9375rem;
+$line-height-base: 1.65;
+$headings-font-weight: 700;
+
+$border-radius: 1rem;
+$border-radius-sm: 0.75rem;
+$border-radius-lg: 1.5rem;
+$border-radius-xl: 1.75rem;
+$border-radius-pill: 50rem;
+$border-color: #e5e5e5;
+
+$card-border-width: 0;
+$card-border-radius: $border-radius-lg;
+$card-box-shadow: none;
+
+$btn-border-radius: $border-radius-pill;
+$btn-font-weight: 600;
+
+$input-border-radius: $border-radius-pill;
+$input-border-color: #d4d4d4;
+$input-focus-border-color: #000000;
+$input-focus-box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+
+$dropdown-border-radius: $border-radius-lg;
+
+$content-max: 1200px;
+$article-max: 760px;
+$nav-height: 72px;
+$transition-base: 0.22s ease;

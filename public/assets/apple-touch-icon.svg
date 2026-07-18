@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none" role="img" aria-label="The Travel Squad">
+  <rect width="180" height="180" rx="40" fill="#111111"/>
+  <g transform="translate(74 74) scale(2.05)">
+    <rect x="2" y="2" width="28" height="28" rx="8" stroke="#ffffff" stroke-width="1.75" fill="none"/>
+    <circle cx="11" cy="21" r="2" fill="#ffffff"/>
+    <circle cx="21" cy="21" r="2" fill="#ffffff"/>
+    <circle cx="16" cy="11" r="2" fill="#ffffff"/>
+    <path d="M11 21L16 11L21 21" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -4,8 +4,10 @@ namespace App\Services;
 
 use App\Models\Media;
 use App\Models\Posts;
+use App\Services\TagSync;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserDashboard
 {
@@ -28,20 +30,59 @@ class UserDashboard
 
     public function post_Data_Search()
     {
-        $search_Parameter = $this->request->input('value') ?? "";
+        $search_Parameter = $this->request->input('value') ?? '';
         $profile = Auth::user();
         $userData = Posts::where('users_id', '=', $profile->id);
-        if ($search_Parameter != "") {
-            $findIt = $userData->where('title', 'LIKE', '%' . $search_Parameter . '%')->get();
+        if ($search_Parameter != '') {
+            $findIt = $userData->where('title', 'LIKE', '%'.$search_Parameter.'%')->get();
             $findPosts = compact('profile', 'findIt', 'search_Parameter');
             $html = view('components.dashboard.dashTableSearch')->with(compact('findPosts'))->render();
+
             return response()->json(['success' => true, 'findPosts', 'value' => $search_Parameter, $findPosts, 'search_Data' => $html]);
-        } else {
-            $findIt = Posts::where('users_id', '=', $profile->id)->get();
-            $findPosts = compact('profile', 'findIt', 'search_Parameter');
-            $html = view('components.dashboard.dashTableData')->with(compact('findPosts'))->render();
-            return response()->json(['success' => true, 'findPosts', $findPosts, 'all_Data' => $html]);
         }
+        $findIt = Posts::where('users_id', '=', $profile->id)->get();
+        $findPosts = compact('profile', 'findIt', 'search_Parameter');
+        $html = view('components.dashboard.dashTableData')->with(compact('findPosts'))->render();
+
+        return response()->json(['success' => true, 'findPosts', $findPosts, 'all_Data' => $html]);
+    }
+
+    public function total_Likes()
+    {
+        if (! $this->request->ajax()) {
+            return abort(404);
+        }
+
+        $profile = Auth::user();
+        $postIds = Posts::where('users_id', $profile->id)->pluck('id');
+
+        $likeCounts = DB::table('posts_action')
+            ->whereIn('posts_id', $postIds)
+            ->where('actions_id', 1)
+            ->selectRaw('posts_id, count(*) as total')
+            ->groupBy('posts_id')
+            ->pluck('total', 'posts_id');
+
+        $dislikeCounts = DB::table('posts_action')
+            ->whereIn('posts_id', $postIds)
+            ->where('actions_id', 2)
+            ->selectRaw('posts_id, count(*) as total')
+            ->groupBy('posts_id')
+            ->pluck('total', 'posts_id');
+
+        $posts = Posts::where('users_id', $profile->id)->latest()->get();
+        $totalLikes = (int) $likeCounts->sum();
+        $totalDislikes = (int) $dislikeCounts->sum();
+
+        $html = view('components.dashboard.dashLikes', compact(
+            'posts',
+            'likeCounts',
+            'dislikeCounts',
+            'totalLikes',
+            'totalDislikes'
+        ))->render();
+
+        return response()->json(['success' => true, 'likes_Data' => $html]);
     }
 
     public function create_Post()
@@ -63,27 +104,26 @@ class UserDashboard
                 abort(404);
             };
             $post = Posts::create([
-                'id' => $request->id,
                 'title' => $request->title,
                 'content' => $request->content,
-                'users_id' => $idGet
+                'users_id' => $idGet,
             ]);
-            $post->save();
             //CATEGORY UPDATE
             if ($request->category_Menu) {
                 $category = $post->category()->create(['category_Menu' => $request->category_Menu]);
             }
+            TagSync::syncFromInput($post, $request->input('tags'));
             if ($request->hasFile('postImage')) {
                 $file = $request->file('postImage')->storeAs('Thumbnails', $post->id . "-" . decrypt($request->users_id) . "-thumbnail." . $request->file('postImage')->extension());
                 $post->media()->save(Media::make(['path' => $file]));
             }
             $response_Type_Created = 'Created';
-            $message = 'Posts Has Been Created !';
+            $message = 'Your story is live and ready for readers.';
             $html = view('components.alert')->with(compact(['response_Type_Created', 'message']))->render();
             return response()->json(['success' => true, 'formData' => $post, 'responseAlert' => $html]);
         } else {
             $response_Type_Fails = 'Failed';
-            $message = 'Request Failed !';
+            $message = 'Something went wrong. Please try again.';
             $html = view('components.alert')->with(compact(['response_Type_Fails', 'message']))->render();
             return response()->json(['success' => true, 'responseAlert' => $html]);
         }
@@ -93,7 +133,7 @@ class UserDashboard
     {
         if ($this->request->ajax()) {
             $id = $this->request->input('id');
-            $post = Posts::findOrFail($id);
+            $post = Posts::with(['tags', 'media'])->findOrFail($id);
             $html = view('components.dashboard.dashEditPost')->with(compact(['id', 'post']))->render();
             return response()->json(['success' => true, 'Edit_Data' => $html]);
         }
@@ -120,6 +160,7 @@ class UserDashboard
                 $category = $post->category()->updateOrCreate(['posts_id' => $post->id], ['category_Menu' => $request->category_Menu]);
                 $test = "updated";
             }
+            TagSync::syncFromInput($post, $request->input('tags'));
             // IMAGE UPDATE
             if ($request->hasFile('postImage')) {
                 $file = $request->file('postImage')->storeAs('Thumbnails', $post->id . "-" . $idGet . "-thumbnail." . $request->file('postImage')->extension());
@@ -127,12 +168,12 @@ class UserDashboard
             }
             // Response Alerts
             $response_Type_Updated = 'Updated';
-            $message = 'Posts Has Been Updated !';
+            $message = 'Your changes have been saved successfully.';
             $html = view('components.alert')->with(compact(['response_Type_Updated', 'message']))->render();
             return response()->json(['success' => true, 'formData' => $post, 'responseAlert' => $html]);
         } else {
             $response_Type_Fails = 'Failed';
-            $message = 'Request Failed !';
+            $message = 'Something went wrong. Please try again.';
             $html = view('components.alert')->with(compact(['response_Type_Fails', 'message']))->render();
             return response()->json(['success' => true, 'responseAlert' => $html]);
         }
@@ -144,6 +185,7 @@ class UserDashboard
             $id = $this->request->input('id');
             $deletePost = Posts::findOrFail($id);
             $deletePost->category()->delete();
+            $deletePost->tags()->detach();
             $deletePost->comments()->delete();
             $deletePost->delete();
             return response()->json(['success' => true]);

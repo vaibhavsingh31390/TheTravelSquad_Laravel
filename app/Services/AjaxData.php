@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class AjaxData
 {
     private $request;
+
     public function __construct(Request $request)
     {
         $this->request = $request;
@@ -15,30 +16,62 @@ class AjaxData
 
     public function Load_More_Data_On_Click()
     {
-        if ($this->request->ajax()) {
-            $allCards = Posts::orderBy('created_at', 'desc')->skip($this->request->input('count'))->limit(6)->get();
-            $html = view('components.ajax')->with(compact('allCards'))->render();
-            return response()->json(['success' => true, 'cards' => $html]);
+        if (! $this->request->ajax()) {
+            return;
         }
+
+        $offset = (int) $this->request->input('count', 6);
+        $limit = 6;
+
+        $allCards = Posts::orderBy('created_at', 'desc')->skip($offset)->limit($limit)->get();
+        $html = view('components.ajax')->with(compact('allCards'))->render();
+
+        return response()->json([
+            'success' => true,
+            'cards' => $html,
+            'hasMore' => $allCards->count() === $limit,
+            'nextOffset' => $offset + $allCards->count(),
+        ]);
     }
 
     public function Load_More_Data_On_Scroll()
     {
-        if ($this->request->ajax()) {
-            $category = $this->request->input('categoryType');
-            $last_Id = $this->request->input('last_Id');
-            if ($this->request->input('categoryType') == 'All Posts') {
-                $allCards = Posts::where('id', '>', $last_Id)->limit(6)->get();
-                $html = view('components.ajax')->with(compact('allCards'))->render();
-                return response()->json(['success' => true, 'cards' => $html]);
-            } else {
-                $allCards = Posts::whereHas('category', function ($query) use ($category) {
-                    $query->where('category_Menu', 'like', '%' . $category . '%');
-                })->with('category')->orderBy('created_at', 'desc')->skip($this->request->input('count'))->limit(6)->get();
-                $html = view('components.ajax')->with(compact('allCards'))->render();
-                return response()->json(['success' => true, 'cards' => $html, 'count' => $this->request->input('count')]);
-            }
+        if (! $this->request->ajax()) {
+            return;
         }
+
+        $category = $this->request->input('categoryType', 'All Posts');
+        $tagSlug = $this->request->input('tagSlug');
+        $searchQuery = trim($this->request->input('searchQuery', ''));
+        $offset = (int) $this->request->input('count', 6);
+        $limit = 6;
+
+        $query = Posts::query()->orderBy('created_at', 'desc');
+
+        if ($searchQuery !== '') {
+            $query->where(function ($q) use ($searchQuery) {
+                $q->where('title', 'LIKE', '%'.$searchQuery.'%')
+                    ->orWhere('content', 'LIKE', '%'.$searchQuery.'%');
+            });
+        } elseif ($tagSlug) {
+            $query->whereHas('tags', function ($q) use ($tagSlug) {
+                $q->where('slug', $tagSlug);
+            });
+        } elseif ($category !== 'All Posts' && $category !== 'All') {
+            $query->whereHas('category', function ($q) use ($category) {
+                $q->where('category_Menu', $category);
+            });
+        }
+
+        $allCards = $query->with(['tags', 'media', 'category'])->skip($offset)->limit($limit)->get();
+        $html = view('components.ajax')->with(compact('allCards'))->render();
+
+        return response()->json([
+            'success' => true,
+            'cards' => $html,
+            'hasMore' => $allCards->count() === $limit,
+            'nextOffset' => $offset + $allCards->count(),
+        ]);
     }
 
     public function test()

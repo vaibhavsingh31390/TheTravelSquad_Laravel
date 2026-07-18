@@ -4,7 +4,6 @@ namespace Laravel\SerializableClosure;
 
 use Closure;
 use Laravel\SerializableClosure\Exceptions\InvalidSignatureException;
-use Laravel\SerializableClosure\Exceptions\PhpVersionNotSupportedException;
 use Laravel\SerializableClosure\Serializers\Signed;
 use Laravel\SerializableClosure\Signers\Hmac;
 
@@ -25,10 +24,6 @@ class SerializableClosure
      */
     public function __construct(Closure $closure)
     {
-        if (\PHP_VERSION_ID < 70400) {
-            throw new PhpVersionNotSupportedException();
-        }
-
         $this->serializable = Serializers\Signed::$signer
             ? new Serializers\Signed($closure)
             : new Serializers\Native($closure);
@@ -41,10 +36,6 @@ class SerializableClosure
      */
     public function __invoke()
     {
-        if (\PHP_VERSION_ID < 70400) {
-            throw new PhpVersionNotSupportedException();
-        }
-
         return call_user_func_array($this->serializable, func_get_args());
     }
 
@@ -55,11 +46,18 @@ class SerializableClosure
      */
     public function getClosure()
     {
-        if (\PHP_VERSION_ID < 70400) {
-            throw new PhpVersionNotSupportedException();
-        }
-
         return $this->serializable->getClosure();
+    }
+
+    /**
+     * Create a new unsigned serializable closure instance.
+     *
+     * @param  Closure  $closure
+     * @return \Laravel\SerializableClosure\UnsignedSerializableClosure
+     */
+    public static function unsigned(Closure $closure)
+    {
+        return new UnsignedSerializableClosure($closure);
     }
 
     /**
@@ -76,7 +74,7 @@ class SerializableClosure
     }
 
     /**
-     * Sets the serializable closure secret key.
+     * Sets the transformer that should be used when serializing use variables.
      *
      * @param  \Closure|null  $transformer
      * @return void
@@ -87,7 +85,7 @@ class SerializableClosure
     }
 
     /**
-     * Sets the serializable closure secret key.
+     * Sets the resolver that should be used when unserializing use variables.
      *
      * @param  \Closure|null  $resolver
      * @return void
@@ -100,7 +98,7 @@ class SerializableClosure
     /**
      * Get the serializable representation of the closure.
      *
-     * @return array
+     * @return array{serializable: \Laravel\SerializableClosure\Serializers\Signed|\Laravel\SerializableClosure\Contracts\Serializable}
      */
     public function __serialize()
     {
@@ -112,7 +110,7 @@ class SerializableClosure
     /**
      * Restore the closure after serialization.
      *
-     * @param  array  $data
+     * @param  array{serializable: \Laravel\SerializableClosure\Serializers\Signed|\Laravel\SerializableClosure\Contracts\Serializable}  $data
      * @return void
      *
      * @throws \Laravel\SerializableClosure\Exceptions\InvalidSignatureException
