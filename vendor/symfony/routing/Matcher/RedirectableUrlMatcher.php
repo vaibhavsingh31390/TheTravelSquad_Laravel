@@ -19,9 +19,6 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  */
 abstract class RedirectableUrlMatcher extends UrlMatcher implements RedirectableUrlMatcherInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function match(string $pathinfo): array
     {
         try {
@@ -44,7 +41,7 @@ abstract class RedirectableUrlMatcher extends UrlMatcher implements Redirectable
                 } finally {
                     $this->context->setScheme($scheme);
                 }
-            } elseif ('/' === $trimmedPathinfo = rtrim($pathinfo, '/') ?: '/') {
+            } elseif ('' === $trimmedPathinfo = rtrim($pathinfo, '/')) {
                 throw $e;
             } else {
                 try {

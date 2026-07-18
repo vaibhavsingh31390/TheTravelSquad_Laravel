@@ -4,7 +4,7 @@ namespace Illuminate\Database;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\View\Components\TwoColumnDetail;
-use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
@@ -14,7 +14,7 @@ abstract class Seeder
     /**
      * The container instance.
      *
-     * @var \Illuminate\Container\Container
+     * @var \Illuminate\Contracts\Container\Container
      */
     protected $container;
 
@@ -50,10 +50,8 @@ abstract class Seeder
             $name = get_class($seeder);
 
             if ($silent === false && isset($this->command)) {
-                with(new TwoColumnDetail($this->command->getOutput()))->render(
-                    $name,
-                    '<fg=yellow;options=bold>RUNNING</>'
-                );
+                (new TwoColumnDetail($this->command->getOutput()))
+                    ->render($name, '<fg=yellow;options=bold>RUNNING</>');
             }
 
             $startTime = microtime(true);
@@ -61,12 +59,10 @@ abstract class Seeder
             $seeder->__invoke($parameters);
 
             if ($silent === false && isset($this->command)) {
-                $runTime = number_format((microtime(true) - $startTime) * 1000, 2);
+                $runTime = number_format((microtime(true) - $startTime) * 1000);
 
-                with(new TwoColumnDetail($this->command->getOutput()))->render(
-                    $name,
-                    "<fg=gray>$runTime ms</> <fg=green;options=bold>DONE</>"
-                );
+                (new TwoColumnDetail($this->command->getOutput()))
+                    ->render($name, "<fg=gray>$runTime ms</> <fg=green;options=bold>DONE</>");
 
                 $this->command->getOutput()->writeln('');
             }
@@ -110,11 +106,15 @@ abstract class Seeder
      */
     public function callOnce($class, $silent = false, array $parameters = [])
     {
-        if (in_array($class, static::$called)) {
-            return;
-        }
+        $classes = Arr::wrap($class);
 
-        $this->call($class, $silent, $parameters);
+        foreach ($classes as $class) {
+            if (in_array($class, static::$called)) {
+                continue;
+            }
+
+            $this->call($class, $silent, $parameters);
+        }
     }
 
     /**
@@ -143,7 +143,7 @@ abstract class Seeder
     /**
      * Set the IoC container instance.
      *
-     * @param  \Illuminate\Container\Container  $container
+     * @param  \Illuminate\Contracts\Container\Container  $container
      * @return $this
      */
     public function setContainer(Container $container)

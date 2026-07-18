@@ -12,37 +12,76 @@ class MediaTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $posts = Posts::all();
-        $users = \App\Models\User::all();
-        $elemets = [$posts, $users];
-        if ($users->count() === 0) {
+        $users = User::all();
+
+        if ($users->isEmpty()) {
             $this->command->info('There are no users, so no media will be added');
+
             return;
         }
-        if ($posts->count() === 0) {
+
+        if ($posts->isEmpty()) {
             $this->command->info('There are no posts, so no media will be added');
+
             return;
         }
-        $images_Thumbnails = Storage::files('Sample_Thumbnails');
+
+        $imagesThumbnails = $this->ensureSampleImages('Sample_Thumbnails');
         foreach ($posts as $post) {
-            $randomImages = array_rand($images_Thumbnails);
-            $randomImage = $images_Thumbnails[$randomImages];
+            $randomImage = $imagesThumbnails[array_rand($imagesThumbnails)];
             $post->media()->save(
                 Media::make(['path' => $randomImage])
             );
-        };
-        $images_User_Thumbnails = Storage::files('Sample_Profile_Pictures');
+        }
+
+        $imagesUserThumbnails = $this->ensureSampleImages('Sample_Profile_Pictures');
         foreach ($users as $user) {
-            $randomImages = array_rand($images_User_Thumbnails);
-            $randomImage = $images_User_Thumbnails[$randomImages];
+            $randomImage = $imagesUserThumbnails[array_rand($imagesUserThumbnails)];
             $user->media()->save(
                 Media::make(['path' => $randomImage])
             );
         }
+    }
+
+    /**
+     * Ensure sample image files exist for seeding.
+     *
+     * @return array<int, string>
+     */
+    private function ensureSampleImages(string $directory, int $count = 5): array
+    {
+        if (! Storage::exists($directory)) {
+            Storage::makeDirectory($directory);
+        }
+
+        $files = Storage::files($directory);
+
+        if ($files !== []) {
+            return $files;
+        }
+
+        if (! extension_loaded('gd')) {
+            $this->command->warn("GD extension is not available. Skipping media generation for {$directory}.");
+
+            return ["{$directory}/placeholder.png"];
+        }
+
+        for ($i = 1; $i <= $count; $i++) {
+            $path = "{$directory}/placeholder-{$i}.png";
+            $image = imagecreatetruecolor(200, 200);
+            $color = imagecolorallocate($image, random_int(50, 200), random_int(50, 200), random_int(50, 200));
+            imagefill($image, 0, 0, $color);
+            ob_start();
+            imagepng($image);
+            $contents = ob_get_clean();
+            imagedestroy($image);
+            Storage::put($path, $contents);
+        }
+
+        return Storage::files($directory);
     }
 }
